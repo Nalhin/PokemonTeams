@@ -11,20 +11,23 @@ sections = main.findAll("div", {"class": "updatesheeticons"})
 
 data = []
 
-element_id = -1  # first two are non pokemon characters
 for s in sections:
     links = s.findAll("a")
     for a in links:
         model_link = a['href']
         model_id = model_link.split('/')[4]
         name = a.find('span', {'class': 'iconheadertext'}).text
+        pokemon_id = 0
         if name.startswith('#'):
+            pokemon_id = name.split(' ')[0].lstrip('#0')
             name = name.split(' ')[1]
+
         icon = a.findAll('img')[0]['src']
-        data.append(
-            {'id': element_id, 'download_url': f'{model_download_url}{model_id}/', 'name': name,
-             'icon': f'https://www.models-resource.com{icon}'})
-        element_id += 1
+        if pokemon_id != 0:
+            data.append(
+                {'id': pokemon_id, 'download_url': f'{model_download_url}{model_id}/', 'name': name,
+                 'icon': f'https://www.models-resource.com{icon}'})
+
 
 with open('pokemon_data.json', 'w', encoding='utf-8') as f:
     json.dump(data, f, ensure_ascii=False, indent=4)
