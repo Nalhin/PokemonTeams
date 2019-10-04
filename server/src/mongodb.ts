@@ -1,6 +1,6 @@
 import * as mongoose from "mongoose";
 
-const url: string = 'mongodb://127.0.0.1:27017/PokemonDreamTeams';
+const url = process.env.MONGODB_URL;
 
 mongoose.connect(url, {
     useCreateIndex: true,

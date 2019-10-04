@@ -54,4 +54,4 @@ with open('pokemon_data.json', 'r') as json_file:
             data.append(row_data)
 
 with open('pokedex_data.json', 'w', encoding='utf-8') as f:
-    json.dump(data, f, ensure_ascii=False, indent=4)
+    json.dump(data, f, ensure_ascii=False)

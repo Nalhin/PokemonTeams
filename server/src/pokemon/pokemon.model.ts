@@ -1,39 +1,45 @@
 import * as mongoose from 'mongoose';
-import { PokemonInterface } from "./pokemon.interface";
+import { Pokemon } from './pokemon.interface';
 
-const PokemonSchema = new mongoose.Schema({
+const PokemonSchema = new mongoose.Schema(
+  {
     id: {
-        type: String,
-        unique: true,
-        required: true,
+      type: String,
+      unique: true,
+      required: true,
     },
     name: {
-        type: String,
+      type: String,
     },
-    tags: [{type: String}],
+    tags: [{ type: String }],
     total: {
-        type: Number
+      type: Number,
     },
     hp: {
-        type: Number
+      type: Number,
     },
     attack: {
-        type: Number
+      type: Number,
     },
     defense: {
-        type: Number
+      type: Number,
     },
     spellAttack: {
-        type: Number
+      type: Number,
     },
     spellDefense: {
-        type: Number
+      type: Number,
     },
     speed: {
-        type: Number
-    }
-});
+      type: Number,
+    },
+  },
+  { collection: 'pokemon' },
+);
 
-const PokemonModel = mongoose.model<PokemonInterface>('pokemon', PokemonSchema);
+const PokemonModel = mongoose.model<Pokemon & mongoose.Document>(
+  'pokemon',
+  PokemonSchema,
+);
 
 export default PokemonModel;
