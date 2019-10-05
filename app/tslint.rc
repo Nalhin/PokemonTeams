@@ -1,6 +1,8 @@
 {
   "extends": [
     "tslint:recommended",
+    "tslint-react",
+    "tslint-consistent-codestyle",
     "tslint-config-prettier"
   ]
 }

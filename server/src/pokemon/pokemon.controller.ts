@@ -1,10 +1,22 @@
 import { Request, Response } from 'express';
-import Pokemon from './pokemon.model';
+import PokemonModel from './pokemon.model';
+import { Pokemon } from './pokemon.interface';
 
 export const getAllPokemon = async (req: Request, res: Response) => {
   try {
-    const allPokemon = await Pokemon.find({});
+    const allPokemon: Pokemon[] = await PokemonModel.find({});
     res.send(allPokemon);
+  } catch (e) {
+    res.status(500).send(e);
+  }
+};
+
+export const getPokemonById = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const pokemon: Pokemon = await PokemonModel.findOne({ id });
+    if (!pokemon) return res.status(404).send();
+    return res.send(pokemon);
   } catch (e) {
     res.status(500).send(e);
   }

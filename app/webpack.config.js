@@ -7,7 +7,7 @@ module.exports = env => {
     mode: env.development ? 'development' : 'production',
     entry: path.resolve(__dirname, './src/index.tsx'),
     output: {
-      // publicPath: env.development ? '/' : './',
+      publicPath: env.development ? '/' : './',
       filename: 'bundle.[hash].js',
       chunkFilename: 'chunk.[chunkhash].js',
       path: path.resolve(__dirname, 'dist'),
@@ -33,7 +33,7 @@ module.exports = env => {
         {
           test: /\.(ts|tsx)$/,
           exclude: /node_modules/,
-          loader: ['babel-loader','ts-loader'],
+          loader: ['babel-loader', 'ts-loader'],
         },
         {
           test: [/\.(scss|css)$/],
@@ -51,11 +51,11 @@ module.exports = env => {
       ],
     },
     resolve: {
-      extensions: [ '.tsx', '.ts', '.js' ],
+      extensions: ['.tsx', '.ts', '.js'],
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: path.resolve(__dirname,'./public/index.html'),
+        template: path.resolve(__dirname, './public/index.html'),
         filename: 'index.html',
       }),
       new MiniCssExtractPlugin({

@@ -31,3 +31,26 @@ describe('GET /pokemon', () => {
     expect(body.length).toEqual(1);
   });
 });
+
+describe('GET /pokemon/:id', () => {
+  beforeEach(async () => {
+    await PokemonModel.deleteMany({});
+    await new PokemonModel(mockPokemon).save();
+  });
+
+  it('Should respond with correct pokemon', async () => {
+    const response = await request(app)
+      .get(`/pokemon/${mockPokemon.id}`)
+      .expect('Content-Type', /json/)
+      .expect(200);
+
+    const { body } = response;
+    expect(body).toMatchObject(mockPokemon);
+  });
+
+  it('Should respond with 404, if pokemon is not found', async () => {
+    await request(app)
+      .get('/pokemon/4')
+      .expect(404);
+  });
+});

@@ -47,7 +47,7 @@ describe('GET /team/:id', () => {
     expect(body).toMatchObject(mockTeam);
   });
 
-  it('Should respond with 404 if no team is found', async () => {
+  it('Should respond with 404, if no team is found', async () => {
     await request(app)
       .get(`/team/${new mongoose.Types.ObjectId()}`)
       .expect(404);

@@ -1,0 +1,44 @@
+import produce from 'immer';
+
+import { PokemonActionTypes, PokemonState } from './pokemon.types';
+import { Reducer } from 'redux';
+import { Pokemon } from '../../interfaces/pokemon';
+
+const INITIAL_STATE: PokemonState = {
+  pokemonData: { data: [], isLoading: false },
+  current: { data: <Pokemon>{}, isLoading: false },
+};
+
+const pokemonReducer: Reducer<PokemonState> = (
+  state = INITIAL_STATE,
+  action,
+) => {
+  return produce(state, draft => {
+    switch (action.type) {
+      case PokemonActionTypes.GET_ALL_POKEMON_REQUESTED:
+        draft.pokemonData.isLoading = true;
+        break;
+      case PokemonActionTypes.GET_POKEMON_BY_ID_REQUESTED:
+        draft.current.isLoading = true;
+        break;
+      case PokemonActionTypes.GET_ALL_POKEMON_SUCCEEDED:
+        draft.pokemonData.data = action.data;
+        draft.pokemonData.isLoading = false;
+        break;
+      case PokemonActionTypes.GET_POKEMON_BY_ID_SUCCEEDED:
+        draft.current.data = action.data;
+        draft.current.isLoading = false;
+        break;
+      case PokemonActionTypes.GET_ALL_POKEMON_FAILED:
+        draft.pokemonData.isLoading = false;
+        break;
+      case PokemonActionTypes.GET_POKEMON_BY_ID_FAILED:
+        draft.current.isLoading = false;
+        break;
+      default:
+        break;
+    }
+  });
+};
+
+export default pokemonReducer;
