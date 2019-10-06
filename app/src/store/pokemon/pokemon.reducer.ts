@@ -1,6 +1,10 @@
 import produce from 'immer';
 
-import { PokemonActionTypes, PokemonState } from './pokemon.types';
+import {
+  PokemonActions,
+  PokemonActionTypes,
+  PokemonState,
+} from './pokemon.types';
 import { Reducer } from 'redux';
 import { Pokemon } from '../../interfaces/pokemon';
 
@@ -9,7 +13,7 @@ const INITIAL_STATE: PokemonState = {
   current: { data: <Pokemon>{}, isLoading: false },
 };
 
-const pokemonReducer: Reducer<PokemonState> = (
+const pokemonReducer: Reducer<PokemonState, PokemonActions> = (
   state = INITIAL_STATE,
   action,
 ) => {

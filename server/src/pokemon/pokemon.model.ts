@@ -4,7 +4,7 @@ import { Pokemon } from './pokemon.interface';
 const PokemonSchema = new mongoose.Schema(
   {
     id: {
-      type: String,
+      type: Number,
       unique: true,
       required: true,
     },

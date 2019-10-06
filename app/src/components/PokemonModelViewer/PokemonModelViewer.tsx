@@ -3,7 +3,8 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import styled from '@emotion/styled';
-import { Camera, Renderer, Scene } from 'three';
+import { Camera, PerspectiveCamera, Renderer, Scene } from 'three';
+import { RefObject } from 'react';
 
 const StyledModelContainer = styled.div`
   height: 500px;
@@ -22,6 +23,30 @@ const cameraPosition = {
   x: 0,
   y: 0,
   z: 8,
+};
+
+const configureCamera = (): PerspectiveCamera => {
+  const camera = new THREE.PerspectiveCamera(
+    cameraSettings.fov,
+    cameraSettings.aspect,
+    cameraSettings.near,
+    cameraSettings.far,
+  );
+  camera.position.set(cameraPosition.x, cameraPosition.y, cameraPosition.z);
+  return camera;
+};
+
+const configureRenderer = (
+  modelContainer: RefObject<HTMLDivElement>,
+): Renderer => {
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setClearColor(0xffffff, 1);
+
+  const width = modelContainer.current.clientWidth;
+  const height = modelContainer.current.clientHeight;
+  renderer.setSize(width, height);
+
+  return renderer;
 };
 
 const addLight = (scene: Scene): void => {
@@ -66,46 +91,29 @@ const PokemonModelViewer: React.FC<PokemonModelViewerProps> = ({ id }) => {
   const modelContainer = React.useRef(null);
 
   React.useEffect(() => {
-    let width = modelContainer.current.clientWidth;
-    let height = modelContainer.current.clientHeight;
-
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(
-      cameraSettings.fov,
-      cameraSettings.aspect,
-      cameraSettings.near,
-      cameraSettings.far,
-    );
-    camera.position.set(cameraPosition.x, cameraPosition.y, cameraPosition.z);
-
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setClearColor(0xffffff, 1);
-    renderer.setSize(width, height);
-
-    const renderScene = () => {
-      renderer.render(scene, camera);
-    };
-
+    const camera = configureCamera();
+    const renderer = configureRenderer(modelContainer);
     addLight(scene);
     loadModel(scene, id);
     addOrbitCamera(camera, renderer);
 
-    const handleResize = () => {
-      width = modelContainer.current.clientWidth;
-      height = modelContainer.current.clientHeight;
+    const handleResize = (): void => {
+      const width = modelContainer.current.clientWidth;
+      const height = modelContainer.current.clientHeight;
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
       renderer.setSize(width, height);
-      renderScene();
+      renderer.render(scene, camera);
     };
 
-    let animationFrameId: number;
-
-    const animate = () => {
-      animationFrameId = requestAnimationFrame(animate);
-      renderScene();
+    const animate = (): number => {
+      const animationFrameId = requestAnimationFrame(animate);
+      renderer.render(scene, camera);
+      return animationFrameId;
     };
-    animate();
+
+    const animationFrameId = animate();
 
     modelContainer.current.appendChild(renderer.domElement);
     window.addEventListener('resize', handleResize);

@@ -1,9 +1,17 @@
 import * as React from 'react';
 import { Pokemon } from '../../interfaces/pokemon';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
 import Loading from '../../components/Loading/Loading';
+import PokemonListSingleView from './PokemonListSingleItem';
+import styled from '@emotion/styled';
 
-interface PokemonListProps extends RouteComponentProps {
+const StyledPokemonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+`;
+
+interface PokemonListProps {
   pokemonData: Pokemon[];
   isLoading: boolean;
   getAllPokemon(): void;
@@ -13,27 +21,20 @@ const PokemonList: React.FC<PokemonListProps> = ({
   pokemonData,
   isLoading,
   getAllPokemon,
-  history,
 }) => {
   React.useEffect(() => {
     getAllPokemon();
   }, [getAllPokemon]);
 
-  const redirectToPokemon = (id: string): void => {
-    history.push(`pokemon/${id}`);
-  };
-
   return (
     <Loading isLoading={isLoading}>
-      <div>
+      <StyledPokemonContainer data-testid="pokemon_list">
         {pokemonData.map(pokemon => (
-          <div onClick={() => redirectToPokemon(pokemon.id)} key={pokemon.name}>
-            {pokemon.name}
-          </div>
+          <PokemonListSingleView pokemon={pokemon} key={pokemon.id} />
         ))}
-      </div>
+      </StyledPokemonContainer>
     </Loading>
   );
 };
 
-export default withRouter(PokemonList);
+export default PokemonList;

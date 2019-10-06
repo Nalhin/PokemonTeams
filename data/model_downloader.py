@@ -36,13 +36,6 @@ def find_file_with_format(format):
                 return os.path.join(root, file)
 
 
-# def find_obj_file_path():
-#     for root, dirs, files in os.walk(temp_path):
-#         for file in files:
-#             if file.endswith(('.obj', '.OBJ')):
-#                 return os.path.join(root, file)
-
-
 def convert_from_fbx(file_path, pokemon_id):
     subprocess.call(
         f'./converters/FBX2glTF-windows-x64.exe "{file_path}" -b -o "{output}/{pokemon_id}"')

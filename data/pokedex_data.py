@@ -5,7 +5,7 @@ import operator
 
 
 def get_id(cell):
-    return cell.findAll('span')[2].text.lstrip("0")
+    return int(cell.findAll('span')[2].text.lstrip("0"))
 
 
 def get_name(cell):
@@ -20,7 +20,7 @@ def get_tags(cell):
 
 
 def get_number(cell):
-    return cell.text
+    return int(cell.text)
 
 
 columns = ('id', 'name', 'tags', 'total', 'hp', 'attack', 'defense', 'spellAttack', 'spellDefense', 'speed')
@@ -35,7 +35,7 @@ def get_row_data(row, model_data,data):
         else:
             row_data[columns[i]] = get_number(cell)
 
-    if row_data["id"] in map(operator.itemgetter('id'), model_data):
+    if str(row_data["id"]) in map(operator.itemgetter('id'), model_data):
         if row_data["name"] not in map(operator.itemgetter('name'), data):
             return row_data
 

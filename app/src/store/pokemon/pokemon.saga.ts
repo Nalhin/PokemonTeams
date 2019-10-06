@@ -26,7 +26,7 @@ export function* pokemonRootSaga(): SagaIterator {
   ]);
 }
 
-function* getAllPokemonSaga(
+export function* getAllPokemonSaga(
   action: GetAllPokemonRequestedAction,
 ): SagaIterator {
   try {
@@ -37,7 +37,7 @@ function* getAllPokemonSaga(
   }
 }
 
-function* getPokemonByIdSaga(
+export function* getPokemonByIdSaga(
   action: GetPokemonByIdRequestedAction,
 ): SagaIterator {
   try {

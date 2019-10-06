@@ -26,7 +26,7 @@ const PokemonSingleView: React.FC<PokemonSingleViewProps> = ({
 
   return (
     <Loading isLoading={isLoading} isRelative>
-      <div>
+      <div data-testid="pokemon_single_view">
         <div>{pokemon.name}</div>
         <PokemonModelViewer id={match.params.id} />
       </div>

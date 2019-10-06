@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { cleanup, render } from '@testing-library/react';
-import Loading from './Loading';
+import Loading from '../Loading';
 import { matchers } from 'jest-emotion';
 
 expect.extend(matchers);

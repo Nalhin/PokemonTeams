@@ -3,7 +3,7 @@ import app from '../app';
 import PokemonModel from './pokemon.model';
 
 const mockPokemon = {
-  id: '1',
+  id: 1,
   tags: ['Bug', 'Flying'],
   name: 'Butterfree',
   total: 395,

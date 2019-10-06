@@ -1,6 +1,6 @@
-import pokemonReducer from './pokemon.reducer';
-import { PokemonState } from './pokemon.types';
-import { Pokemon } from '../../interfaces/pokemon';
+import pokemonReducer from '../pokemon.reducer';
+import { PokemonState } from '../pokemon.types';
+import { Pokemon } from '../../../interfaces/pokemon';
 import {
   getAllPokemonFailed,
   getAllPokemonRequested,
@@ -8,29 +8,17 @@ import {
   getPokemonByIdFailed,
   getPokemonByIdRequested,
   getPokemonByIdSucceeded,
-} from './pokemon.actions';
-
-const mockPokemon = {
-  id: '1',
-  tags: ['Bug', 'Flying'],
-  name: 'Butterfree',
-  total: 395,
-  hp: 60,
-  attack: 45,
-  defense: 50,
-  spellAttack: 90,
-  spellDefense: 80,
-  speed: 70,
-};
+} from '../pokemon.actions';
+import { fakePokemon } from '../../../../test/fixtures/pokemon';
 
 describe('Pokemon reducer', () => {
   it('Should return the initial state', () => {
     const expectedState: PokemonState = {
-      pokemonData: { data: [], isLoading: false },
+      pokemonData: { data: [], isLoading: true },
       current: { data: <Pokemon>{}, isLoading: false },
     };
 
-    const reducer = pokemonReducer(undefined, { type: '' });
+    const reducer = pokemonReducer(undefined, getAllPokemonRequested());
 
     expect(reducer).toEqual(expectedState);
   });
@@ -65,7 +53,7 @@ describe('Pokemon reducer', () => {
       pokemonData: { data: [], isLoading: true },
       current: { data: <Pokemon>{}, isLoading: false },
     };
-    const data = [mockPokemon, mockPokemon];
+    const data = [fakePokemon, fakePokemon];
     const expectedState: PokemonState = {
       pokemonData: { data, isLoading: false },
       current: { data: <Pokemon>{}, isLoading: false },
@@ -81,7 +69,7 @@ describe('Pokemon reducer', () => {
       pokemonData: { data: [], isLoading: false },
       current: { data: <Pokemon>{}, isLoading: true },
     };
-    const data = mockPokemon;
+    const data = fakePokemon;
     const expectedState: PokemonState = {
       pokemonData: { data: [], isLoading: false },
       current: { data, isLoading: false },

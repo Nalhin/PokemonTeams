@@ -40,3 +40,11 @@ export interface PokemonState {
   readonly pokemonData: { data: Pokemon[]; isLoading: boolean };
   readonly current: { data: Pokemon; isLoading: boolean };
 }
+
+export type PokemonActions =
+  | GetAllPokemonRequestedAction
+  | GetAllPokemonSucceededAction
+  | GetAllPokemonFailedAction
+  | GetPokemonByIdRequestedAction
+  | GetPokemonByIdSucceededAction
+  | GetPokemonByIdFailedAction;

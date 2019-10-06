@@ -13,7 +13,6 @@ export interface AppStateProps {
 
 function mapStateToDispatch(state: AppState): AppStateProps {
   const pokemon = state.pokemon.current.data;
-  console.log(pokemon);
   const isLoading = state.pokemon.current.isLoading;
   return {
     pokemon,
