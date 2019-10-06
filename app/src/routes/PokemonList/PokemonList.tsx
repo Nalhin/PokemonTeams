@@ -30,7 +30,7 @@ const PokemonList: React.FC<PokemonListProps> = ({
     <Loading isLoading={isLoading}>
       <StyledPokemonContainer data-testid="pokemon_list">
         {pokemonData.map(pokemon => (
-          <PokemonListSingleView pokemon={pokemon} key={pokemon.id} />
+          <PokemonListSingleView pokemon={pokemon} key={pokemon.pokedexId} />
         ))}
       </StyledPokemonContainer>
     </Loading>

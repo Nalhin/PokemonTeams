@@ -1,5 +1,4 @@
 export const fakePokemon = {
-  _id: '5d9a6116f0a2d44fefa3afd2',
   pokedexId: 1,
   tags: ['Bug', 'Flying'],
   name: 'Butterfree',

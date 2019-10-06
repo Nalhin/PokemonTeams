@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose';
 
 export interface Pokemon extends mongoose.Document {
-  id: string;
+  pokedexId: number;
   name: string;
   tags: string[];
   total: number;

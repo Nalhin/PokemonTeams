@@ -2,20 +2,15 @@ import * as request from 'supertest';
 import * as mongoose from 'mongoose';
 import app from '../app';
 import TeamModel from './team.model';
+import { fakeTeam } from '../../test/fixtures/team';
 
-const mockTeamId = new mongoose.Types.ObjectId();
-
-const mockTeam = {
-  ownerId: '5',
-  name: 'Test Team',
-  description: 'Test Team with super cool pokemon',
-  roster: ['1', '2', '3'],
-};
+const fakeTeamId = new mongoose.Types.ObjectId();
+const fakeTeamWithId = { ...fakeTeam, _id: fakeTeamId };
 
 describe('GET /team', () => {
   beforeEach(async () => {
     await TeamModel.deleteMany({});
-    await new TeamModel({ ...mockTeam, _id: mockTeamId }).save();
+    await new TeamModel(fakeTeamWithId).save();
   });
 
   it('Should respond with one team', async () => {
@@ -32,19 +27,20 @@ describe('GET /team', () => {
 describe('GET /team/:id', () => {
   beforeEach(async () => {
     await TeamModel.deleteMany({});
-    await new TeamModel({ ...mockTeam, _id: mockTeamId }).save();
-    await new TeamModel({ ...mockTeam, name: 'Wrong Team' }).save();
+    await new TeamModel(fakeTeamWithId).save();
+    await new TeamModel(fakeTeam).save();
   });
 
   it('Should respond with the correct team', async () => {
     const response = await request(app)
-      .get(`/team/${mockTeamId}`)
+      .get(`/team/${fakeTeamId}`)
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(200);
 
     const { body } = response;
-    expect(body).toMatchObject(mockTeam);
+    expect(body).not.toBe(null);
+    expect(JSON.stringify(body._id)).toEqual(JSON.stringify(fakeTeamId));
   });
 
   it('Should respond with 404, if no team is found', async () => {
@@ -57,13 +53,13 @@ describe('GET /team/:id', () => {
 describe('POST /team', () => {
   beforeEach(async () => {
     await TeamModel.deleteMany({});
-    await new TeamModel({ ...mockTeam, _id: mockTeamId }).save();
+    await new TeamModel(fakeTeamWithId).save();
   });
 
   it('Should save team to the database correctly', async () => {
     const newTeamId = new mongoose.Types.ObjectId();
     const newTeam = {
-      ...mockTeam,
+      ...fakeTeam,
       _id: newTeamId,
     };
 
@@ -72,7 +68,7 @@ describe('POST /team', () => {
       .send(newTeam)
       .expect(201);
 
-    const team = await TeamModel.findById(newTeamId);
+    const team = await TeamModel.findById(newTeamId).populate('roster');
     expect(team.toObject({ versionKey: false })).toMatchObject(newTeam);
   });
 });
@@ -80,25 +76,27 @@ describe('POST /team', () => {
 describe('DELETE /team/:id', () => {
   beforeEach(async () => {
     await TeamModel.deleteMany({});
-    await new TeamModel({ ...mockTeam, _id: mockTeamId }).save();
+    await new TeamModel(fakeTeamWithId).save();
   });
 
   it('Should remove team correctly', async () => {
     await request(app)
-      .delete(`/team/${mockTeamId}`)
+      .delete(`/team/${fakeTeamId}`)
       .expect(200);
 
-    const removedTeam = await TeamModel.findById(mockTeamId);
+    const removedTeam = await TeamModel.findById(fakeTeamId);
     expect(removedTeam).toBeNull();
   });
 
   it('Should return removed team if removed correctly', async () => {
     const response = await request(app)
-      .delete(`/team/${mockTeamId}`)
+      .delete(`/team/${fakeTeamId}`)
       .expect(200);
 
     const { body } = response;
-    expect(body).toMatchObject(mockTeam);
+
+    expect(body).not.toBe(null);
+    expect(JSON.stringify(body._id)).toEqual(JSON.stringify(fakeTeamId));
   });
 
   it('Should respond with 404 if team is not found', async () => {

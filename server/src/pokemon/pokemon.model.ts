@@ -3,7 +3,7 @@ import { Pokemon } from './pokemon.interface';
 
 const PokemonSchema = new mongoose.Schema(
   {
-    id: {
+    pokedexId: {
       type: Number,
       unique: true,
       required: true,

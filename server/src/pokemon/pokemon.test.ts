@@ -1,24 +1,16 @@
 import * as request from 'supertest';
 import app from '../app';
 import PokemonModel from './pokemon.model';
+import * as mongoose from 'mongoose';
+import { fakePokemon } from '../../test/fixtures/pokemon';
 
-const mockPokemon = {
-  id: 1,
-  tags: ['Bug', 'Flying'],
-  name: 'Butterfree',
-  total: 395,
-  hp: 60,
-  attack: 45,
-  defense: 50,
-  spellAttack: 90,
-  spellDefense: 80,
-  speed: 70,
-};
+const fakePokemonId = new mongoose.Types.ObjectId();
+const fakePokemonWithId = { ...fakePokemon, _id: fakePokemonId };
 
 describe('GET /pokemon', () => {
   beforeEach(async () => {
     await PokemonModel.deleteMany({});
-    await new PokemonModel(mockPokemon).save();
+    await new PokemonModel(fakePokemonWithId).save();
   });
 
   it('Should respond with one pokemon', async () => {
@@ -35,17 +27,17 @@ describe('GET /pokemon', () => {
 describe('GET /pokemon/:id', () => {
   beforeEach(async () => {
     await PokemonModel.deleteMany({});
-    await new PokemonModel(mockPokemon).save();
+    await new PokemonModel(fakePokemonWithId).save();
   });
 
   it('Should respond with correct pokemon', async () => {
     const response = await request(app)
-      .get(`/pokemon/${mockPokemon.id}`)
+      .get(`/pokemon/${fakePokemon.pokedexId}`)
       .expect('Content-Type', /json/)
       .expect(200);
 
     const { body } = response;
-    expect(body).toMatchObject(mockPokemon);
+    expect(body).toMatchObject(fakePokemon);
   });
 
   it('Should respond with 404, if pokemon is not found', async () => {

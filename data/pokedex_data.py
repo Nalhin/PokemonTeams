@@ -23,7 +23,7 @@ def get_number(cell):
     return int(cell.text)
 
 
-columns = ('id', 'name', 'tags', 'total', 'hp', 'attack', 'defense', 'spellAttack', 'spellDefense', 'speed')
+columns = ('pokedexId', 'name', 'tags', 'total', 'hp', 'attack', 'defense', 'spellAttack', 'spellDefense', 'speed')
 parse_function = {0: get_id, 1: get_name, 2: get_tags}
 
 
@@ -35,7 +35,7 @@ def get_row_data(row, model_data,data):
         else:
             row_data[columns[i]] = get_number(cell)
 
-    if str(row_data["id"]) in map(operator.itemgetter('id'), model_data):
+    if str(row_data["pokedexId"]) in map(operator.itemgetter('id'), model_data):
         if row_data["name"] not in map(operator.itemgetter('name'), data):
             return row_data
 

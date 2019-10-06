@@ -14,7 +14,7 @@ export const getAllPokemon = async (req: Request, res: Response) => {
 export const getPokemonById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const pokemon: Pokemon = await PokemonModel.findOne({ id });
+    const pokemon: Pokemon = await PokemonModel.findOne({ pokedexId: id });
     if (!pokemon) return res.status(404).send();
     return res.send(pokemon);
   } catch (e) {

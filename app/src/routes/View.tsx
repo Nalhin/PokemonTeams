@@ -5,10 +5,12 @@ import PokemonSingleView from './PokemonSingleView/PokemonSingleViewContainer';
 import NoMatch from './NoMatch/NoMatch';
 import Teams from './Teams/Teams';
 import TeamSingleView from './TeamSingleView/TeamSingleView';
+import Navigation from './Navigation/Navigation';
 
 const View = () => {
   return (
     <div>
+      <Navigation />
       <Switch>
         <Route path="/pokemon" component={PokemonList} exact />
         <Route path="/pokemon/:id" component={PokemonSingleView} exact />

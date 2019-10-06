@@ -18,13 +18,13 @@ const PokemonListSingleView: React.FC<PokemonListSingleItem> = ({
   history,
 }) => {
   const redirectToPokemon = (): void => {
-    history.push(`pokemon/${pokemon.id}`);
+    history.push(`pokemon/${pokemon.pokedexId}`);
   };
 
   return (
     <StyledSingleView onClick={redirectToPokemon}>
       <span>{pokemon.name}</span>
-      <img src={`./icons/${pokemon.id}.png`} alt={pokemon.name} />
+      <img src={`./icons/${pokemon.pokedexId}.png`} alt={pokemon.name} />
     </StyledSingleView>
   );
 };

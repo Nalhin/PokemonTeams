@@ -1,5 +1,6 @@
 export interface Pokemon {
-  id: number;
+  _id: string;
+  pokedexId: number;
   name: string;
   tags: string[];
   total: number;
