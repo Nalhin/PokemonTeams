@@ -26,13 +26,13 @@ describe('View Component', () => {
   });
 
   it('Should handle "/team" route', () => {
-    const route = '/team';
+    const route = '/teams';
     const { getByTestId } = renderWithStore(<View />, { route });
 
     expect(getByTestId(/teams/i)).toBeTruthy();
   });
-  it('Should handle "/team/:id" route', () => {
-    const route = '/team/:id';
+  it('Should handle "/teams/:id" route', () => {
+    const route = '/teams/:id';
     const { getByTestId } = renderWithStore(<View />, { route });
 
     expect(getByTestId(/team_single_view/i)).toBeTruthy();

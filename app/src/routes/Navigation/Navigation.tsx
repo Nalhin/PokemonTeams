@@ -6,6 +6,8 @@ const Navigation = () => {
     <nav>
       <NavLink to="/pokemon">Pokemon</NavLink>
       <NavLink to="/teams">Teams</NavLink>
+      <NavLink to="/login">Login</NavLink>
+      <NavLink to="/register">Register</NavLink>
     </nav>
   );
 };

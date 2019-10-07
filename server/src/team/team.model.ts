@@ -3,6 +3,7 @@ import { Team } from './team.interface';
 
 const TeamSchema = new mongoose.Schema({
   ownerId: { type: String },
+  type: { type: Number },
   name: { type: String },
   description: { type: String },
   roster: [{ type: mongoose.Schema.Types.ObjectId, ref: 'pokemon' }],

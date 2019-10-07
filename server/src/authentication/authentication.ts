@@ -9,12 +9,13 @@ export const authentication = async (
   next: NextFunction,
 ) => {
   try {
-    const token = req.headers['x-access-token'];
+    const { token } = req.cookies;
+
     const verified = jwt.verify(token, process.env.SECRET);
     const user = await UserModel.findOne({ _id: verified._id, tokens: token });
 
-    if (!user) throw new Error();
-    next();
+    if (!user) res.status(401).send();
+    next(user);
   } catch (e) {
     res.status(401).send();
   }

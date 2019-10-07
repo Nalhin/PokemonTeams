@@ -12,7 +12,7 @@ const INITIAL_STATE: TeamState = {
   teams: { data: [], isLoading: false },
 };
 
-const pokemonReducer: Reducer<TeamState, TeamActions> = (
+const teamReducer: Reducer<TeamState, TeamActions> = (
   state = INITIAL_STATE,
   action,
 ) => {
@@ -52,4 +52,4 @@ const pokemonReducer: Reducer<TeamState, TeamActions> = (
   });
 };
 
-export default pokemonReducer;
+export default teamReducer;

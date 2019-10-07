@@ -1,16 +1,14 @@
 import * as mongoose from 'mongoose';
+import { Schema } from 'mongoose';
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
 import { User } from './user.interface';
-import { Schema, Model } from 'mongoose';
 
 export interface IUser extends User {
   generateAuthenticationToken: () => Promise<string>;
-  comparePassword(password: string): boolean;
-}
-
-export interface IUserModel extends Model<IUser> {
-  hashPassword(): string;
+  isPasswordValid(password: string): boolean;
+  hashPassword(): void;
+  generateAuthenticationCookie(): string;
 }
 
 const UserSchema: Schema = new Schema({
@@ -20,34 +18,32 @@ const UserSchema: Schema = new Schema({
   tokens: [{ type: String }],
 });
 
-UserSchema.pre<IUserModel>('save', async function(next) {
-  await this.hashPassword();
+UserSchema.pre<IUser>('save', function(next) {
+  this.hashPassword();
   next();
 });
 
-UserSchema.method('comparePassword', function(password: string): boolean {
-  return !!bcrypt.compareSync(password, this.password);
+UserSchema.method('hashPassword', async function() {
+  this.password = await bcrypt.hash(this.password, 10);
 });
 
-UserSchema.static('hashPassword', () => {
-  const hash = bcrypt.hashSync(this.password);
-  this.password = hash;
+UserSchema.method('isPasswordValid', function(
+  password: string,
+): Promise<boolean> {
+  return bcrypt.compare(password, this.password);
 });
 
 UserSchema.method('generateAuthenticationToken', async function(): Promise<
   string
 > {
-  const token = jwt.sign({ _id: this._id.toString() }, process.env.SECRET);
-
+  const token = jwt.sign({ _id: this._id.toString() }, process.env.SECRET, {
+    expiresIn: '7 days',
+  });
   this.tokens = this.tokens.concat(token);
   await this.save();
-
   return token;
 });
 
-const UserModel: IUserModel = mongoose.model<IUser, IUserModel>(
-  'user',
-  UserSchema,
-);
+const UserModel = mongoose.model<IUser & mongoose.Document>('user', UserSchema);
 
 export default UserModel;

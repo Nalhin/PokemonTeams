@@ -1,8 +1,16 @@
-import * as mongoose from 'mongoose';
+import { Pokemon } from '../../../app/src/interfaces/pokemon';
 
-export interface Team extends mongoose.Document {
+enum TeamType {
+  Valor,
+  Instinct,
+  Mystic,
+}
+
+export interface Team {
+  _id: string;
+  type: TeamType;
   ownerId: string;
   name: string;
   description: string;
-  roster: string[];
+  roster: Pokemon[];
 }
