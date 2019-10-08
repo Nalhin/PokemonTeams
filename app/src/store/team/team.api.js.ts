@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { url } from '../url';
 import { Team } from '../../interfaces/team';
+import { NewTeam } from '../../interfaces/newTeam';
 
 export const fetchGetTeams = async () => {
   try {
@@ -20,9 +21,11 @@ export const fetchGetTeamById = async (_id: string) => {
   }
 };
 
-export const fetchSaveTeam = async (team: Team) => {
+export const fetchSaveTeam = async (team: NewTeam) => {
   try {
-    const response = await axios.post(`${url}/team`, team);
+    const response = await axios.post(`${url}/team`, team, {
+      withCredentials: true,
+    });
     return response.data;
   } catch (e) {
     return e;
@@ -30,7 +33,9 @@ export const fetchSaveTeam = async (team: Team) => {
 };
 export const fetchDeleteTeam = async (_id: string) => {
   try {
-    const response = await axios.delete(`${url}/team/${_id}`);
+    const response = await axios.delete(`${url}/team/${_id}`, {
+      withCredentials: true,
+    });
     return response.data;
   } catch (e) {
     return e;

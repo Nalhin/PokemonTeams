@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import TeamModel from './team.model';
 import { Team } from './team.interface';
+import { AuthenticationRequest } from '../authentication/authentication.interface';
 
 export const getTeams = async (req: Request, res: Response) => {
   try {
@@ -11,10 +12,13 @@ export const getTeams = async (req: Request, res: Response) => {
   }
 };
 
-export const postTeam = async (req: Request, res: Response) => {
+export const saveTeam = async (req: AuthenticationRequest, res: Response) => {
   try {
     const teamData: Team = req.body;
-    const team = await new TeamModel(teamData).save();
+    const team = await new TeamModel({
+      ...teamData,
+      ownerId: req.locals.userId,
+    }).save();
 
     res.status(201).send(team);
   } catch (e) {

@@ -1,20 +1,17 @@
 import * as React from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { Team } from '../../interfaces/team';
 import Loading from '../../components/Loading/Loading';
 import TeamCard from '../../components/TeamCard/TeamCard';
+import { TeamsContainerProps } from './Teams.container';
 
-interface TeamsProps extends RouteComponentProps {
-  teams: Team[];
-  isLoading: boolean;
-  getTeams(): void;
-}
+interface TeamsProps extends RouteComponentProps, TeamsContainerProps {}
 
 const Teams: React.FC<TeamsProps> = ({
   teams,
   isLoading,
   getTeams,
   history,
+  userId,
 }) => {
   React.useEffect(() => {
     getTeams();
@@ -30,7 +27,7 @@ const Teams: React.FC<TeamsProps> = ({
         <button onClick={addTeam}>Draft Team</button>
         <div>
           {teams.map(team => (
-            <TeamCard team={team} key={team._id} />
+            <TeamCard team={team} key={team._id} userId={userId} />
           ))}
         </div>
       </div>

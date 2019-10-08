@@ -1,7 +1,10 @@
 import { Team } from '../../interfaces/team';
+import { NewTeam } from '../../interfaces/newTeam';
 
 export interface TeamState {
   readonly teams: { data: Team[]; isLoading: boolean };
+  readonly newTeam: { savedTeam: Team; isLoading: boolean };
+  readonly draftTeam: { team: Team | {} };
 }
 
 export enum TeamActionTypes {
@@ -17,6 +20,8 @@ export enum TeamActionTypes {
   DELETE_TEAM_REQUESTED = 'DELETE_TEAM_REQUESTED',
   DELETE_TEAM_SUCCEEDED = 'DELETE_TEAM_SUCCEEDED',
   DELETE_TEAM_FAILED = 'DELETE_TEAM_FAILED',
+  SET_DRAFT = 'SET_DRAFT',
+  REMOVE_DRAFT = 'REMOVE_DRAFT',
 }
 
 export interface GetTeamsRequestedAction {
@@ -42,11 +47,11 @@ export interface GetTeamByIdFailedAction {
 }
 export interface SaveTeamRequestedAction {
   type: TeamActionTypes.SAVE_TEAM_REQUESTED;
-  team: Team;
+  team: NewTeam;
 }
 export interface SaveTeamSucceededAction {
   type: TeamActionTypes.SAVE_TEAM_SUCCEEDED;
-  team: Team;
+  savedTeam: Team;
 }
 export interface SaveTeamFailedAction {
   type: TeamActionTypes.SAVE_TEAM_FAILED;
@@ -63,6 +68,15 @@ export interface DeleteTeamFailedAction {
   type: TeamActionTypes.DELETE_TEAM_FAILED;
 }
 
+export interface SetDraftAction {
+  type: TeamActionTypes.SET_DRAFT;
+  team: Team;
+}
+
+export interface RemoveDraftAction {
+  type: TeamActionTypes.REMOVE_DRAFT;
+}
+
 export type TeamActions =
   | GetTeamsRequestedAction
   | GetTeamsSucceededAction
@@ -75,4 +89,6 @@ export type TeamActions =
   | SaveTeamFailedAction
   | DeleteTeamRequestedAction
   | DeleteTeamSucceededAction
-  | DeleteTeamFailedAction;
+  | DeleteTeamFailedAction
+  | SetDraftAction
+  | RemoveDraftAction;

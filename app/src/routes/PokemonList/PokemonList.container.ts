@@ -2,16 +2,10 @@ import { bindActionCreators, Dispatch } from 'redux';
 import PokemonList from './PokemonList';
 import { connect } from 'react-redux';
 import { AppState } from '../../store/rootReducer';
-import { Pokemon } from '../../interfaces/pokemon';
-
 import { getAllPokemonRequested } from '../../store/pokemon/pokemon.actions';
+import { RootAction } from '../../store/rootAction';
 
-export interface AppStateProps {
-  pokemonData: Pokemon[];
-  isLoading: boolean;
-}
-
-const mapStateToProps = (state: AppState): AppStateProps => {
+const mapStateToProps = (state: AppState) => {
   const pokemonData = state.pokemon.pokemonData.data;
   const isLoading = state.pokemon.pokemonData.isLoading;
   return {
@@ -20,10 +14,13 @@ const mapStateToProps = (state: AppState): AppStateProps => {
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) =>
+const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
   bindActionCreators({ getAllPokemon: getAllPokemonRequested }, dispatch);
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(PokemonList);
+
+export type PokemonListContainerProps = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;

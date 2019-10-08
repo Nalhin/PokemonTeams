@@ -6,6 +6,8 @@ import { TeamActions, TeamActionTypes, TeamState } from './team.types';
 
 const INITIAL_STATE: TeamState = {
   teams: { data: [], isLoading: false },
+  newTeam: { savedTeam: <Team>{}, isLoading: false },
+  draftTeam: { team: <Team>{} },
 };
 
 const teamReducer: Reducer<TeamState, TeamActions> = (
@@ -31,16 +33,26 @@ const teamReducer: Reducer<TeamState, TeamActions> = (
       case TeamActionTypes.GET_TEAM_BY_ID_FAILED:
         break;
       case TeamActionTypes.SAVE_TEAM_REQUESTED:
+        draft.newTeam.isLoading = true;
         break;
       case TeamActionTypes.SAVE_TEAM_SUCCEEDED:
+        draft.newTeam.isLoading = false;
+        draft.newTeam.savedTeam = action.savedTeam;
         break;
       case TeamActionTypes.SAVE_TEAM_FAILED:
+        draft.newTeam.isLoading = false;
         break;
       case TeamActionTypes.DELETE_TEAM_REQUESTED:
         break;
       case TeamActionTypes.DELETE_TEAM_SUCCEEDED:
         break;
       case TeamActionTypes.DELETE_TEAM_FAILED:
+        break;
+      case TeamActionTypes.SET_DRAFT:
+        draft.draftTeam.team = action.team;
+        break;
+      case TeamActionTypes.REMOVE_DRAFT:
+        draft.draftTeam.team = {};
         break;
       default:
         break;

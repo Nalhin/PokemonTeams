@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Pokemon } from '../../interfaces/pokemon';
 import Loading from '../../components/Loading/Loading';
 import PokemonListSingleView from './PokemonListSingleItem';
 import styled from '@emotion/styled';
+import { PokemonListContainerProps } from './PokemonList.container';
 
 const StyledPokemonContainer = styled.div`
   display: flex;
@@ -11,11 +11,7 @@ const StyledPokemonContainer = styled.div`
   justify-content: space-between;
 `;
 
-interface PokemonListProps {
-  pokemonData: Pokemon[];
-  isLoading: boolean;
-  getAllPokemon(): void;
-}
+interface PokemonListProps extends PokemonListContainerProps {}
 
 const PokemonList: React.FC<PokemonListProps> = ({
   pokemonData,

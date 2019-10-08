@@ -1,6 +1,6 @@
 import { Pokemon } from './pokemon';
 
-enum TeamType {
+export enum TeamType {
   Valor,
   Instinct,
   Mystic,

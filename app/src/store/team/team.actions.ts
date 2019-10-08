@@ -8,12 +8,15 @@ import {
   GetTeamsFailedAction,
   GetTeamsRequestedAction,
   GetTeamsSucceededAction,
+  RemoveDraftAction,
   SaveTeamFailedAction,
   SaveTeamRequestedAction,
   SaveTeamSucceededAction,
+  SetDraftAction,
   TeamActionTypes,
 } from './team.types';
 import { Team } from '../../interfaces/team';
+import { NewTeam } from '../../interfaces/newTeam';
 
 export const getTeamsRequested = (): GetTeamsRequestedAction => ({
   type: TeamActionTypes.GET_TEAMS_REQUESTED,
@@ -46,14 +49,16 @@ export const getTeamByIdFailed = (): GetTeamByIdFailedAction => ({
   type: TeamActionTypes.GET_TEAM_BY_ID_FAILED,
 });
 
-export const saveTeamRequested = (team: Team): SaveTeamRequestedAction => ({
+export const saveTeamRequested = (team: NewTeam): SaveTeamRequestedAction => ({
   type: TeamActionTypes.SAVE_TEAM_REQUESTED,
   team,
 });
 
-export const saveTeamSucceeded = (team: Team): SaveTeamSucceededAction => ({
+export const saveTeamSucceeded = (
+  savedTeam: Team,
+): SaveTeamSucceededAction => ({
   type: TeamActionTypes.SAVE_TEAM_SUCCEEDED,
-  team,
+  savedTeam,
 });
 
 export const saveTeamFailed = (): SaveTeamFailedAction => ({
@@ -74,4 +79,13 @@ export const deleteTeamSucceeded = (team: Team): DeleteTeamSucceededAction => ({
 
 export const deleteTeamFailed = (): DeleteTeamFailedAction => ({
   type: TeamActionTypes.DELETE_TEAM_FAILED,
+});
+
+export const setDraft = (team: Team): SetDraftAction => ({
+  type: TeamActionTypes.SET_DRAFT,
+  team,
+});
+
+export const removeDraft = (): RemoveDraftAction => ({
+  type: TeamActionTypes.REMOVE_DRAFT,
 });

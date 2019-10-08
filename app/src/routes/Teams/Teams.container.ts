@@ -1,30 +1,28 @@
 import { bindActionCreators, Dispatch } from 'redux';
-
 import { connect } from 'react-redux';
-
 import Teams from './Teams';
-import { Team } from '../../interfaces/team';
 import { AppState } from '../../store/rootReducer';
 import { getTeamsRequested } from '../../store/team/team.actions';
+import { RootAction } from '../../store/rootAction';
 
-export interface AppStateProps {
-  teams: Team[];
-  isLoading: boolean;
-}
-
-function mapStateToDispatch(state: AppState): AppStateProps {
+const mapStateToProps = (state: AppState) => {
   const teams = state.team.teams.data;
   const isLoading = state.team.teams.isLoading;
+  const userId = state.user.userId;
   return {
     teams,
     isLoading,
+    userId,
   };
-}
+};
 
-const mapDispatchToProps = (dispatch: Dispatch) =>
+const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
   bindActionCreators({ getTeams: getTeamsRequested }, dispatch);
 
 export default connect(
-  mapStateToDispatch,
+  mapStateToProps,
   mapDispatchToProps,
 )(Teams);
+
+export type TeamsContainerProps = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;

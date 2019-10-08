@@ -2,9 +2,10 @@ import * as jwt from 'jsonwebtoken';
 import UserModel from '../user/user.model';
 import { Request, Response } from 'express';
 import { NextFunction } from 'express';
+import { AuthenticationRequest } from './authentication.interface';
 
 export const authentication = async (
-  req: Request,
+  req: AuthenticationRequest,
   res: Response,
   next: NextFunction,
 ) => {
@@ -15,7 +16,9 @@ export const authentication = async (
     const user = await UserModel.findOne({ _id: verified._id, tokens: token });
 
     if (!user) res.status(401).send();
-    next(user);
+
+    req.locals = { userId: user._id };
+    next();
   } catch (e) {
     res.status(401).send();
   }
