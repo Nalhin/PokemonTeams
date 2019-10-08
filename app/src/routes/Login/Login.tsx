@@ -1,16 +1,19 @@
 import * as React from 'react';
 import Input from '../../components/Input/Input';
-import { loginData } from '../../interfaces/loginData';
-import { fetchLoginUser } from '../../store/user/user.api';
+import { LoginData } from '../../interfaces/loginData';
+import Loading from '../../components/Loading/Loading';
+import { LoginContainerProps } from './Login.container';
 
-const Login = () => {
-  const [loginValue, setLoginValue] = React.useState<loginData>({
+interface LoginProps extends LoginContainerProps {}
+
+const Login: React.FC<LoginProps> = ({ loginUser, isLoading }) => {
+  const [loginValue, setLoginValue] = React.useState<LoginData>({
     login: '',
     password: '',
   });
 
   const handleLoginUser = async () => {
-    await fetchLoginUser(loginValue);
+    await loginUser(loginValue);
   };
 
   const handleLoginChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,21 +22,23 @@ const Login = () => {
 
   const { password, login } = loginValue;
   return (
-    <div>
-      <Input
-        value={login}
-        name={'login'}
-        placeholder={'login'}
-        onChange={handleLoginChange}
-      />
-      <Input
-        value={password}
-        name={'password'}
-        placeholder={'password'}
-        onChange={handleLoginChange}
-      />
-      <button onClick={handleLoginUser}>Login</button>
-    </div>
+    <Loading isLoading={isLoading}>
+      <div>
+        <Input
+          value={login}
+          name={'login'}
+          placeholder={'login'}
+          onChange={handleLoginChange}
+        />
+        <Input
+          value={password}
+          name={'password'}
+          placeholder={'password'}
+          onChange={handleLoginChange}
+        />
+        <button onClick={handleLoginUser}>Login</button>
+      </div>
+    </Loading>
   );
 };
 

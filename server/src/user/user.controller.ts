@@ -7,7 +7,7 @@ export const registerUser = async (req: Request, res: Response) => {
     const token = await user.generateAuthenticationToken();
 
     res.cookie('token', token, { maxAge: 1000 * 60 * 10, httpOnly: true });
-    res.status(201).send(user);
+    res.status(201).send({ login: user.login, _id: user._id });
   } catch (e) {
     res.status(400).send(e);
   }
@@ -25,7 +25,8 @@ export const loginUser = async (req: Request, res: Response) => {
     const token = await user.generateAuthenticationToken();
 
     res.cookie('token', token, { maxAge: 1000 * 60 * 10, httpOnly: true });
-    res.send(user);
+
+    res.send({ login: user.login, _id: user._id });
   } catch (e) {
     res.status(400).send();
   }

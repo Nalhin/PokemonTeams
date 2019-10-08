@@ -3,15 +3,16 @@ import { Pokemon } from '../../interfaces/pokemon';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import PokemonModelViewer from '../../components/PokemonModelViewer/PokemonModelViewer';
 import Loading from '../../components/Loading/Loading';
+import { PokemonSingleViewContainerProps } from './PokemonSingleView.container';
 
 interface RouterProps {
   id: string;
 }
 
-interface PokemonSingleViewProps extends RouteComponentProps<RouterProps> {
+interface PokemonSingleViewProps
+  extends RouteComponentProps<RouterProps>,
+    PokemonSingleViewContainerProps {
   pokemon: Pokemon;
-  isLoading: boolean;
-  getPokemonById(id: string): void;
 }
 
 const PokemonSingleView: React.FC<PokemonSingleViewProps> = ({

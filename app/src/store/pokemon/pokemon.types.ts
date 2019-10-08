@@ -1,5 +1,10 @@
 import { Pokemon } from '../../interfaces/pokemon';
 
+export interface PokemonState {
+  readonly pokemonData: { data: Pokemon[]; isLoading: boolean };
+  readonly current: { data: Pokemon; isLoading: boolean };
+}
+
 export enum PokemonActionTypes {
   GET_ALL_POKEMON_REQUESTED = 'GET_ALL_POKEMON_REQUESTED',
   GET_ALL_POKEMON_SUCCEEDED = 'GET_ALL_POKEMON_SUCCEEDED',
@@ -34,11 +39,6 @@ export interface GetPokemonByIdSucceededAction {
 
 export interface GetPokemonByIdFailedAction {
   type: typeof PokemonActionTypes.GET_POKEMON_BY_ID_FAILED;
-}
-
-export interface PokemonState {
-  readonly pokemonData: { data: Pokemon[]; isLoading: boolean };
-  readonly current: { data: Pokemon; isLoading: boolean };
 }
 
 export type PokemonActions =

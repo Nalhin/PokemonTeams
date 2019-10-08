@@ -2,11 +2,7 @@ import produce from 'immer';
 
 import { Reducer } from 'redux';
 import { Team } from '../../interfaces/team';
-import { TeamActions, TeamActionTypes } from './team.types';
-
-export interface TeamState {
-  readonly teams: { data: Team[]; isLoading: boolean };
-}
+import { TeamActions, TeamActionTypes, TeamState } from './team.types';
 
 const INITIAL_STATE: TeamState = {
   teams: { data: [], isLoading: false },

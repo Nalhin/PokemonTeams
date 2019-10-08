@@ -6,8 +6,8 @@ import NoMatch from './NoMatch/NoMatch';
 import Teams from './Teams/Teams.container';
 import TeamSingleView from './TeamSingleView/TeamSingleView';
 import Navigation from './Navigation/Navigation';
-import Login from './Login/Login';
-import Register from './Register/Register';
+import Login from './Login/Login.container';
+import Register from './Register/Register.container';
 import NewTeam from './NewTeam/NewTeam';
 import EditTeam from './EditTeam/EditTeam';
 

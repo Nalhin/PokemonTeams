@@ -1,28 +1,24 @@
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
+import { loginUserRequested } from '../../store/user/user.actions';
+import Login from './Login';
 import { AppState } from '../../store/rootReducer';
-import { getPokemonByIdRequested } from '../../store/pokemon/pokemon.actions';
-import PokemonSingleView from './PokemonSingleView';
 import { RootAction } from '../../store/rootAction';
 
 const mapStateToProps = (state: AppState) => {
-  const pokemon = state.pokemon.current.data;
-  const isLoading = state.pokemon.current.isLoading;
+  const isLoading = state.user.isLoading;
   return {
-    pokemon,
     isLoading,
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
-  bindActionCreators({ getPokemonById: getPokemonByIdRequested }, dispatch);
+  bindActionCreators({ loginUser: loginUserRequested }, dispatch);
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(PokemonSingleView);
+)(Login);
 
-export type PokemonSingleViewContainerProps = ReturnType<
-  typeof mapStateToProps
-> &
+export type LoginContainerProps = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;

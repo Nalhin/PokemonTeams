@@ -1,5 +1,9 @@
 import { Team } from '../../interfaces/team';
 
+export interface TeamState {
+  readonly teams: { data: Team[]; isLoading: boolean };
+}
+
 export enum TeamActionTypes {
   GET_TEAMS_REQUESTED = 'GET_TEAMS_REQUESTED',
   GET_TEAMS_SUCCEEDED = 'GET_TEAMS_SUCCEEDED',

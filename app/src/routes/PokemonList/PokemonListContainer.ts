@@ -11,19 +11,19 @@ export interface AppStateProps {
   isLoading: boolean;
 }
 
-function mapStateToDispatch(state: AppState): AppStateProps {
+const mapStateToProps = (state: AppState): AppStateProps => {
   const pokemonData = state.pokemon.pokemonData.data;
   const isLoading = state.pokemon.pokemonData.isLoading;
   return {
     pokemonData,
     isLoading,
   };
-}
+};
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators({ getAllPokemon: getAllPokemonRequested }, dispatch);
 
 export default connect(
-  mapStateToDispatch,
+  mapStateToProps,
   mapDispatchToProps,
 )(PokemonList);

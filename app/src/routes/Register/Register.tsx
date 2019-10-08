@@ -1,17 +1,19 @@
 import * as React from 'react';
 import Input from '../../components/Input/Input';
-import { registerData } from '../../interfaces/registerData';
-import { fetchRegisterUser } from '../../store/user/user.api';
+import { RegisterData } from '../../interfaces/registerData';
+import { RegisterContainerProps } from './Register.container';
 
-const Register = () => {
-  const [registerValue, setRegisterValue] = React.useState<registerData>({
+interface RegisterProps extends RegisterContainerProps {}
+
+const Register: React.FC<RegisterProps> = ({ registerUser }) => {
+  const [registerValue, setRegisterValue] = React.useState<RegisterData>({
     login: '',
     password: '',
     email: '',
   });
 
   const handleRegisterUser = async () => {
-    await fetchRegisterUser(registerValue);
+    await registerUser(registerValue);
   };
 
   const handleRegisterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
