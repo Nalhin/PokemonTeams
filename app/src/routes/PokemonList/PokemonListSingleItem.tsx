@@ -11,10 +11,12 @@ const StyledSingleView = styled.div`
 
 interface PokemonListSingleItem extends RouteComponentProps {
   pokemon: Pokemon;
+  handleSetDraft: (pokemon: Pokemon) => void;
 }
 
 const PokemonListSingleView: React.FC<PokemonListSingleItem> = ({
   pokemon,
+  handleSetDraft,
   history,
 }) => {
   const redirectToPokemon = (): void => {
@@ -25,6 +27,7 @@ const PokemonListSingleView: React.FC<PokemonListSingleItem> = ({
     <StyledSingleView onClick={redirectToPokemon}>
       <span>{pokemon.name}</span>
       <img src={`./icons/${pokemon.pokedexId}.png`} alt={pokemon.name} />
+      <button>Add</button>
     </StyledSingleView>
   );
 };

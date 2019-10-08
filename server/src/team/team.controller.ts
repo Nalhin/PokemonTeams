@@ -37,6 +37,20 @@ export const getTeamById = async (req: Request, res: Response) => {
   }
 };
 
+export const editTeam = async (req: Request, res: Response) => {
+  try {
+    const { _id, type, name, description, roster } = req.params;
+    const updatedTeam = await TeamModel.findByIdAndUpdate(
+      _id,
+      { type, name, description, roster },
+      { new: true },
+    );
+    return res.status(201).send(updatedTeam);
+  } catch (e) {
+    res.status(500).send(e);
+  }
+};
+
 export const deleteTeam = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;

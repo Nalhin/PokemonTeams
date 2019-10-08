@@ -2,6 +2,9 @@ import {
   DeleteTeamFailedAction,
   DeleteTeamRequestedAction,
   DeleteTeamSucceededAction,
+  EditTeamFailedAction,
+  EditTeamRequestedAction,
+  EditTeamSucceededAction,
   GetTeamByIdFailedAction,
   GetTeamByIdRequestedAction,
   GetTeamByIdSucceededAction,
@@ -79,6 +82,20 @@ export const deleteTeamSucceeded = (team: Team): DeleteTeamSucceededAction => ({
 
 export const deleteTeamFailed = (): DeleteTeamFailedAction => ({
   type: TeamActionTypes.DELETE_TEAM_FAILED,
+});
+
+export const editTeamRequested = (team: Team): EditTeamRequestedAction => ({
+  type: TeamActionTypes.EDIT_TEAM_REQUESTED,
+  team,
+});
+
+export const editTeamSucceeded = (team: Team): EditTeamSucceededAction => ({
+  type: TeamActionTypes.EDIT_TEAM_SUCCEEDED,
+  team,
+});
+
+export const editTeamFailed = (): EditTeamFailedAction => ({
+  type: TeamActionTypes.EDIT_TEAM_FAILED,
 });
 
 export const setDraft = (team: Team): SetDraftAction => ({

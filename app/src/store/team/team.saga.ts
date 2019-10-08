@@ -2,6 +2,7 @@ import { SagaIterator } from 'redux-saga';
 import { call, put, all, takeEvery } from '@redux-saga/core/effects';
 import {
   DeleteTeamRequestedAction,
+  EditTeamRequestedAction,
   GetTeamByIdRequestedAction,
   GetTeamsRequestedAction,
   SaveTeamRequestedAction,
@@ -9,6 +10,7 @@ import {
 } from './team.types';
 import {
   fetchDeleteTeam,
+  fetchEditTeam,
   fetchGetTeamById,
   fetchGetTeams,
   fetchSaveTeam,
@@ -16,6 +18,8 @@ import {
 import {
   deleteTeamFailed,
   deleteTeamSucceeded,
+  editTeamFailed,
+  editTeamSucceeded,
   getTeamByIdFailed,
   getTeamByIdSucceeded,
   getTeamsFailed,
@@ -30,6 +34,7 @@ export function* teamRootSaga(): SagaIterator {
     yield takeEvery(TeamActionTypes.GET_TEAM_BY_ID_REQUESTED, getTeamByIdSaga),
     yield takeEvery(TeamActionTypes.DELETE_TEAM_REQUESTED, deleteTeamSaga),
     yield takeEvery(TeamActionTypes.SAVE_TEAM_REQUESTED, saveTeamSaga),
+    yield takeEvery(TeamActionTypes.EDIT_TEAM_REQUESTED, editTeamSaga),
   ]);
 }
 
@@ -61,6 +66,15 @@ export function* deleteTeamSaga(
     yield put(deleteTeamSucceeded(team));
   } catch (e) {
     yield put(deleteTeamFailed());
+  }
+}
+
+export function* editTeamSaga(action: EditTeamRequestedAction): SagaIterator {
+  try {
+    const team = yield call(fetchEditTeam, action.team);
+    yield put(editTeamSucceeded(team));
+  } catch (e) {
+    yield put(editTeamFailed());
   }
 }
 

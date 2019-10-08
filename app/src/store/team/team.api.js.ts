@@ -31,6 +31,18 @@ export const fetchSaveTeam = async (team: NewTeam) => {
     return e;
   }
 };
+
+export const fetchEditTeam = async (team: Team) => {
+  try {
+    const response = await axios.post(`${url}/team/${team._id}`, team, {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (e) {
+    return e;
+  }
+};
+
 export const fetchDeleteTeam = async (_id: string) => {
   try {
     const response = await axios.delete(`${url}/team/${_id}`, {

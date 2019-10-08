@@ -52,7 +52,7 @@ const teamReducer: Reducer<TeamState, TeamActions> = (
         draft.draftTeam.team = action.team;
         break;
       case TeamActionTypes.REMOVE_DRAFT:
-        draft.draftTeam.team = {};
+        draft.draftTeam.team = {} as Team;
         break;
       default:
         break;
