@@ -1,9 +1,12 @@
 import * as React from 'react';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { TeamType } from '../../interfaces/team';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import Input from '../../components/Input/Input';
 import { NewTeamContainerProps } from './NewTeam.container';
 import { NewTeam } from '../../interfaces/newTeam';
+import TeamTypeRadioGroup from '../../components/TeamTypeRadioGroup/TeamTypeRadioGroup';
+import Button from '../../components/Button/Button';
+import Loading from '../../components/Loading/Loading';
+import { StyledLoginContainer } from '../Login/Login';
 
 interface NewTeamProps extends NewTeamContainerProps, RouteComponentProps {}
 
@@ -12,11 +15,12 @@ const NewTeam: React.FC<NewTeamProps> = ({
   savedTeam,
   history,
   setDraft,
+  isLoading,
 }) => {
   const [teamState, setTeamState] = React.useState<NewTeam>({
     description: '',
     name: '',
-    type: null,
+    type: 0,
   });
 
   const handleDraftTeam = () => {
@@ -41,46 +45,29 @@ const NewTeam: React.FC<NewTeamProps> = ({
     saveTeam(teamState);
   };
 
+  const { description, type, name } = teamState;
   return (
-    <div data-testid="teams">
-      <input
-        type="radio"
-        name="Valor"
-        value={TeamType.Valor}
-        onChange={setType}
-      />
-      Valor
-      <input
-        type="radio"
-        name="Instinct"
-        value={TeamType.Instinct}
-        onChange={setType}
-      />
-      Instinct
-      <input
-        type="radio"
-        name="Mystic"
-        value={TeamType.Mystic}
-        onChange={setType}
-      />
-      Mystic
-      <Input
-        onChange={handleTeamChange}
-        value={teamState.name}
-        name="name"
-        label="Team name"
-      />
-      <Input
-        onChange={handleTeamChange}
-        value={teamState.description}
-        name="description"
-        label="Team description"
-      />
-      <button onClick={handleSaveTeam}>Finish Draft</button>
-      {savedTeam._id && (
-        <button onClick={handleDraftTeam}>Add Pokemon To Team</button>
-      )}
-    </div>
+    <Loading isLoading={isLoading}>
+      <StyledLoginContainer data-testid="teams">
+        <TeamTypeRadioGroup value={type} onChange={setType} />
+        <Input
+          onChange={handleTeamChange}
+          value={name}
+          name="name"
+          label="Team name"
+        />
+        <Input
+          onChange={handleTeamChange}
+          value={description}
+          name="description"
+          label="Team description"
+        />
+        <Button onClick={handleSaveTeam}>Finish Draft</Button>
+        {savedTeam._id && (
+          <Button onClick={handleDraftTeam}>Add Pokemon To Team</Button>
+        )}
+      </StyledLoginContainer>
+    </Loading>
   );
 };
 
