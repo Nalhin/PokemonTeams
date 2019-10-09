@@ -68,13 +68,13 @@ const NewTeam: React.FC<NewTeamProps> = ({
         onChange={handleTeamChange}
         value={teamState.name}
         name="name"
-        placeholder="Team name"
+        label="Team name"
       />
       <Input
         onChange={handleTeamChange}
         value={teamState.description}
         name="description"
-        placeholder="Team description"
+        label="Team description"
       />
       <button onClick={handleSaveTeam}>Finish Draft</button>
       {savedTeam._id && (

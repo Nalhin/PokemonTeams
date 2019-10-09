@@ -30,3 +30,12 @@ export const loginUser = async (req: Request, res: Response) => {
     res.status(400).send();
   }
 };
+
+export const logoutUser = async (req: Request, res: Response) => {
+  try {
+    res.clearCookie('token');
+    res.status(201).send();
+  } catch (e) {
+    return res.status(500).send();
+  }
+};

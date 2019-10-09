@@ -1,24 +1,27 @@
 import * as React from 'react';
+import styled from '@emotion/styled';
+import TextField from '@material-ui/core/TextField';
+import { PADDING } from '../../styles/padding';
 
-interface InputProps {
+const StyledTextField = styled(TextField)<{}>`
+  margin: ${PADDING.BASE} 0;
+`;
+
+export interface InputProps {
   value: string;
   name: string;
-  placeholder: string;
+  label: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input: React.FC<InputProps> = ({
-  value,
-  name,
-  placeholder,
-  onChange,
-}) => {
+const Input: React.FC<InputProps> = ({ value, name, label, onChange }) => {
   return (
-    <input
-      placeholder={placeholder}
+    <StyledTextField
       value={value}
       name={name}
       onChange={onChange}
+      label={label}
+      type="text"
     />
   );
 };

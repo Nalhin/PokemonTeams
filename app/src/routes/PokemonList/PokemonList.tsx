@@ -33,6 +33,8 @@ const PokemonList: React.FC<PokemonListProps> = ({
     setDraft(nextState);
   };
 
+  const isDraft = !!draftTeam._id;
+
   return (
     <Loading isLoading={isLoading}>
       <StyledPokemonContainer data-testid="pokemon_list">
@@ -41,6 +43,7 @@ const PokemonList: React.FC<PokemonListProps> = ({
             pokemon={pokemon}
             key={pokemon.pokedexId}
             handleSetDraft={handleSetDraft}
+            isDraft={isDraft}
           />
         ))}
       </StyledPokemonContainer>

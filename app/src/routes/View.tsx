@@ -20,8 +20,8 @@ const View = () => {
         <Route path="/pokemon/:id" component={PokemonSingleView} exact />
         <Route path="/teams" component={Teams} exact />
         <Route path="/teams/new" component={NewTeam} exact />
-        <Route path="/teams/:id" component={TeamSingleView} exact />
         <Route path="/teams/edit/:id" component={EditTeam} exact />
+        <Route path="/teams/:id" component={TeamSingleView} exact />
         <Route path="/login" component={Login} exact />
         <Route path="/register" component={Register} exact />
         <Route component={NoMatch} />
