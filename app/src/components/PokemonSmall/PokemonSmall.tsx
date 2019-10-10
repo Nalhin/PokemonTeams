@@ -1,12 +1,14 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
-import DeleteIcon from '@material-ui/icons/Delete';
-import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
+import Avatar from '@material-ui/core/Avatar';
 
 import { Pokemon } from '../../interfaces/pokemon';
 
-const StyledContainer = styled.div``;
+const StyledAvatar = styled(Avatar)`
+  width: 40px;
+  height: 40px;
+`;
 
 interface PokemonSmallProps {
   pokemon: Pokemon;
@@ -14,15 +16,12 @@ interface PokemonSmallProps {
 
 const PokemonSmall: React.FC<PokemonSmallProps> = ({ pokemon }) => {
   return (
-    <StyledContainer>
-      <span>pokemon.name</span>
-      <img src={`./icons/${pokemon.pokedexId}.png`} alt={pokemon.name} />
-      <Tooltip title="Remove Pokemon">
-        <IconButton>
-          <DeleteIcon />
-        </IconButton>
-      </Tooltip>
-    </StyledContainer>
+    <Tooltip title={pokemon.name}>
+      <StyledAvatar
+        alt={pokemon.name}
+        src={`./icons/${pokemon.pokedexId}.png`}
+      />
+    </Tooltip>
   );
 };
 

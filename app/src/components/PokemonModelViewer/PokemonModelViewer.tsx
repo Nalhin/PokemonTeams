@@ -7,9 +7,9 @@ import { Camera, PerspectiveCamera, Renderer, Scene } from 'three';
 import { RefObject } from 'react';
 
 const StyledModelContainer = styled.div`
-  height: 500px;
-  width: 500px;
-  margin: 0 auto;
+  margin: auto;
+  width: 100%;
+  height: 100%;
 `;
 
 const cameraSettings = {
@@ -43,8 +43,8 @@ const configureRenderer = (
   renderer.setClearColor(0xffffff, 1);
 
   const width = modelContainer.current.clientWidth;
-  const height = modelContainer.current.clientHeight;
-  renderer.setSize(width, height);
+  const height = (3 * width) / 4;
+  renderer.setSize(width, height, false);
 
   return renderer;
 };
@@ -62,9 +62,8 @@ const loadModel = (scene: Scene, id: string): void => {
     `/models/${id}.glb`,
     gltf => {
       const model = gltf.scene;
-      model.scale.set(1, 1, 1);
-      model.position.set(0, 0, 0);
-      console.log(model);
+      model.scale.set(2, 2, 2);
+      model.position.set(0, -2, 0);
       scene.add(model);
     },
     undefined,
@@ -79,8 +78,6 @@ const addOrbitCamera = (camera: Camera, renderer: Renderer): void => {
   controls.screenSpacePanning = true;
   controls.minDistance = 2;
   controls.maxDistance = 100;
-  // controls.maxPolarAngle = Math.PI / 2;
-  // controls.minPolarAngle = Math.PI / 2;
 };
 
 interface PokemonModelViewerProps {
@@ -100,10 +97,8 @@ const PokemonModelViewer: React.FC<PokemonModelViewerProps> = ({ id }) => {
 
     const handleResize = (): void => {
       const width = modelContainer.current.clientWidth;
-      const height = modelContainer.current.clientHeight;
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
-      renderer.setSize(width, height);
+      const height = (3 * width) / 4;
+      renderer.setSize(width, height, false);
       renderer.render(scene, camera);
     };
 

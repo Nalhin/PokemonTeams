@@ -2,7 +2,10 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import Teams from './Teams';
 import { AppState } from '../../store/rootReducer';
-import { getTeamsRequested } from '../../store/team/team.actions';
+import {
+  deleteTeamRequested,
+  getTeamsRequested,
+} from '../../store/team/team.actions';
 import { RootAction } from '../../store/rootAction';
 
 const mapStateToProps = (state: AppState) => {
@@ -17,7 +20,10 @@ const mapStateToProps = (state: AppState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
-  bindActionCreators({ getTeams: getTeamsRequested }, dispatch);
+  bindActionCreators(
+    { getTeams: getTeamsRequested, deleteTeam: deleteTeamRequested },
+    dispatch,
+  );
 
 export default connect(
   mapStateToProps,

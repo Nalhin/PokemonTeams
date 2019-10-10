@@ -4,7 +4,9 @@ import { Pokemon } from './pokemon.interface';
 
 export const getAllPokemon = async (req: Request, res: Response) => {
   try {
-    const allPokemon: Pokemon[] = await PokemonModel.find({}).sort({ id: 1 });
+    const allPokemon: Pokemon[] = await PokemonModel.find({}).sort({
+      pokedexId: 1,
+    });
     res.send(allPokemon);
   } catch (e) {
     res.status(500).send(e);

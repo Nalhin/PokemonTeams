@@ -30,8 +30,7 @@ const NavLink: React.FC<NavLinkProps> = ({
   const onClick = () => {
     history.push(to);
   };
-
-  const isActive = location.pathname === to;
+  const isActive = '/' + location.pathname.split('/')[1] === to;
 
   return (
     <StyledNavLink onClick={onClick} isActive={isActive} className={className}>
