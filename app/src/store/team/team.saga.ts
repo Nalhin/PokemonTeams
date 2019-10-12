@@ -72,6 +72,7 @@ export function* deleteTeamSaga(
 export function* editTeamSaga(action: EditTeamRequestedAction): SagaIterator {
   try {
     const team = yield call(fetchEditTeam, action.team);
+    console.log(team);
     yield put(editTeamSucceeded(team));
   } catch (e) {
     yield put(editTeamFailed());

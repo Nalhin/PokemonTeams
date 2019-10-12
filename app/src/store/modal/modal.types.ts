@@ -11,6 +11,7 @@ export interface ModalState {
 export enum ModalActionTypes {
   OPEN_MODAL = 'OPEN_MODAL',
   CLOSE_MODAL = 'CLOSE_MODAL',
+  CLOSE_ALL_MODAL = 'CLOSE_ALL_MODAL',
 }
 
 export interface OpenModalAction {
@@ -23,4 +24,11 @@ export interface CloseModalAction {
   modalType: ModalTypes;
 }
 
-export type ModalActions = OpenModalAction | CloseModalAction;
+export interface CloseAllModalAction {
+  type: typeof ModalActionTypes.CLOSE_ALL_MODAL;
+}
+
+export type ModalActions =
+  | OpenModalAction
+  | CloseModalAction
+  | CloseAllModalAction;

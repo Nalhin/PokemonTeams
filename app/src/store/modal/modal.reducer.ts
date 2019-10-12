@@ -20,6 +20,9 @@ const modalReducer: Reducer<ModalState, ModalActions> = (
       case ModalActionTypes.OPEN_MODAL:
         draft.openModals.push(action.modalType);
         break;
+      case ModalActionTypes.CLOSE_ALL_MODAL:
+        draft.openModals = [];
+        break;
     }
   });
 };

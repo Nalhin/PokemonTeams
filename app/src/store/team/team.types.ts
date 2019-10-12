@@ -108,5 +108,8 @@ export type TeamActions =
   | DeleteTeamRequestedAction
   | DeleteTeamSucceededAction
   | DeleteTeamFailedAction
+  | EditTeamRequestedAction
+  | EditTeamFailedAction
+  | EditTeamSucceededAction
   | SetDraftAction
   | RemoveDraftAction;

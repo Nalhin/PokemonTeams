@@ -65,6 +65,13 @@ const teamReducer: Reducer<TeamState, TeamActions> = (
       case TeamActionTypes.REMOVE_DRAFT:
         draft.draftTeam.team = {} as Team;
         break;
+      case TeamActionTypes.EDIT_TEAM_REQUESTED:
+        break;
+      case TeamActionTypes.EDIT_TEAM_SUCCEEDED:
+        draft.current.team = action.team;
+        break;
+      case TeamActionTypes.EDIT_TEAM_FAILED:
+        break;
       default:
         break;
     }

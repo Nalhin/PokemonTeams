@@ -67,9 +67,7 @@ export function* logoutUserSaga(
   }
 }
 
-export function* authorizeUserSaga(
-  action: AuthorizeUserRequestedAction,
-): SagaIterator {
+export function* authorizeUserSaga(): SagaIterator {
   try {
     const user = yield call(fetchAuthorizeUser);
     yield put(authorizeUserSucceeded(user));

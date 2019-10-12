@@ -38,7 +38,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon, history }) => {
   return (
     <StyledCard onClick={redirectToPokemon}>
       <CardActionArea>
-        <StyledCardMedia image={`./icons/${pokemon.pokedexId}.png`} />
+        <StyledCardMedia image={`/icons/${pokemon.pokedexId}.png`} />
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
             #{pokemon.pokedexId}

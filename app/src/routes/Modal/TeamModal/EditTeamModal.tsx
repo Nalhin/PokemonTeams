@@ -1,28 +1,25 @@
 import * as React from 'react';
 import { Pokemon } from '../../../interfaces/pokemon';
 import produce from 'immer';
-import { fetchGetTeamById } from '../../../store/team/team.api.js';
 import { Team } from '../../../interfaces/team';
 import { EditTeamModalContainerProps } from './EditTeamModal.container';
 import TeamModal from './TeamModal';
 
-interface EditTeamModalProps extends EditTeamModalContainerProps {
-  teamId: string;
-}
+interface EditTeamModalProps extends EditTeamModalContainerProps {}
 
 const EditTeamModal: React.FC<EditTeamModalProps> = ({
   onConfirm,
-  isLoading,
+  team,
   closeModal,
-  teamId,
+  isLoading,
   isOpen,
   openPickPokemonModal,
 }) => {
   const [teamState, setTeamState] = React.useState<Team>({} as Team);
 
   React.useEffect(() => {
-    fetchGetTeamById(teamId).then(team => setTeamState(team));
-  });
+    setTeamState(team);
+  }, [team]);
 
   const handleTeamChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTeamState({

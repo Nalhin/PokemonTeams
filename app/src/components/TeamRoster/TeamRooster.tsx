@@ -36,4 +36,8 @@ const TeamRoster: React.FC<TeamRosterProps> = ({ roster, className }) => {
   );
 };
 
+TeamRoster.defaultProps = {
+  roster: [],
+};
+
 export default TeamRoster;

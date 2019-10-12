@@ -1,4 +1,5 @@
 import {
+  CloseAllModalAction,
   CloseModalAction,
   ModalActionTypes,
   ModalTypes,
@@ -13,4 +14,8 @@ export const openModal = (modalType: ModalTypes): OpenModalAction => ({
 export const closeModal = (modalType: ModalTypes): CloseModalAction => ({
   type: ModalActionTypes.CLOSE_MODAL,
   modalType,
+});
+
+export const closeAllModal = (): CloseAllModalAction => ({
+  type: ModalActionTypes.CLOSE_ALL_MODAL,
 });

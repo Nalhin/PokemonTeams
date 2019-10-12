@@ -1,9 +1,10 @@
 app/node_modules
+app/package-lock.json
 
-/data/icons
-/data/models
-/data/package-lock.json
-/data/node_modules
+data/icons
+data/models
+data/package-lock.json
+data/node_modules
 
 server/node_modules
 server/package-lock.json

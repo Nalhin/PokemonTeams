@@ -4,20 +4,14 @@ import PokemonList from './PokemonList/PokemonList.container';
 import PokemonSingleView from './PokemonSingleView/PokemonSingleView.container';
 import NoMatch from './NoMatch/NoMatch';
 import Teams from './Teams/Teams.container';
-import TeamSingleView from './TeamSingleView/TeamSingleView';
+import TeamSingleView from './TeamSingleView/TeamSingleView.container';
 import Navigation from './Navigation/Navigation';
 import Login from './Login/Login.container';
 import Register from './Register/Register.container';
 import EditTeam from './EditTeam/EditTeam';
-import { ViewContainerProps } from './View.container';
+import Modal from './Modal/Modal.container';
 
-interface ViewProps extends ViewContainerProps {}
-
-const View: React.FC<ViewProps> = ({ authorizeUser }) => {
-  React.useEffect(() => {
-    authorizeUser();
-  }, [authorizeUser]);
-
+const View: React.FC = () => {
   return (
     <div>
       <Navigation />
@@ -31,6 +25,7 @@ const View: React.FC<ViewProps> = ({ authorizeUser }) => {
         <Route path="/register" component={Register} exact />
         <Route component={NoMatch} />
       </Switch>
+      <Modal />
     </div>
   );
 };

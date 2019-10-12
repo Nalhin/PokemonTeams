@@ -7,6 +7,8 @@ import {
 } from '../../store/team/team.actions';
 import { connect } from 'react-redux';
 import TeamSingleView from './TeamSingleView';
+import { openModal } from '../../store/modal/modal.actions';
+import { ModalTypes } from '../../store/modal/modal.types';
 
 const mapStateToProps = (state: AppState) => {
   const isLoading = state.team.current.isLoading;
@@ -19,7 +21,11 @@ const mapStateToProps = (state: AppState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
   bindActionCreators(
-    { getTeam: getTeamByIdRequested, deleteTeam: deleteTeamRequested },
+    {
+      getTeam: getTeamByIdRequested,
+      deleteTeam: deleteTeamRequested,
+      openEditTeamModal: () => openModal(ModalTypes.editTeam),
+    },
     dispatch,
   );
 

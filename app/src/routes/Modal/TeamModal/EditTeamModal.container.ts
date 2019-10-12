@@ -8,13 +8,15 @@ import { AppState } from '../../../store/rootReducer';
 import EditTeamModal from './EditTeamModal';
 
 const mapStateToProps = (state: AppState) => {
-  const isLoading = state.pokemon.pokemonData.isLoading;
   const isOpen = state.modal.openModals.some(
     modal => modal === ModalTypes.editTeam,
   );
+  const isLoading = state.team.current.isLoading;
+  const team = state.team.current.team;
   return {
-    isLoading,
     isOpen,
+    team,
+    isLoading,
   };
 };
 

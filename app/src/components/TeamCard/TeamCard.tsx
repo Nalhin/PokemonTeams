@@ -52,9 +52,6 @@ const TeamCard: React.FC<TeamCardProps> = ({
     },
     [team._id],
   );
-  // const handleEditTeam = () => {
-  //   history.push(`/teams/edit/${team._id}`);
-  // };
 
   const handleTeamClick = () => {
     history.push(`/teams/${team._id}`);

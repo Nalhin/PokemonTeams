@@ -5,7 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { StylesProvider } from '@material-ui/styles';
 
 import store from './store/store';
-import View from './routes/View.container';
+import View from './routes/View';
 
 const App = () => {
   return (

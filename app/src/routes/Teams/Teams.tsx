@@ -9,7 +9,6 @@ import styled from '@emotion/styled';
 import { COLORS } from '../../styles/colors';
 import { PADDING } from '../../styles/padding';
 import LazyLoading from '../../components/Loading/LazyLoading';
-import AddTeamModal from '../Modal/TeamModal/AddTeamModal.container';
 
 const StyledContainer = styled(InfiniteScroll)`
   display: flex;
@@ -79,7 +78,6 @@ const Teams: React.FC<TeamsProps> = ({
           <AddIcon />
         </StyledFab>
       </div>
-      <AddTeamModal />
     </Loading>
   );
 };

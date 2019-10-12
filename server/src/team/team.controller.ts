@@ -39,12 +39,12 @@ export const getTeamById = async (req: Request, res: Response) => {
 
 export const editTeam = async (req: Request, res: Response) => {
   try {
-    const { _id, type, name, description, roster } = req.params;
-    const updatedTeam = await TeamModel.findByIdAndUpdate(
+    const { _id, type, name, description, roster } = req.body;
+    const updatedTeam = await TeamModel.findOneAndUpdate(
       _id,
       { type, name, description, roster },
       { new: true },
-    );
+    ).populate('roster');
     return res.status(201).send(updatedTeam);
   } catch (e) {
     res.status(500).send(e);
