@@ -20,22 +20,28 @@ const SpinnerWrapper = styled.div`
   align-items: center;
   justify-content: center;
   background: rgba(255, 255, 255, 0.6);
-  z-index: 100;
+  z-index: 1001;
 `;
 
 interface LoadingProps {
   isLoading: boolean;
   children: React.ReactNode;
   isRelative?: boolean;
+  className?: string;
 }
 
 const Loading: React.FC<LoadingProps> = ({
   isLoading,
   children,
   isRelative,
+  className,
 }) => {
   return (
-    <Wrapper isRelative={isRelative} data-testid="loading_wrapper">
+    <Wrapper
+      isRelative={isRelative}
+      className={className}
+      data-testid="loading_wrapper"
+    >
       {isLoading && (
         <SpinnerWrapper data-testid="loading_spinner">
           <BounceLoader

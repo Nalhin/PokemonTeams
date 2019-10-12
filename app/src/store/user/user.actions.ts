@@ -1,6 +1,9 @@
 import { LoginData } from '../../interfaces/loginData';
 import { RegisterData } from '../../interfaces/registerData';
 import {
+  AuthorizeUserFailedAction,
+  AuthorizeUserRequestedAction,
+  AuthorizeUserSucceededAction,
   LoginUserFailedAction,
   LoginUserRequestedAction,
   LoginUserSucceededAction,
@@ -13,6 +16,7 @@ import {
   UserActionTypes,
 } from './user.types';
 import { UserResponse } from '../../interfaces/userResponse';
+import { User } from '../../../../server/src/user/user.interface';
 
 export const loginUserRequested = (
   loginData: LoginData,
@@ -60,4 +64,19 @@ export const logoutUserSucceeded = (): LogoutUserSucceededAction => ({
 
 export const logoutUserFailed = (): LogoutUserFailedAction => ({
   type: UserActionTypes.LOGOUT_USER_FAILED,
+});
+
+export const authorizeUserRequested = (): AuthorizeUserRequestedAction => ({
+  type: UserActionTypes.AUTHORIZE_USER_REQUESTED,
+});
+
+export const authorizeUserSucceeded = (
+  user: User,
+): AuthorizeUserSucceededAction => ({
+  type: UserActionTypes.AUTHORIZE_USER_SUCCEEDED,
+  user,
+});
+
+export const authorizeUserFailed = (): AuthorizeUserFailedAction => ({
+  type: UserActionTypes.AUTHORIZE_USER_FAILED,
 });

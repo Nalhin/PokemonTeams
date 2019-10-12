@@ -6,6 +6,7 @@ import { TeamActions, TeamActionTypes, TeamState } from './team.types';
 
 const INITIAL_STATE: TeamState = {
   teams: { data: [], isLoading: false },
+  current: { team: <Team>{}, isLoading: false },
   newTeam: { savedTeam: <Team>{}, isLoading: false },
   draftTeam: { team: <Team>{} },
 };
@@ -27,26 +28,36 @@ const teamReducer: Reducer<TeamState, TeamActions> = (
         draft.teams.isLoading = false;
         break;
       case TeamActionTypes.GET_TEAM_BY_ID_REQUESTED:
+        draft.current.isLoading = true;
         break;
       case TeamActionTypes.GET_TEAM_BY_ID_SUCCEEDED:
+        draft.current.team = action.team;
+        draft.current.isLoading = false;
         break;
       case TeamActionTypes.GET_TEAM_BY_ID_FAILED:
+        draft.current.isLoading = false;
         break;
       case TeamActionTypes.SAVE_TEAM_REQUESTED:
         draft.newTeam.isLoading = true;
         break;
       case TeamActionTypes.SAVE_TEAM_SUCCEEDED:
+        draft.teams.data.push(action.savedTeam);
         draft.newTeam.isLoading = false;
-        draft.newTeam.savedTeam = action.savedTeam;
         break;
       case TeamActionTypes.SAVE_TEAM_FAILED:
         draft.newTeam.isLoading = false;
         break;
       case TeamActionTypes.DELETE_TEAM_REQUESTED:
+        draft.teams.isLoading = true;
         break;
       case TeamActionTypes.DELETE_TEAM_SUCCEEDED:
+        draft.teams.isLoading = false;
+        draft.teams.data = state.teams.data.filter(
+          team => team._id !== action.team._id,
+        );
         break;
       case TeamActionTypes.DELETE_TEAM_FAILED:
+        draft.teams.isLoading = false;
         break;
       case TeamActionTypes.SET_DRAFT:
         draft.draftTeam.team = action.team;

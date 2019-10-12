@@ -7,6 +7,8 @@ import {
   getTeamsRequested,
 } from '../../store/team/team.actions';
 import { RootAction } from '../../store/rootAction';
+import { ModalTypes } from '../../store/modal/modal.types';
+import { openModal } from '../../store/modal/modal.actions';
 
 const mapStateToProps = (state: AppState) => {
   const teams = state.team.teams.data;
@@ -21,7 +23,11 @@ const mapStateToProps = (state: AppState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
   bindActionCreators(
-    { getTeams: getTeamsRequested, deleteTeam: deleteTeamRequested },
+    {
+      getTeams: getTeamsRequested,
+      deleteTeam: deleteTeamRequested,
+      openAddTeamModal: () => openModal(ModalTypes.addTeam),
+    },
     dispatch,
   );
 

@@ -29,3 +29,12 @@ export const fetchLogoutUser = async () => {
     return response.data;
   } catch (e) {}
 };
+
+export const fetchAuthorizeUser = async () => {
+  try {
+    const response = await axios.get(`${url}/user/authorize`, {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (e) {}
+};

@@ -1,13 +1,21 @@
 import { SagaIterator } from 'redux-saga';
 import { call, put, all, takeEvery } from '@redux-saga/core/effects';
 import {
+  AuthorizeUserRequestedAction,
   LoginUserRequestedAction,
   LogoutUserRequestedAction,
   RegisterUserRequestedAction,
   UserActionTypes,
 } from './user.types';
-import { fetchLoginUser, fetchLogoutUser, fetchRegisterUser } from './user.api';
 import {
+  fetchAuthorizeUser,
+  fetchLoginUser,
+  fetchLogoutUser,
+  fetchRegisterUser,
+} from './user.api';
+import {
+  authorizeUserFailed,
+  authorizeUserSucceeded,
   loginUserFailed,
   loginUserSucceeded,
   logoutUserFailed,
@@ -21,6 +29,10 @@ export function* userRootSaga(): SagaIterator {
     yield takeEvery(UserActionTypes.LOGIN_USER_REQUESTED, loginUserSaga),
     yield takeEvery(UserActionTypes.REGISTER_USER_REQUESTED, registerUserSaga),
     yield takeEvery(UserActionTypes.LOGOUT_USER_REQUESTED, logoutUserSaga),
+    yield takeEvery(
+      UserActionTypes.AUTHORIZE_USER_REQUESTED,
+      authorizeUserSaga,
+    ),
   ]);
 }
 
@@ -52,5 +64,16 @@ export function* logoutUserSaga(
     yield put(logoutUserSucceeded());
   } catch (e) {
     yield put(logoutUserFailed());
+  }
+}
+
+export function* authorizeUserSaga(
+  action: AuthorizeUserRequestedAction,
+): SagaIterator {
+  try {
+    const user = yield call(fetchAuthorizeUser);
+    yield put(authorizeUserSucceeded(user));
+  } catch (e) {
+    yield put(authorizeUserFailed());
   }
 }

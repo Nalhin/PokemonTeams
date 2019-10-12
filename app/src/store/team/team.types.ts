@@ -3,6 +3,7 @@ import { NewTeam } from '../../interfaces/newTeam';
 
 export interface TeamState {
   readonly teams: { data: Team[]; isLoading: boolean };
+  readonly current: { team: Team; isLoading: boolean };
   readonly newTeam: { savedTeam: Team; isLoading: boolean };
   readonly draftTeam: { team: Team };
 }

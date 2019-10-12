@@ -9,11 +9,9 @@ import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-
 import styled from '@emotion/styled';
 import { TEAM_COLORS } from '../../styles/colors';
 import { PADDING } from '../../styles/padding';
-import PokemonSmall from '../PokemonSmall/PokemonSmall';
 import TeamRoster from '../TeamRoster/TeamRooster';
 
 type StyledFormControlLabelProps = {
@@ -26,6 +24,11 @@ const StyledCard = styled(Card)`
   max-width: 450px;
   min-width: 300px;
   margin: ${PADDING.BASE};
+  &:hover {
+    cursor: pointer;
+    background: ${(props: StyledFormControlLabelProps) =>
+      ` ${TEAM_COLORS[props.type]}22`};
+  }
 `;
 
 interface TeamCardProps extends RouteComponentProps {
@@ -41,15 +44,24 @@ const TeamCard: React.FC<TeamCardProps> = ({
   history,
 }) => {
   const isMine = userId === team.ownerId;
-  const handleDeleteTeam = React.useCallback(() => deleteTeam(team._id), [
-    team._id,
-  ]);
-  const handleEditTeam = () => {
-    history.push(`/teams/edit/${team._id}`);
+
+  const handleDeleteTeam = React.useCallback(
+    (event: React.MouseEvent<HTMLElement>) => {
+      event.stopPropagation();
+      deleteTeam(team._id);
+    },
+    [team._id],
+  );
+  // const handleEditTeam = () => {
+  //   history.push(`/teams/edit/${team._id}`);
+  // };
+
+  const handleTeamClick = () => {
+    history.push(`/teams/${team._id}`);
   };
 
   return (
-    <StyledCard type={team.type}>
+    <StyledCard type={team.type} onClick={handleTeamClick}>
       <CardContent>
         <Typography variant="h5" component="h2">
           {team.name}
@@ -63,7 +75,7 @@ const TeamCard: React.FC<TeamCardProps> = ({
             <IconButton onClick={handleDeleteTeam}>
               <DeleteForeverIcon />
             </IconButton>
-            <IconButton onClick={handleEditTeam}>
+            <IconButton>
               <EditIcon />
             </IconButton>
           </CardActions>

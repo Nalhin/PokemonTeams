@@ -15,6 +15,11 @@ const StyledCard = styled(Card)`
   margin: ${PADDING.BASE} auto;
 `;
 
+const StyledCardMedia = styled(CardMedia)`
+  height: 125px;
+  width: 148px;
+`;
+
 const StyledTagContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -33,13 +38,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon, history }) => {
   return (
     <StyledCard onClick={redirectToPokemon}>
       <CardActionArea>
-        <CardMedia
-          component="img"
-          alt={pokemon.name}
-          image={`./icons/${pokemon.pokedexId}.png`}
-          title={pokemon.name}
-          height={125}
-        />
+        <StyledCardMedia image={`./icons/${pokemon.pokedexId}.png`} />
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
             #{pokemon.pokedexId}

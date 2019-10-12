@@ -8,10 +8,16 @@ import TeamSingleView from './TeamSingleView/TeamSingleView';
 import Navigation from './Navigation/Navigation';
 import Login from './Login/Login.container';
 import Register from './Register/Register.container';
-import NewTeam from './NewTeam/NewTeam.container';
 import EditTeam from './EditTeam/EditTeam';
+import { ViewContainerProps } from './View.container';
 
-const View = () => {
+interface ViewProps extends ViewContainerProps {}
+
+const View: React.FC<ViewProps> = ({ authorizeUser }) => {
+  React.useEffect(() => {
+    authorizeUser();
+  }, [authorizeUser]);
+
   return (
     <div>
       <Navigation />
@@ -19,7 +25,6 @@ const View = () => {
         <Route path="/pokemon" component={PokemonList} exact />
         <Route path="/pokemon/:id" component={PokemonSingleView} exact />
         <Route path="/teams" component={Teams} exact />
-        <Route path="/teams/new" component={NewTeam} exact />
         <Route path="/teams/edit/:id" component={EditTeam} exact />
         <Route path="/teams/:id" component={TeamSingleView} exact />
         <Route path="/login" component={Login} exact />

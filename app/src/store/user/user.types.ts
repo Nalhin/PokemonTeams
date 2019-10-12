@@ -1,6 +1,7 @@
 import { LoginData } from '../../interfaces/loginData';
 import { RegisterData } from '../../interfaces/registerData';
 import { UserResponse } from '../../interfaces/userResponse';
+import { User } from '../../../../server/src/user/user.interface';
 
 export enum UserActionTypes {
   LOGIN_USER_REQUESTED = 'LOGIN_USER_REQUESTED',
@@ -12,6 +13,9 @@ export enum UserActionTypes {
   LOGOUT_USER_REQUESTED = 'LOGOUT_USER_REQUESTED',
   LOGOUT_USER_SUCCEEDED = 'LOGOUT_USER_SUCCEEDED',
   LOGOUT_USER_FAILED = 'LOGOUT_USER_FAILED',
+  AUTHORIZE_USER_REQUESTED = 'AUTHORIZE_USER_REQUESTED',
+  AUTHORIZE_USER_SUCCEEDED = 'AUTHORIZE_USER_SUCCEEDED',
+  AUTHORIZE_USER_FAILED = 'AUTHORIZE_USER_FAILED',
 }
 
 export interface UserState {
@@ -60,6 +64,19 @@ export interface LogoutUserFailedAction {
   type: UserActionTypes.LOGOUT_USER_FAILED;
 }
 
+export interface AuthorizeUserRequestedAction {
+  type: UserActionTypes.AUTHORIZE_USER_REQUESTED;
+}
+
+export interface AuthorizeUserSucceededAction {
+  type: UserActionTypes.AUTHORIZE_USER_SUCCEEDED;
+  user: User;
+}
+
+export interface AuthorizeUserFailedAction {
+  type: UserActionTypes.AUTHORIZE_USER_FAILED;
+}
+
 export type UserActions =
   | LoginUserRequestedAction
   | LoginUserSucceededAction
@@ -69,4 +86,7 @@ export type UserActions =
   | RegisterUserFailedAction
   | LogoutUserRequestedAction
   | LogoutUserSucceededAction
-  | LogoutUserFailedAction;
+  | LogoutUserFailedAction
+  | AuthorizeUserRequestedAction
+  | AuthorizeUserSucceededAction
+  | AuthorizeUserFailedAction;

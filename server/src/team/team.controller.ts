@@ -17,7 +17,7 @@ export const saveTeam = async (req: AuthenticationRequest, res: Response) => {
     const teamData: Team = req.body;
     const team = await new TeamModel({
       ...teamData,
-      ownerId: req.locals.userId,
+      ownerId: req.locals.user._id,
     }).save();
 
     res.status(201).send(team);

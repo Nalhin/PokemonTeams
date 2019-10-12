@@ -12,14 +12,24 @@ const StyledAvatar = styled(Avatar)`
 
 interface PokemonSmallProps {
   pokemon: Pokemon;
+  className?: string;
+  onClick?: () => any;
+  hideTooltip?: boolean;
 }
 
-const PokemonSmall: React.FC<PokemonSmallProps> = ({ pokemon }) => {
+const PokemonSmall: React.FC<PokemonSmallProps> = ({
+  pokemon,
+  onClick,
+  className,
+  hideTooltip,
+}) => {
   return (
-    <Tooltip title={pokemon.name}>
+    <Tooltip title={pokemon.name} disableHoverListener={hideTooltip}>
       <StyledAvatar
+        className={className}
+        onClick={onClick}
         alt={pokemon.name}
-        src={`./icons/${pokemon.pokedexId}.png`}
+        src={`/icons/${pokemon.pokedexId}.png`}
       />
     </Tooltip>
   );

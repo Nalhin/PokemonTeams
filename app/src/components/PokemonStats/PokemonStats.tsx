@@ -2,7 +2,6 @@ import * as React from 'react';
 import styled from '@emotion/styled';
 import StatBar from './StatBar';
 import Typography from '@material-ui/core/Typography';
-import { PADDING } from '../../styles/padding';
 
 interface PokemonStatsProps {
   hp: number;
@@ -17,10 +16,6 @@ interface PokemonStatsProps {
 const StyledHeader = styled.div`
   display: flex;
   justify-content: space-between;
-`;
-
-const StyledContainer = styled.div`
-  margin-top: ${PADDING.LARGE};
 `;
 
 const StyledBarContainer = styled.div`
@@ -41,7 +36,7 @@ const PokemonStats: React.FC<PokemonStatsProps> = ({
   total,
 }) => {
   return (
-    <StyledContainer>
+    <div>
       <StyledHeader>
         <Typography component="legend">Stats</Typography>
         <Typography component="legend">Total {total}</Typography>
@@ -54,7 +49,7 @@ const PokemonStats: React.FC<PokemonStatsProps> = ({
         <StatBar name="Spell Defense" shortName="SDF" data={spellDefense} />
         <StatBar name="Speed" shortName="SPD" data={speed} />
       </StyledBarContainer>
-    </StyledContainer>
+    </div>
   );
 };
 

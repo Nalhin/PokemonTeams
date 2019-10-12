@@ -5,9 +5,10 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import styled from '@emotion/styled';
 import { Camera, PerspectiveCamera, Renderer, Scene } from 'three';
 import { RefObject } from 'react';
+import { PADDING } from '../../styles/padding';
 
 const StyledModelContainer = styled.div`
-  margin: auto;
+  margin: ${PADDING.BASE} auto;
   width: 100%;
   height: 100%;
 `;

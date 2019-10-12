@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import UserModel, { IUser } from './user.model';
+import { AuthenticationRequest } from '../authentication/authentication.interface';
 
 export const registerUser = async (req: Request, res: Response) => {
   try {
@@ -37,5 +38,17 @@ export const logoutUser = async (req: Request, res: Response) => {
     res.status(201).send();
   } catch (e) {
     return res.status(500).send();
+  }
+};
+
+export const authorizeUser = async (
+  req: AuthenticationRequest,
+  res: Response,
+) => {
+  try {
+    const { user } = req.locals;
+    return res.send(user);
+  } catch (e) {
+    res.status(500).send(e);
   }
 };

@@ -1,6 +1,6 @@
 import * as jwt from 'jsonwebtoken';
 import UserModel from '../user/user.model';
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { NextFunction } from 'express';
 import { AuthenticationRequest } from './authentication.interface';
 
@@ -17,7 +17,7 @@ export const authentication = async (
 
     if (!user) res.status(401).send();
 
-    req.locals = { userId: user._id };
+    req.locals = { user };
     next();
   } catch (e) {
     res.status(401).send();
