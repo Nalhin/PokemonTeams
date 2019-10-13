@@ -16,7 +16,6 @@ import {
   UserActionTypes,
 } from './user.types';
 import { UserResponse } from '../../interfaces/userResponse';
-import { User } from '../../../../server/src/user/user.interface';
 
 export const loginUserRequested = (
   loginData: LoginData,
@@ -71,7 +70,7 @@ export const authorizeUserRequested = (): AuthorizeUserRequestedAction => ({
 });
 
 export const authorizeUserSucceeded = (
-  user: User,
+  user: UserResponse,
 ): AuthorizeUserSucceededAction => ({
   type: UserActionTypes.AUTHORIZE_USER_SUCCEEDED,
   user,

@@ -1,7 +1,6 @@
 import { LoginData } from '../../interfaces/loginData';
 import { RegisterData } from '../../interfaces/registerData';
 import { UserResponse } from '../../interfaces/userResponse';
-import { User } from '../../../../server/src/user/user.interface';
 
 export enum UserActionTypes {
   LOGIN_USER_REQUESTED = 'LOGIN_USER_REQUESTED',
@@ -23,7 +22,7 @@ export interface UserState {
     login: string;
     _id: string;
   };
-  readonly isAuthorized: boolean;
+  readonly isAuthenticated: boolean;
   readonly isLoading: boolean;
 }
 
@@ -73,7 +72,7 @@ export interface AuthorizeUserRequestedAction {
 
 export interface AuthorizeUserSucceededAction {
   type: UserActionTypes.AUTHORIZE_USER_SUCCEEDED;
-  user: User;
+  user: UserResponse;
 }
 
 export interface AuthorizeUserFailedAction {

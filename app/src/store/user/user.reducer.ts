@@ -4,7 +4,7 @@ import produce from 'immer';
 
 const INITIAL_STATE: UserState = {
   userData: { login: '', _id: '' },
-  isAuthorized: false,
+  isAuthenticated: false,
   isLoading: false,
 };
 
@@ -20,7 +20,7 @@ const userReducer: Reducer<UserState, UserActions> = (
       case UserActionTypes.LOGIN_USER_SUCCEEDED:
         draft.isLoading = false;
         draft.userData = action.user;
-        draft.isAuthorized = true;
+        draft.isAuthenticated = true;
         break;
       case UserActionTypes.LOGIN_USER_FAILED:
         draft.isLoading = false;
@@ -31,7 +31,7 @@ const userReducer: Reducer<UserState, UserActions> = (
       case UserActionTypes.REGISTER_USER_SUCCEEDED:
         draft.isLoading = false;
         draft.userData = action.user;
-        draft.isAuthorized = true;
+        draft.isAuthenticated = true;
         break;
       case UserActionTypes.REGISTER_USER_FAILED:
         draft.isLoading = false;
@@ -41,6 +41,7 @@ const userReducer: Reducer<UserState, UserActions> = (
         break;
       case UserActionTypes.LOGOUT_USER_SUCCEEDED:
         draft.isLoading = false;
+        draft.isAuthenticated = false;
         draft.userData = INITIAL_STATE.userData;
         break;
       case UserActionTypes.LOGOUT_USER_FAILED:
@@ -52,7 +53,7 @@ const userReducer: Reducer<UserState, UserActions> = (
       case UserActionTypes.AUTHORIZE_USER_SUCCEEDED:
         draft.isLoading = false;
         draft.userData = action.user;
-        draft.isAuthorized = true;
+        draft.isAuthenticated = true;
         break;
       case UserActionTypes.AUTHORIZE_USER_FAILED:
         draft.isLoading = false;

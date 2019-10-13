@@ -25,6 +25,7 @@ import {
 import { addSnackbar } from '../snackbar/sanckbar.action';
 import { generateSnackbar } from '../../utils/generateSnackbar';
 import { SnackbarTypes } from '../../interfaces/snackbar';
+import { generateErrorMessage } from '../../utils/generateErrorMessage';
 
 export function* userRootSaga(): SagaIterator {
   yield all([
@@ -40,10 +41,19 @@ export function* userRootSaga(): SagaIterator {
 
 export function* loginUserSaga(action: LoginUserRequestedAction): SagaIterator {
   try {
-    const loginData = yield call(fetchLoginUser, action.loginData);
-    yield put(loginUserSucceeded(loginData));
-    yield put(addSnackbar(generateSnackbar('added', SnackbarTypes.success)));
+    const response = yield call(fetchLoginUser, action.loginData);
+    yield put(loginUserSucceeded(response.data));
+    yield put(
+      addSnackbar(
+        generateSnackbar(
+          `Welcome ${response.data.login}`,
+          SnackbarTypes.success,
+        ),
+      ),
+    );
   } catch (e) {
+    const errorMessage = generateErrorMessage(e);
+    yield put(addSnackbar(generateSnackbar(errorMessage, SnackbarTypes.error)));
     yield put(loginUserFailed());
   }
 }
@@ -52,9 +62,19 @@ export function* registerUserSaga(
   action: RegisterUserRequestedAction,
 ): SagaIterator {
   try {
-    const registerData = yield call(fetchRegisterUser, action.registerData);
-    yield put(registerUserSucceeded(registerData));
+    const response = yield call(fetchRegisterUser, action.registerData);
+    yield put(registerUserSucceeded(response.data));
+    yield put(
+      addSnackbar(
+        generateSnackbar(
+          `Welcome ${response.data.login}`,
+          SnackbarTypes.success,
+        ),
+      ),
+    );
   } catch (e) {
+    const errorMessage = generateErrorMessage(e);
+    yield put(addSnackbar(generateSnackbar(errorMessage, SnackbarTypes.error)));
     yield put(registerUserFailed());
   }
 }
@@ -63,17 +83,30 @@ export function* logoutUserSaga(
   action: LogoutUserRequestedAction,
 ): SagaIterator {
   try {
-    const response = yield call(fetchLogoutUser);
+    yield call(fetchLogoutUser);
+    yield put(
+      addSnackbar(generateSnackbar(`Logout successful`, SnackbarTypes.success)),
+    );
     yield put(logoutUserSucceeded());
   } catch (e) {
+    const errorMessage = generateErrorMessage(e);
+    yield put(addSnackbar(generateSnackbar(errorMessage, SnackbarTypes.error)));
     yield put(logoutUserFailed());
   }
 }
 
 export function* authorizeUserSaga(): SagaIterator {
   try {
-    const user = yield call(fetchAuthorizeUser);
-    yield put(authorizeUserSucceeded(user));
+    const response = yield call(fetchAuthorizeUser);
+    yield put(authorizeUserSucceeded(response.data));
+    yield put(
+      addSnackbar(
+        generateSnackbar(
+          `Welcome back ${response.data.login}`,
+          SnackbarTypes.info,
+        ),
+      ),
+    );
   } catch (e) {
     yield put(authorizeUserFailed());
   }

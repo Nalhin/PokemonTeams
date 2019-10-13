@@ -31,6 +31,20 @@ const StyledSnackbar = styled(MdSnackbar)`
   background: ${(props: StyledSnackbarProps) => SNACKBAR_COLORS[props.type]};
 `;
 
+const StyledSnackbarMessageContainer = styled.span`
+  display: flex;
+  align-items: center;
+  text-align: center;
+  line-height: 0;
+  > svg {
+    font-size: 20px;
+  }
+`;
+
+const StyledSnackbarMessage = styled.span`
+  padding-left: ${PADDING.BASE};
+`;
+
 const StyledSnackbarContent = styled(SnackbarContent)`
   background: ${(props: StyledSnackbarProps) => SNACKBAR_COLORS[props.type]};
 `;
@@ -64,10 +78,10 @@ const Snackbar: React.FC<SnackbarProps> = ({ onClose, message, id, type }) => {
           </IconButton>,
         ]}
         message={
-          <span>
+          <StyledSnackbarMessageContainer>
             <Icon />
-            {message}
-          </span>
+            <StyledSnackbarMessage>{message}</StyledSnackbarMessage>
+          </StyledSnackbarMessageContainer>
         }
       />
     </StyledSnackbar>

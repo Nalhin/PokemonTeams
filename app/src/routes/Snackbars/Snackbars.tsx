@@ -13,6 +13,7 @@ const StyledContainer = styled.div`
   flex-direction: column-reverse;
   align-items: center;
   pointer-events: none;
+  z-index: 1002;
 `;
 
 interface Snackbars extends SnackbarsContainerProps {}

@@ -38,7 +38,7 @@ const StyledPaper = styled(Paper)`
     ` ${TEAM_COLORS[props.type]}44`};
   width: 90%;
   padding: ${PADDING.BASE};
-  margin: 0 auto;
+  margin: ${PADDING.LARGE} auto;
 `;
 
 const StyledTypography = styled(Typography)`

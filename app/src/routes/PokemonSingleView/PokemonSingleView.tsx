@@ -23,7 +23,7 @@ const StyledTag = styled(Tag)`
 
 const StyledPaper = styled(Paper)`
   width: 90%;
-  margin: 0 auto;
+  margin: ${PADDING.LARGE} auto;
   max-width: 600px;
   padding: ${PADDING.LARGE};
 `;

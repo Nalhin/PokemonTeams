@@ -5,7 +5,9 @@ import { AuthenticationRequest } from '../authentication/authentication.interfac
 
 export const getTeams = async (req: Request, res: Response) => {
   try {
-    const teams: Team[] = await TeamModel.find({}).populate('roster');
+    const teams: Team[] = await TeamModel.find({})
+      .populate('roster')
+      .populate('owner', 'login');
     res.send(teams);
   } catch (e) {
     res.status(500).send(e);
@@ -17,7 +19,7 @@ export const saveTeam = async (req: AuthenticationRequest, res: Response) => {
     const teamData: Team = req.body;
     const team = await new TeamModel({
       ...teamData,
-      ownerId: req.locals.user._id,
+      owner: req.locals.user._id,
     }).save();
 
     res.status(201).send(team);
@@ -29,7 +31,9 @@ export const saveTeam = async (req: AuthenticationRequest, res: Response) => {
 export const getTeamById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const team = await TeamModel.findById(id).populate('roster');
+    const team = await TeamModel.findById(id)
+      .populate('roster')
+      .populate('user', 'login');
     if (!team) return res.status(404).send();
     return res.send(team);
   } catch (e) {
@@ -37,9 +41,16 @@ export const getTeamById = async (req: Request, res: Response) => {
   }
 };
 
-export const editTeam = async (req: Request, res: Response) => {
+export const editTeam = async (req: AuthenticationRequest, res: Response) => {
   try {
     const { _id, type, name, description, roster } = req.body;
+
+    const userId = req.locals.user._id;
+    const oldTeam = await TeamModel.findById(_id);
+
+    if (userId.toString() !== oldTeam.ownerId.toString())
+      return res.status(401).send({ error: 'You do not own this team.' });
+
     const updatedTeam = await TeamModel.findOneAndUpdate(
       _id,
       { type, name, description, roster },
@@ -51,9 +62,16 @@ export const editTeam = async (req: Request, res: Response) => {
   }
 };
 
-export const deleteTeam = async (req: Request, res: Response) => {
+export const deleteTeam = async (req: AuthenticationRequest, res: Response) => {
   try {
     const { id } = req.params;
+
+    const userId = req.locals.user._id;
+    const oldTeam = await TeamModel.findById(id);
+
+    if (userId.toString() !== oldTeam.ownerId.toString())
+      return res.status(401).send({ error: 'You do not own this team.' });
+
     const team = await TeamModel.findByIdAndDelete(id);
     if (!team) return res.status(404).send();
     return res.send(team);

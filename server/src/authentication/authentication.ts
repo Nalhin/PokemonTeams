@@ -20,6 +20,6 @@ export const authentication = async (
     req.locals = { user };
     next();
   } catch (e) {
-    res.status(401).send();
+    res.status(401).send({ error: 'Unauthorized.' });
   }
 };

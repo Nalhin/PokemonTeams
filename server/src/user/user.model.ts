@@ -6,8 +6,7 @@ import { User } from './user.interface';
 
 export interface IUser extends User {
   generateAuthenticationToken: () => Promise<string>;
-  isPasswordValid(password: string): boolean;
-  hashPassword(): void;
+  isPasswordValid(password: string): Promise<boolean>;
   generateAuthenticationCookie(): string;
 }
 
@@ -18,13 +17,10 @@ const UserSchema: Schema = new Schema({
   tokens: [{ type: String }],
 });
 
-UserSchema.pre<IUser>('save', function(next) {
-  this.hashPassword();
-  next();
-});
-
-UserSchema.method('hashPassword', async function() {
+UserSchema.pre<IUser>('save', async function(next) {
+  if (!this.isModified('password')) return next();
   this.password = await bcrypt.hash(this.password, 10);
+  next();
 });
 
 UserSchema.method('isPasswordValid', function(

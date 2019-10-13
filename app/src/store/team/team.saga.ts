@@ -29,6 +29,10 @@ import {
 } from './team.actions';
 import { closeModal } from '../modal/modal.actions';
 import { ModalTypes } from '../modal/modal.types';
+import { generateErrorMessage } from '../../utils/generateErrorMessage';
+import { addSnackbar } from '../snackbar/sanckbar.action';
+import { generateSnackbar } from '../../utils/generateSnackbar';
+import { SnackbarTypes } from '../../interfaces/snackbar';
 
 export function* teamRootSaga(): SagaIterator {
   yield all([
@@ -42,9 +46,11 @@ export function* teamRootSaga(): SagaIterator {
 
 export function* getTeamsSaga(action: GetTeamsRequestedAction): SagaIterator {
   try {
-    const data = yield call(fetchGetTeams);
-    yield put(getTeamsSucceeded(data));
+    const response = yield call(fetchGetTeams);
+    yield put(getTeamsSucceeded(response.data));
   } catch (e) {
+    const errorMessage = generateErrorMessage(e);
+    yield put(addSnackbar(generateSnackbar(errorMessage, SnackbarTypes.error)));
     yield put(getTeamsFailed());
   }
 }
@@ -53,9 +59,11 @@ export function* getTeamByIdSaga(
   action: GetTeamByIdRequestedAction,
 ): SagaIterator {
   try {
-    const team = yield call(fetchGetTeamById, action._id);
-    yield put(getTeamByIdSucceeded(team));
+    const response = yield call(fetchGetTeamById, action._id);
+    yield put(getTeamByIdSucceeded(response.data));
   } catch (e) {
+    const errorMessage = generateErrorMessage(e);
+    yield put(addSnackbar(generateSnackbar(errorMessage, SnackbarTypes.error)));
     yield put(getTeamByIdFailed());
   }
 }
@@ -64,29 +72,53 @@ export function* deleteTeamSaga(
   action: DeleteTeamRequestedAction,
 ): SagaIterator {
   try {
-    const team = yield call(fetchDeleteTeam, action._id);
-    yield put(deleteTeamSucceeded(team));
+    const response = yield call(fetchDeleteTeam, action._id);
+    yield put(deleteTeamSucceeded(response.data));
+    yield put(
+      addSnackbar(
+        generateSnackbar(
+          `Removed ${response.data.name}`,
+          SnackbarTypes.warning,
+        ),
+      ),
+    );
     action.history.push('/teams');
   } catch (e) {
+    const errorMessage = generateErrorMessage(e);
+    yield put(addSnackbar(generateSnackbar(errorMessage, SnackbarTypes.error)));
     yield put(deleteTeamFailed());
   }
 }
 
 export function* editTeamSaga(action: EditTeamRequestedAction): SagaIterator {
   try {
-    const team = yield call(fetchEditTeam, action.team);
-    yield put(editTeamSucceeded(team));
+    const response = yield call(fetchEditTeam, action.team);
+    yield put(editTeamSucceeded(response.data));
     yield put(closeModal(ModalTypes.editTeam));
+    yield put(
+      addSnackbar(
+        generateSnackbar(`Edited ${response.data.name}`, SnackbarTypes.success),
+      ),
+    );
   } catch (e) {
+    const errorMessage = generateErrorMessage(e);
+    yield put(addSnackbar(generateSnackbar(errorMessage, SnackbarTypes.error)));
     yield put(editTeamFailed());
   }
 }
 
 export function* saveTeamSaga(action: SaveTeamRequestedAction): SagaIterator {
   try {
-    const team = yield call(fetchSaveTeam, action.team);
-    yield put(saveTeamSucceeded(team));
+    const response = yield call(fetchSaveTeam, action.team);
+    yield put(saveTeamSucceeded(response.data));
+    yield put(
+      addSnackbar(
+        generateSnackbar(`Added ${response.data.name}`, SnackbarTypes.success),
+      ),
+    );
   } catch (e) {
+    const errorMessage = generateErrorMessage(e);
+    yield put(addSnackbar(generateSnackbar(errorMessage, SnackbarTypes.error)));
     yield put(saveTeamFailed());
   }
 }

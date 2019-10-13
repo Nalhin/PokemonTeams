@@ -3,38 +3,30 @@ import { LoginData } from '../../interfaces/loginData';
 import { url } from '../url';
 import { RegisterData } from '../../interfaces/registerData';
 
-export const fetchLoginUser = async (data: LoginData) => {
-  try {
-    const response = await axios.post(`${url}/user/login`, data, {
+export const fetchLoginUser = (data: LoginData) => {
+  return axios.post(`${url}/user/login`, data, {
+    withCredentials: true,
+  });
+};
+
+export const fetchRegisterUser = (data: RegisterData) => {
+  return axios.post(`${url}/user/register`, data, {
+    withCredentials: true,
+  });
+};
+
+export const fetchLogoutUser = () => {
+  return axios.post(
+    `${url}/user/logout`,
+    {},
+    {
       withCredentials: true,
-    });
-    return response.data;
-  } catch (e) {
-    return e;
-  }
+    },
+  );
 };
 
-export const fetchRegisterUser = async (data: RegisterData) => {
-  try {
-    const response = await axios.post(`${url}/user/register`, data);
-    return response.data;
-  } catch (e) {
-    return e;
-  }
-};
-
-export const fetchLogoutUser = async () => {
-  try {
-    const response = await axios.post(`${url}/user/logout`);
-    return response.data;
-  } catch (e) {}
-};
-
-export const fetchAuthorizeUser = async () => {
-  try {
-    const response = await axios.get(`${url}/user/authorize`, {
-      withCredentials: true,
-    });
-    return response.data;
-  } catch (e) {}
+export const fetchAuthorizeUser = () => {
+  return axios.get(`${url}/user/authorize`, {
+    withCredentials: true,
+  });
 };
