@@ -19,9 +19,12 @@ export enum UserActionTypes {
 }
 
 export interface UserState {
-  login: string;
-  userId: string;
-  isLoading: boolean;
+  readonly userData: {
+    login: string;
+    _id: string;
+  };
+  readonly isAuthorized: boolean;
+  readonly isLoading: boolean;
 }
 
 export interface LoginUserRequestedAction {

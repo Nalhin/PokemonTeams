@@ -8,7 +8,7 @@ import { saveTeamRequested } from '../../../store/team/team.actions';
 import AddTeamModal from './AddTeamModal';
 
 const mapStateToProps = (state: AppState) => {
-  const isLoading = state.team.newTeam.isLoading;
+  const isLoading = state.team.addTeam.isLoading;
   const isOpen = state.modal.openModals.some(
     modal => modal === ModalTypes.addTeam,
   );

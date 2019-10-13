@@ -12,6 +12,8 @@ import styled from '@emotion/styled';
 import Modal from '@material-ui/core/Modal';
 import Paper from '@material-ui/core/Paper';
 import { PADDING } from '../../../styles/padding';
+import AsyncSelect from 'react-select/async';
+import { fetchGetAllPokemon } from '../../../store/pokemon/pokemon.api';
 
 const StyledModal = styled(Modal)`
   display: flex;
@@ -58,7 +60,7 @@ const TeamModal: React.FC<TeamModalProps> = ({
   return (
     <StyledModal open={isOpen} onClose={closeModal}>
       <StyledContainer data-testid="teams">
-        <StyledLoading isLoading={isLoading}>
+        <StyledLoading isLoading={isLoading} isRelative>
           <TeamTypeRadioGroup value={type} onChange={setType} />
           <Input
             onChange={handleTeamChange}
@@ -76,6 +78,12 @@ const TeamModal: React.FC<TeamModalProps> = ({
             Roster
           </Typography>
           <TeamRoster roster={roster} />
+          <AsyncSelect
+            isMulti
+            cacheOptions
+            defaultOptions
+            loadOptions={fetchGetAllPokemon}
+          />
           <Button onClick={openPickPokemonModal}>Change Roster</Button>
           <Button onClick={handleConfirm}>Save</Button>
           <PickPokemonModal addPokemon={addPokemon} roster={roster} />

@@ -11,15 +11,14 @@ import {
   GetTeamsFailedAction,
   GetTeamsRequestedAction,
   GetTeamsSucceededAction,
-  RemoveDraftAction,
   SaveTeamFailedAction,
   SaveTeamRequestedAction,
   SaveTeamSucceededAction,
-  SetDraftAction,
   TeamActionTypes,
 } from './team.types';
 import { Team } from '../../interfaces/team';
 import { NewTeam } from '../../interfaces/newTeam';
+import { History } from 'history';
 
 export const getTeamsRequested = (): GetTeamsRequestedAction => ({
   type: TeamActionTypes.GET_TEAMS_REQUESTED,
@@ -70,9 +69,11 @@ export const saveTeamFailed = (): SaveTeamFailedAction => ({
 
 export const deleteTeamRequested = (
   _id: string,
+  history: History,
 ): DeleteTeamRequestedAction => ({
   type: TeamActionTypes.DELETE_TEAM_REQUESTED,
   _id,
+  history,
 });
 
 export const deleteTeamSucceeded = (team: Team): DeleteTeamSucceededAction => ({
@@ -96,13 +97,4 @@ export const editTeamSucceeded = (team: Team): EditTeamSucceededAction => ({
 
 export const editTeamFailed = (): EditTeamFailedAction => ({
   type: TeamActionTypes.EDIT_TEAM_FAILED,
-});
-
-export const setDraft = (team: Team): SetDraftAction => ({
-  type: TeamActionTypes.SET_DRAFT,
-  team,
-});
-
-export const removeDraft = (): RemoveDraftAction => ({
-  type: TeamActionTypes.REMOVE_DRAFT,
 });

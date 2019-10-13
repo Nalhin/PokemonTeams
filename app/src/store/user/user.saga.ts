@@ -1,7 +1,6 @@
 import { SagaIterator } from 'redux-saga';
-import { call, put, all, takeEvery } from '@redux-saga/core/effects';
+import { all, call, put, takeEvery } from '@redux-saga/core/effects';
 import {
-  AuthorizeUserRequestedAction,
   LoginUserRequestedAction,
   LogoutUserRequestedAction,
   RegisterUserRequestedAction,
@@ -23,6 +22,9 @@ import {
   registerUserFailed,
   registerUserSucceeded,
 } from './user.actions';
+import { addSnackbar } from '../snackbar/sanckbar.action';
+import { generateSnackbar } from '../../utils/generateSnackbar';
+import { SnackbarTypes } from '../../interfaces/snackbar';
 
 export function* userRootSaga(): SagaIterator {
   yield all([
@@ -40,6 +42,7 @@ export function* loginUserSaga(action: LoginUserRequestedAction): SagaIterator {
   try {
     const loginData = yield call(fetchLoginUser, action.loginData);
     yield put(loginUserSucceeded(loginData));
+    yield put(addSnackbar(generateSnackbar('added', SnackbarTypes.success)));
   } catch (e) {
     yield put(loginUserFailed());
   }

@@ -23,6 +23,7 @@ const pokemonReducer: Reducer<PokemonState, PokemonActions> = (
         draft.pokemonData.isLoading = true;
         break;
       case PokemonActionTypes.GET_POKEMON_BY_ID_REQUESTED:
+        draft.current.data = {} as Pokemon;
         draft.current.isLoading = true;
         break;
       case PokemonActionTypes.GET_ALL_POKEMON_SUCCEEDED:

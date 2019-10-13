@@ -7,6 +7,13 @@ import TeamModal from './TeamModal';
 
 interface AddTeamModalProps extends AddTeamModalContainerProps {}
 
+const INITIAL_STATE: NewTeam = {
+  description: '',
+  name: '',
+  type: 0,
+  roster: [],
+};
+
 const AddTeamModal: React.FC<AddTeamModalProps> = ({
   onConfirm,
   isLoading,
@@ -15,10 +22,7 @@ const AddTeamModal: React.FC<AddTeamModalProps> = ({
   openPickPokemonModal,
 }) => {
   const [teamState, setTeamState] = React.useState<NewTeam>({
-    description: '',
-    name: '',
-    type: 0,
-    roster: [],
+    ...INITIAL_STATE,
   });
 
   const handleTeamChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,6 +59,7 @@ const AddTeamModal: React.FC<AddTeamModalProps> = ({
 
   const handleConfirm = () => {
     onConfirm(teamState);
+    setTeamState(INITIAL_STATE);
   };
 
   return (

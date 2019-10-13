@@ -10,6 +10,7 @@ import Login from './Login/Login.container';
 import Register from './Register/Register.container';
 import EditTeam from './EditTeam/EditTeam';
 import Modal from './Modal/Modal.container';
+import Snackbars from './Snackbars/Snackbars.container';
 
 const View: React.FC = () => {
   return (
@@ -26,6 +27,7 @@ const View: React.FC = () => {
         <Route component={NoMatch} />
       </Switch>
       <Modal />
+      <Snackbars />
     </div>
   );
 };

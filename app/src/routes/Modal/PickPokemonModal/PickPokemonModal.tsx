@@ -52,7 +52,7 @@ const StyledWrapper = styled(InfiniteScroll)`
   justify-content: center;
 `;
 
-const LOAD_AMOUNT = 20;
+const LOAD_AMOUNT = 100;
 const INITIAL_LOAD = 50;
 
 const PickPokemonModal: React.FC<PickPokemonModalProps> = ({
@@ -65,7 +65,6 @@ const PickPokemonModal: React.FC<PickPokemonModalProps> = ({
   roster,
 }) => {
   const [loaded, setLoaded] = React.useState(INITIAL_LOAD);
-  const modalRef = React.useRef(null);
 
   React.useEffect(() => {
     if (isOpen) getAllPokemon();
@@ -77,18 +76,20 @@ const PickPokemonModal: React.FC<PickPokemonModalProps> = ({
 
   const hasMore = loaded < pokemonData.length;
 
-  const items = [...pokemonData.slice(0, loaded)].map(pokemon => (
-    <PickPokemonModalPokemon
-      pokemon={pokemon}
-      addPokemon={addPokemon}
-      roster={roster}
-      key={pokemon._id}
-    />
-  ));
+  const items = pokemonData
+    .slice(0, loaded)
+    .map(pokemon => (
+      <PickPokemonModalPokemon
+        pokemon={pokemon}
+        addPokemon={addPokemon}
+        roster={roster}
+        key={pokemon._id}
+      />
+    ));
   return (
     <StyledModal open={isOpen} onClose={closeModal}>
-      <StyledModalContainer ref={modalRef}>
-        <Loading isLoading={isLoading} isRelative>
+      <Loading isLoading={isLoading} isRelative>
+        <StyledModalContainer>
           <StyledHeader>
             <Typography variant="h5" component="h3">
               Current Roster
@@ -99,13 +100,12 @@ const PickPokemonModal: React.FC<PickPokemonModalProps> = ({
             loadMore={handleLoadedChange}
             hasMore={hasMore}
             useWindow={false}
-            getScrollParent={() => modalRef.current}
             loader={<LazyLoading key={loaded} />}
           >
             {items}
           </StyledWrapper>
-        </Loading>
-      </StyledModalContainer>
+        </StyledModalContainer>
+      </Loading>
     </StyledModal>
   );
 };

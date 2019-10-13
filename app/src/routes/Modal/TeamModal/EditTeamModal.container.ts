@@ -11,7 +11,7 @@ const mapStateToProps = (state: AppState) => {
   const isOpen = state.modal.openModals.some(
     modal => modal === ModalTypes.editTeam,
   );
-  const isLoading = state.team.current.isLoading;
+  const isLoading = state.team.editTeam.isLoading;
   const team = state.team.current.team;
   return {
     isOpen,

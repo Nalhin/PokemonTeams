@@ -37,9 +37,9 @@ const PokemonList: React.FC<PokemonListProps> = ({
 
   const hasMore = loaded < pokemonData.length;
 
-  const items = [...pokemonData.slice(0, loaded)].map(pokemon => (
-    <PokemonCard pokemon={pokemon} key={pokemon.pokedexId} />
-  ));
+  const items = pokemonData
+    .slice(0, loaded)
+    .map(pokemon => <PokemonCard pokemon={pokemon} key={pokemon.pokedexId} />);
 
   return (
     <Loading isLoading={isLoading}>

@@ -1,5 +1,5 @@
 import { SagaIterator } from 'redux-saga';
-import { call, put, all, takeEvery } from '@redux-saga/core/effects';
+import { all, call, put, takeEvery } from '@redux-saga/core/effects';
 import {
   DeleteTeamRequestedAction,
   EditTeamRequestedAction,
@@ -27,6 +27,8 @@ import {
   saveTeamFailed,
   saveTeamSucceeded,
 } from './team.actions';
+import { closeModal } from '../modal/modal.actions';
+import { ModalTypes } from '../modal/modal.types';
 
 export function* teamRootSaga(): SagaIterator {
   yield all([
@@ -64,6 +66,7 @@ export function* deleteTeamSaga(
   try {
     const team = yield call(fetchDeleteTeam, action._id);
     yield put(deleteTeamSucceeded(team));
+    action.history.push('/teams');
   } catch (e) {
     yield put(deleteTeamFailed());
   }
@@ -72,8 +75,8 @@ export function* deleteTeamSaga(
 export function* editTeamSaga(action: EditTeamRequestedAction): SagaIterator {
   try {
     const team = yield call(fetchEditTeam, action.team);
-    console.log(team);
     yield put(editTeamSucceeded(team));
+    yield put(closeModal(ModalTypes.editTeam));
   } catch (e) {
     yield put(editTeamFailed());
   }

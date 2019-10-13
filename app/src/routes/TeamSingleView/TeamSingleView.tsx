@@ -2,7 +2,7 @@ import * as React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { TeamSingleViewContainerProps } from './TeamSingleView.container';
 import Loading from '../../components/Loading/Loading';
-import Fab from '@material-ui/core/Fab';
+import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import { PADDING } from '../../styles/padding';
 import styled from '@emotion/styled';
@@ -11,11 +11,16 @@ import Typography from '@material-ui/core/Typography';
 import { TeamType } from '../../interfaces/team';
 import { TEAM_COLORS } from '../../styles/colors';
 import PokemonCard from '../../components/PokemonCard/PokemonCard';
+import ZoomFab from '../../components/ZoomFab/ZoomFab';
 
-const StyledFab = styled(Fab)`
-  position: fixed;
+const StyledEditFab = styled(ZoomFab)`
   bottom: ${PADDING.BASE};
   right: ${PADDING.BASE};
+`;
+
+const StyledDeleteFab = styled(ZoomFab)`
+  bottom: ${PADDING.BASE};
+  left: ${PADDING.BASE};
 `;
 
 const StyledPokemonContainer = styled.div`
@@ -32,7 +37,12 @@ const StyledPaper = styled(Paper)`
   background: ${(props: StyledFormControlLabelProps) =>
     ` ${TEAM_COLORS[props.type]}44`};
   width: 90%;
+  padding: ${PADDING.BASE};
   margin: 0 auto;
+`;
+
+const StyledTypography = styled(Typography)`
+  text-align: center;
 `;
 
 interface RouterProps {
@@ -48,22 +58,28 @@ const TeamSingleView: React.FC<TeamSingleViewProps> = ({
   isLoading,
   match,
   openEditTeamModal,
+  deleteTeam,
   team,
+  history,
 }) => {
   React.useEffect(() => {
     getTeam(match.params.id);
   }, [getTeam]);
 
+  const handleDeleteTeam = () => {
+    deleteTeam(match.params.id, history);
+  };
+
   const { roster, description, type, name } = team;
   return (
     <Loading isLoading={isLoading}>
       <StyledPaper data-testid="team_single_view" type={type}>
-        <Typography variant="h5" component="h2">
+        <StyledTypography variant="h5" component="h2">
           {name}
-        </Typography>
-        <Typography variant="h6" component="h3">
+        </StyledTypography>
+        <StyledTypography variant="h6" component="h3">
           {description}
-        </Typography>
+        </StyledTypography>
         <StyledPokemonContainer>
           {roster &&
             roster.map((pokemon, i) => (
@@ -71,9 +87,10 @@ const TeamSingleView: React.FC<TeamSingleViewProps> = ({
             ))}
         </StyledPokemonContainer>
       </StyledPaper>
-      <StyledFab color="secondary" onClick={openEditTeamModal}>
-        <EditIcon />
-      </StyledFab>
+      <StyledDeleteFab icon={<DeleteIcon />} onClick={handleDeleteTeam}>
+        <DeleteIcon />
+      </StyledDeleteFab>
+      <StyledEditFab icon={<EditIcon />} onClick={openEditTeamModal} />
     </Loading>
   );
 };
