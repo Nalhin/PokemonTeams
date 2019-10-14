@@ -45,6 +45,12 @@ const StyledTypography = styled(Typography)`
   text-align: center;
 `;
 
+const StyledOwner = styled(Typography)`
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+`;
+
 interface RouterProps {
   id: string;
 }
@@ -70,7 +76,8 @@ const TeamSingleView: React.FC<TeamSingleViewProps> = ({
     deleteTeam(match.params.id, history);
   };
 
-  const { roster, description, type, name } = team;
+  const { roster, description, owner, type, name } = team;
+
   return (
     <Loading isLoading={isLoading}>
       <StyledPaper data-testid="team_single_view" type={type}>
@@ -86,6 +93,9 @@ const TeamSingleView: React.FC<TeamSingleViewProps> = ({
               <PokemonCard pokemon={pokemon} key={i} />
             ))}
         </StyledPokemonContainer>
+        <StyledOwner variant="body2" component="p">
+          {owner && owner.login}
+        </StyledOwner>
       </StyledPaper>
       <StyledDeleteFab icon={<DeleteIcon />} onClick={handleDeleteTeam}>
         <DeleteIcon />

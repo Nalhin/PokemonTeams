@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Team, TeamType } from '../../interfaces/team';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -27,6 +27,12 @@ const StyledCard = styled(Card)`
   }
 `;
 
+const StyledOwner = styled(Typography)`
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+`;
+
 interface TeamCardProps extends RouteComponentProps {
   team: Team;
 }
@@ -36,16 +42,21 @@ const TeamCard: React.FC<TeamCardProps> = ({ team, history }) => {
     history.push(`/teams/${team._id}`);
   };
 
+  const { roster, description, owner, type, name } = team;
+  const { login } = owner;
   return (
-    <StyledCard type={team.type} onClick={handleTeamClick}>
+    <StyledCard type={type} onClick={handleTeamClick}>
       <CardContent>
         <Typography variant="h5" component="h2">
-          {team.name}
+          {name}
         </Typography>
         <Typography variant="body2" component="p">
-          {team.description}
+          {description}
         </Typography>
-        <TeamRoster roster={team.roster} />
+        <TeamRoster roster={roster} />
+        <StyledOwner variant="body2" component="p">
+          {login}
+        </StyledOwner>
       </CardContent>
     </StyledCard>
   );

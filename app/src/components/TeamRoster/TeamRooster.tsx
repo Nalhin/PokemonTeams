@@ -3,11 +3,13 @@ import { Pokemon } from '../../interfaces/pokemon';
 import styled from '@emotion/styled';
 import PokemonSmall from '../PokemonSmall/PokemonSmall';
 import Typography from '@material-ui/core/Typography';
+import { PADDING } from '../../styles/padding';
 
 const Container = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin: ${PADDING.BASE} 0;
 `;
 
 const StyledTypography = styled(Typography)`

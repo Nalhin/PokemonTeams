@@ -33,7 +33,7 @@ export const getTeamById = async (req: Request, res: Response) => {
     const { id } = req.params;
     const team = await TeamModel.findById(id)
       .populate('roster')
-      .populate('user', 'login');
+      .populate('owner', 'login');
     if (!team) return res.status(404).send();
     return res.send(team);
   } catch (e) {
@@ -48,10 +48,10 @@ export const editTeam = async (req: AuthenticationRequest, res: Response) => {
     const userId = req.locals.user._id;
     const oldTeam = await TeamModel.findById(_id);
 
-    if (userId.toString() !== oldTeam.ownerId.toString())
+    if (userId.toString() !== oldTeam.owner.toString())
       return res.status(401).send({ error: 'You do not own this team.' });
 
-    const updatedTeam = await TeamModel.findOneAndUpdate(
+    const updatedTeam = await TeamModel.findByIdAndUpdate(
       _id,
       { type, name, description, roster },
       { new: true },
@@ -69,7 +69,7 @@ export const deleteTeam = async (req: AuthenticationRequest, res: Response) => {
     const userId = req.locals.user._id;
     const oldTeam = await TeamModel.findById(id);
 
-    if (userId.toString() !== oldTeam.ownerId.toString())
+    if (userId.toString() !== oldTeam.owner.toString())
       return res.status(401).send({ error: 'You do not own this team.' });
 
     const team = await TeamModel.findByIdAndDelete(id);

@@ -9,7 +9,10 @@ export enum TeamType {
 export interface Team {
   _id: string;
   type: TeamType;
-  ownerId: string;
+  owner: {
+    _id: string;
+    login: string;
+  };
   name: string;
   description: string;
   roster: Pokemon[];
