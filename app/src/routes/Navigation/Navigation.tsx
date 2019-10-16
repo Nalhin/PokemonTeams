@@ -10,6 +10,7 @@ const StyledAppBar = styled(AppBar)`
   background: ${COLORS.MAIN};
   display: flex;
   flex-direction: row;
+  padding: 0 5%;
   height: 54px;
 `;
 

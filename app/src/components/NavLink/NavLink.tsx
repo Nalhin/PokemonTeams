@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { PADDING } from '../../styles/padding';
 import { COLORS } from '../../styles/colors';
@@ -14,6 +14,7 @@ export const StyledNavLink = styled.a`
   justify-content: center;
   position: relative;
   padding: 0 ${PADDING.BASE};
+  margin: 0 ${PADDING.SMALL};
   background: ${COLORS.MAIN};
   color: #fff;
 
