@@ -56,6 +56,7 @@ const NavLink: React.FC<NavLinkProps> = ({
   const onClick = () => {
     history.push(to);
   };
+
   const isActive = '/' + location.pathname.split('/')[1] === to;
 
   return (

@@ -28,7 +28,6 @@ const StyledSnackbar = styled(MdSnackbar)`
   position: unset;
   transform: none;
   margin: ${PADDING.BASE};
-  background: ${(props: StyledSnackbarProps) => SNACKBAR_COLORS[props.type]};
 `;
 
 const StyledSnackbarMessageContainer = styled.span`
@@ -67,13 +66,17 @@ const Snackbar: React.FC<SnackbarProps> = ({ onClose, message, id, type }) => {
       autoHideDuration={autoHideDuration}
       onClose={handleClose}
       open
-      type={type}
       ClickAwayListenerProps={{ mouseEvent: false, touchEvent: false }}
     >
       <StyledSnackbarContent
         type={type}
         action={[
-          <IconButton color="inherit" onClick={handleClose} key={id}>
+          <IconButton
+            color="inherit"
+            onClick={handleClose}
+            key={id}
+            data-testid="snackbar__close-icon"
+          >
             <CloseIcon />
           </IconButton>,
         ]}
@@ -83,6 +86,7 @@ const Snackbar: React.FC<SnackbarProps> = ({ onClose, message, id, type }) => {
             <StyledSnackbarMessage>{message}</StyledSnackbarMessage>
           </StyledSnackbarMessageContainer>
         }
+        data-testid="snackbar__content"
       />
     </StyledSnackbar>
   );

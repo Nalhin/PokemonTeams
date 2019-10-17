@@ -36,7 +36,7 @@ const TeamTypeRadioGroup: React.FC<TeamTypeRadioGroupProps> = ({
       <RadioGroup name="type" value={value} onChange={onChange}>
         <StyledFormControlLabel
           value={TeamType.Valor}
-          control={<Radio />}
+          control={<Radio data-testid={'xd'} />}
           label="Valor"
         />
         <StyledFormControlLabel

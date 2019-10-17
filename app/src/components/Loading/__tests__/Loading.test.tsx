@@ -29,13 +29,14 @@ describe('Loading Component', () => {
   });
 
   it('Should display children correctly', () => {
+    const text = 'test';
     const { getByText } = render(
       <Loading isLoading={false}>
-        <div>test</div>
+        <div>{text}</div>
       </Loading>,
     );
 
-    expect(getByText(/test/)).not.toBeNull();
+    expect(getByText(text)).not.toBeNull();
   });
 
   it('Should set wrapper position to relative when isRelative is true', () => {

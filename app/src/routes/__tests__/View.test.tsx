@@ -10,28 +10,28 @@ jest.mock('../../components/PokemonModelViewer/PokemonModelViewer', () => {
 describe('View Component', () => {
   afterEach(cleanup);
 
-  it('Should handle "/pokemon" route', () => {
-    const route = '/pokemon';
-    const { getByTestId } = renderWithStore(<View />, {
-      route,
-    });
-
-    expect(getByTestId(/pokemon_list/i)).toBeTruthy();
-  });
-
-  it('Should handle "/pokemon/:id" route', () => {
-    const route = '/pokemon/2';
-    const { getByTestId } = renderWithStore(<View />, { route });
-
-    expect(getByTestId(/pokemon_single_view/i)).toBeTruthy();
-  });
-
-  it('Should handle "/team" route', () => {
-    const route = '/teams';
-    const { getByTestId } = renderWithStore(<View />, { route });
-
-    expect(getByTestId(/teams/i)).toBeTruthy();
-  });
+  // it('Should handle "/pokemon" route', () => {
+  //   const route = '/pokemon';
+  //   const { getByTestId } = renderWithStore(<View />, {
+  //     route,
+  //   });
+  //
+  //   expect(getByTestId(/pokemon_list/i)).toBeTruthy();
+  // });
+  //
+  // it('Should handle "/pokemon/:id" route', () => {
+  //   const route = '/pokemon/2';
+  //   const { getByTestId } = renderWithStore(<View />, { route });
+  //
+  //   expect(getByTestId(/pokemon_single_view/i)).toBeTruthy();
+  // });
+  //
+  // it('Should handle "/team" route', () => {
+  //   const route = '/teams';
+  //   const { getByTestId } = renderWithStore(<View />, { route });
+  //
+  //   expect(getByTestId(/teams/i)).toBeTruthy();
+  // });
 
   it('Should handle "/teams/:id" route', () => {
     const route = '/teams/:id';

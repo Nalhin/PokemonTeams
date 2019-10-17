@@ -37,11 +37,7 @@ const PasswordInput: React.FC<InputProps> = ({
         name={name}
         endAdornment={
           <InputAdornment position="end">
-            <IconButton
-              aria-label="toggle password visibility"
-              onClick={handleShowPasswordChange}
-              onMouseDown={handleShowPasswordChange}
-            >
+            <IconButton onClick={handleShowPasswordChange}>
               {showPassword ? <Visibility /> : <VisibilityOff />}
             </IconButton>
           </InputAdornment>
