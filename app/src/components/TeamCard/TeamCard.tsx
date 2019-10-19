@@ -6,9 +6,9 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import styled from '@emotion/styled';
-import { TEAM_COLORS } from '../../styles/colors';
+import { TEAM_COLORS } from '../../styles/team';
 import { PADDING } from '../../styles/padding';
-import TeamRoster from '../TeamRoster/TeamRooster';
+import TeamRoster from '../TeamRoster/TeamRoster';
 
 type StyledFormControlLabelProps = {
   type: TeamType;
@@ -45,7 +45,7 @@ const TeamCard: React.FC<TeamCardProps> = ({ team, history }) => {
   const { roster, description, owner, type, name } = team;
   const { login } = owner;
   return (
-    <StyledCard type={type} onClick={handleTeamClick}>
+    <StyledCard type={type} onClick={handleTeamClick} data-testid="team__card">
       <CardContent>
         <Typography variant="h5" component="h2">
           {name}

@@ -10,52 +10,61 @@ import {
 } from '../Login/Login';
 import PasswordInput from '../../components/PasswordInput/PasswordInput';
 import Button from '../../components/Button/Button';
+import { hasEmptyFields } from '../../utils/hasEmptyField';
 
 interface RegisterProps extends RegisterContainerProps {}
 
 const Register: React.FC<RegisterProps> = ({ registerUser, isLoading }) => {
-  const [registerValue, setRegisterValue] = React.useState<RegisterData>({
+  const [registerValues, setRegisterValues] = React.useState<RegisterData>({
     login: '',
     password: '',
     email: '',
   });
 
   const handleRegisterUser = () => {
-    registerUser(registerValue);
+    if (!hasEmptyFields<RegisterData>(registerValues))
+      registerUser(registerValues);
   };
 
   const handleRegisterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRegisterValue({
-      ...registerValue,
+    setRegisterValues({
+      ...registerValues,
       [event.target.name]: event.target.value,
     });
   };
 
-  const { password, login, email } = registerValue;
+  const { password, login, email } = registerValues;
   return (
-    <StyledWrapper>
+    <StyledWrapper data-testid="register">
       <StyledLoading isLoading={isLoading} isRelative>
         <StyledLoginContainer>
           <Input
             value={login}
-            name={'login'}
-            label={'Login'}
+            name="login"
+            label="Login"
             onChange={handleRegisterChange}
           />
           <PasswordInput
             value={password}
-            name={'password'}
-            label={'Password'}
+            name="password"
+            label="Password"
             onChange={handleRegisterChange}
           />
           <Input
             value={email}
-            name={'email'}
-            label={'Email'}
+            name="email"
+            label="Email"
             onChange={handleRegisterChange}
           />
-          <StyledLink to="/">Back to login?</StyledLink>
-          <Button onClick={handleRegisterUser}>Register</Button>
+          <StyledLink to="/" data-testid="register__login-link">
+            Back to login?
+          </StyledLink>
+          <Button
+            onClick={handleRegisterUser}
+            data-testid="register__register-button"
+          >
+            Register
+          </Button>
         </StyledLoginContainer>
       </StyledLoading>
     </StyledWrapper>

@@ -10,6 +10,7 @@ import { LoginData } from '../../interfaces/loginData';
 import { PADDING } from '../../styles/padding';
 import { Link } from 'react-router-dom';
 import { COLORS } from '../../styles/colors';
+import { hasEmptyFields } from '../../utils/hasEmptyField';
 
 export const StyledWrapper = styled.div`
   position: absolute;
@@ -46,23 +47,27 @@ export const StyledLink = styled(Link)`
 
 interface LoginProps extends LoginContainerProps {}
 
+const INITIAL_STATE: LoginData = {
+  login: '',
+  password: '',
+};
+
 const Login: React.FC<LoginProps> = ({ loginUser, isLoading }) => {
-  const [loginValue, setLoginValue] = React.useState<LoginData>({
-    login: '',
-    password: '',
-  });
+  const [loginValues, setLoginValues] = React.useState<LoginData>(
+    INITIAL_STATE,
+  );
 
   const handleLoginUser = () => {
-    loginUser(loginValue);
+    if (!hasEmptyFields<LoginData>(loginValues)) loginUser(loginValues);
   };
 
   const handleLoginChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLoginValue({ ...loginValue, [event.target.name]: event.target.value });
+    setLoginValues({ ...loginValues, [event.target.name]: event.target.value });
   };
 
-  const { password, login } = loginValue;
+  const { password, login } = loginValues;
   return (
-    <StyledWrapper>
+    <StyledWrapper data-testid="login">
       <StyledLoading isLoading={isLoading}>
         <StyledLoginContainer>
           <Input
@@ -77,8 +82,12 @@ const Login: React.FC<LoginProps> = ({ loginUser, isLoading }) => {
             label={'Password'}
             onChange={handleLoginChange}
           />
-          <StyledLink to="/register">Don't have an account? </StyledLink>
-          <Button onClick={handleLoginUser}>Login</Button>
+          <StyledLink to="/register" data-testid="login__register-link">
+            Don't have an account?
+          </StyledLink>
+          <Button onClick={handleLoginUser} data-testid="login__login-button">
+            Login
+          </Button>
         </StyledLoginContainer>
       </StyledLoading>
     </StyledWrapper>

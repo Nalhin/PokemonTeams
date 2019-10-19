@@ -15,6 +15,7 @@ const Container = styled.div`
 const StyledTypography = styled(Typography)`
   margin: 0 auto;
   height: 40px;
+  font-size: 16px;
 `;
 
 interface TeamRosterProps {
@@ -30,7 +31,11 @@ const TeamRoster: React.FC<TeamRosterProps> = ({ roster, className }) => {
           <PokemonSmall key={`${pokemon._id}#${i}`} pokemon={pokemon} />
         ))
       ) : (
-        <StyledTypography variant="h5" component="h3">
+        <StyledTypography
+          variant="h5"
+          component="h3"
+          data-testid="team__roster--empty"
+        >
           Empty roster
         </StyledTypography>
       )}

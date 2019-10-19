@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Pokemon } from '../../interfaces/pokemon';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import PokemonModelViewer from '../../components/PokemonModelViewer/PokemonModelViewer';
 import Loading from '../../components/Loading/Loading';
 import { PokemonSingleViewContainerProps } from './PokemonSingleView.container';
@@ -57,7 +57,7 @@ const PokemonSingleView: React.FC<PokemonSingleViewProps> = ({
 
   return (
     <Loading isLoading={isLoading} isRelative>
-      <StyledPaper>
+      <StyledPaper data-testid="pokemon-single-view">
         <StyledPokemonDescription>
           <Typography variant="body2" color="textSecondary" component="p">
             #{pokemon.pokedexId}

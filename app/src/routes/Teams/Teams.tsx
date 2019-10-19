@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as InfiniteScroll from 'react-infinite-scroller';
+import InfiniteScroll from 'react-infinite-scroller';
 import Loading from '../../components/Loading/Loading';
 import TeamCard from '../../components/TeamCard/TeamCard';
 import AddIcon from '@material-ui/icons/Add';

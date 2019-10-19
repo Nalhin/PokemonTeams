@@ -7,7 +7,6 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-
 import { PADDING } from '../../styles/padding';
 import { InputProps } from '../Input/Input';
 
@@ -29,15 +28,19 @@ const PasswordInput: React.FC<InputProps> = ({
 
   return (
     <StyledFormControl>
-      <InputLabel>{label}</InputLabel>
+      <InputLabel htmlFor={name}>{label}</InputLabel>
       <Input
         type={showPassword ? 'text' : 'password'}
         value={value}
         onChange={onChange}
         name={name}
+        id={name}
         endAdornment={
           <InputAdornment position="end">
-            <IconButton onClick={handleShowPasswordChange}>
+            <IconButton
+              onClick={handleShowPasswordChange}
+              data-testid="password-input__icon"
+            >
               {showPassword ? <Visibility /> : <VisibilityOff />}
             </IconButton>
           </InputAdornment>

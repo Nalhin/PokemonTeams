@@ -14,7 +14,7 @@ describe('Snackbar Component', () => {
     const message = 'test';
     const { getByText } = render(
       <Snackbar
-        onClose={() => {}}
+        onClose={jest.fn()}
         message={message}
         id={'1'}
         type={SnackbarTypes.success}
@@ -44,7 +44,7 @@ describe('Snackbar Component', () => {
   it('Should change background color based on type', () => {
     const { getByTestId } = render(
       <Snackbar
-        onClose={() => {}}
+        onClose={jest.fn()}
         message={'test'}
         id="1"
         type={SnackbarTypes.success}

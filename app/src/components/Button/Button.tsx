@@ -24,7 +24,7 @@ interface ButtonProps {
 const Button: React.FC<ButtonProps> = ({ children, ...rest }) => {
   return (
     <StyledButton variant="contained" {...rest}>
-      {children}{' '}
+      {children}
     </StyledButton>
   );
 };

@@ -9,7 +9,7 @@ import styled from '@emotion/styled';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { TeamType } from '../../interfaces/team';
-import { TEAM_COLORS } from '../../styles/colors';
+import { TEAM_COLORS } from '../../styles/team';
 import PokemonCard from '../../components/PokemonCard/PokemonCard';
 import ZoomFab from '../../components/ZoomFab/ZoomFab';
 
@@ -80,7 +80,7 @@ const TeamSingleView: React.FC<TeamSingleViewProps> = ({
 
   return (
     <Loading isLoading={isLoading}>
-      <StyledPaper data-testid="team_single_view" type={type}>
+      <StyledPaper data-testid="team-single-view" type={type}>
         <StyledTypography variant="h5" component="h2">
           {name}
         </StyledTypography>

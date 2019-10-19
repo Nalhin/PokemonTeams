@@ -7,7 +7,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { TeamType } from '../../interfaces/team';
 import styled from '@emotion/styled';
 import { PADDING } from '../../styles/padding';
-import { TEAM_COLORS } from '../../styles/colors';
+import { TEAM_COLORS } from '../../styles/team';
 
 const StyledFormControl = styled(FormControl)`
   margin: ${PADDING.BASE} 0;
@@ -36,7 +36,7 @@ const TeamTypeRadioGroup: React.FC<TeamTypeRadioGroupProps> = ({
       <RadioGroup name="type" value={value} onChange={onChange}>
         <StyledFormControlLabel
           value={TeamType.Valor}
-          control={<Radio data-testid={'xd'} />}
+          control={<Radio />}
           label="Valor"
         />
         <StyledFormControlLabel

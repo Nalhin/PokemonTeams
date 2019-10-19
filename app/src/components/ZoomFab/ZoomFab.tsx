@@ -24,7 +24,11 @@ const transitionDuration = 500;
 const ZoomFab: React.FC<ZoomFabProps> = ({ icon, onClick, className }) => {
   return (
     <Zoom in unmountOnExit timeout={transitionDuration}>
-      <StyledFab className={className} onClick={onClick}>
+      <StyledFab
+        className={className}
+        onClick={onClick}
+        data-testid="zoom__fab"
+      >
         {icon}
       </StyledFab>
     </Zoom>

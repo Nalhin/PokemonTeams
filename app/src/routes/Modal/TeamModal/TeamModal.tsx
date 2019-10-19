@@ -4,7 +4,7 @@ import Loading from '../../../components/Loading/Loading';
 import TeamTypeRadioGroup from '../../../components/TeamTypeRadioGroup/TeamTypeRadioGroup';
 import Input from '../../../components/Input/Input';
 import { Typography } from '@material-ui/core';
-import TeamRoster from '../../../components/TeamRoster/TeamRooster';
+import TeamRoster from '../../../components/TeamRoster/TeamRoster';
 import Button from '../../../components/Button/Button';
 import PickPokemonModal from '../PickPokemonModal/PickPokemonModal.container';
 import { NewTeam } from '../../../interfaces/newTeam';

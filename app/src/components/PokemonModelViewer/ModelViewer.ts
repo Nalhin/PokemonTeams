@@ -4,7 +4,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { RefObject } from 'react';
 
-class ModelViewer {
+export default class ModelViewer {
   static cameraSettings = {
     fov: 90,
     aspect: 2,
@@ -105,5 +105,3 @@ class ModelViewer {
     container.current.removeChild(this.renderer.domElement);
   }
 }
-
-export default ModelViewer;

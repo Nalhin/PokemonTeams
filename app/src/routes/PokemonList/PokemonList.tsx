@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as InfiniteScroll from 'react-infinite-scroller';
+import InfiniteScroll from 'react-infinite-scroller';
 import Loading from '../../components/Loading/Loading';
 import styled from '@emotion/styled';
 import { PokemonListContainerProps } from './PokemonList.container';
@@ -44,7 +44,7 @@ const PokemonList: React.FC<PokemonListProps> = ({
   return (
     <Loading isLoading={isLoading}>
       <StyledPokemonContainer
-        data-testid="pokemon_list"
+        data-testid="pokemon-list"
         loadMore={handleLoadedChange}
         hasMore={hasMore}
         loader={<LazyLoading key={loaded} />}

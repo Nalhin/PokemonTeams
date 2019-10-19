@@ -7,8 +7,13 @@
     "sourceMap": true,
     "moduleResolution": "node",
     "jsx": "react",
-    "allowJs": true
+    "allowSyntheticDefaultImports": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules","dist"]
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }

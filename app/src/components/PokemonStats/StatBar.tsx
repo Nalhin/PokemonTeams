@@ -4,7 +4,7 @@ import { COLORS } from '../../styles/colors';
 import Typography from '@material-ui/core/Typography';
 import Tooltip from '@material-ui/core/Tooltip';
 
-const MAX_STAT = 160;
+export const MAX_STAT = 160;
 const BAR_WIDTH = '36px';
 
 const StyledStat = styled.div`
@@ -57,7 +57,7 @@ const StatBar: React.FC<StatBarProps> = ({ name, shortName, data }) => {
     <Tooltip title={name} placement="bottom">
       <StyledContainer>
         <StyledStat>
-          <StyledStatDisplay stat={data} />
+          <StyledStatDisplay stat={data} data-testid="stat-bar__stat-display" />
           <StyledStatText component="legend">{data}</StyledStatText>
         </StyledStat>
         <StyledLegend component="legend">{shortName}</StyledLegend>

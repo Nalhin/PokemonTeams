@@ -14,13 +14,26 @@ const StyledAppBar = styled(AppBar)`
   height: 54px;
 `;
 
+const StyledNavigationLink = styled(NavLink)`
+  &:hover {
+    &::after {
+      transform: scaleX(1);
+    }
+  }
+`;
+
 const StyledButton = styled(StyledNavLink)`
   margin-left: auto;
   margin-right: ${PADDING.BASE};
   outline: none;
+  &:hover {
+    &::after {
+      transform: scaleX(1);
+    }
+  }
 `;
 
-const StyledLoginNavLink = styled(NavLink)`
+const StyledLoginNavLink = styled(StyledNavigationLink)`
   margin-left: auto;
   margin-right: ${PADDING.BASE};
 `;
@@ -35,8 +48,8 @@ const Navigation: React.FC<NavigationProps> = ({
 }) => {
   return (
     <StyledAppBar position="sticky">
-      <NavLink to="/pokemon">Pokemon</NavLink>
-      <NavLink to="/teams">Teams</NavLink>
+      <StyledNavigationLink to="/pokemon">Pokemon</StyledNavigationLink>
+      <StyledNavigationLink to="/teams">Teams</StyledNavigationLink>
       {isAuthenticated ? (
         <StyledNavLinkButton type="button" onClick={logoutUser}>
           Logout

@@ -22,6 +22,8 @@ const Input: React.FC<InputProps> = ({ value, name, label, onChange }) => {
       onChange={onChange}
       label={label}
       type="text"
+      id={name}
+      InputLabelProps={{ htmlFor: name }}
     />
   );
 };

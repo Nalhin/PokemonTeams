@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import { PADDING } from '../../../styles/padding';
 import { Pokemon } from '../../../interfaces/pokemon';
 import PickPokemonModalPokemon from './PickPokemonModalPokemon';
-import TeamRoster from '../../../components/TeamRoster/TeamRooster';
+import TeamRoster from '../../../components/TeamRoster/TeamRoster';
 import * as InfiniteScroll from 'react-infinite-scroller';
 import LazyLoading from '../../../components/Loading/LazyLoading';
 

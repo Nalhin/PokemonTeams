@@ -15,7 +15,7 @@ describe('NavLink Component', () => {
   it('Should highlight active route', () => {
     const route = '/test';
     const { getByText } = renderWithRouter(
-      <NavLink to={`${route}/123`}>{mockNavLinkText}</NavLink>,
+      <NavLink to={`${route}`}>{mockNavLinkText}</NavLink>,
       { route },
     );
 
@@ -28,22 +28,22 @@ describe('NavLink Component', () => {
     );
   });
 
-  // it('Should not highlight inactive route', () => {
-  //   const route = '/test';
-  //   const newRoute = '/other-route';
-  //   const { getByText } = renderWithRouter(
-  //     <NavLink to={newRoute}>{mockNavLinkText}</NavLink>,
-  //     { route },
-  //   );
-  //
-  //   expect(getByText(mockNavLinkText)).toHaveStyleRule(
-  //     'transform',
-  //     'scaleX(0)',
-  //     {
-  //       target: '::after',
-  //     },
-  //   );
-  // });
+  it('Should not highlight inactive route', () => {
+    const route = '/test';
+    const newRoute = '/other-route';
+    const { getByText } = renderWithRouter(
+      <NavLink to={newRoute}>{mockNavLinkText}</NavLink>,
+      { route },
+    );
+
+    expect(getByText(mockNavLinkText)).toHaveStyleRule(
+      'transform',
+      'scaleX(0)',
+      {
+        target: '::after',
+      },
+    );
+  });
 
   it('Should redirect when clicked', () => {
     const route = '/test';
