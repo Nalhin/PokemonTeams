@@ -4,7 +4,7 @@ import { Reducer } from 'redux';
 import { Team } from '../../interfaces/team';
 import { TeamActions, TeamActionTypes, TeamState } from './team.types';
 
-const INITIAL_STATE: TeamState = {
+export const INITIAL_STATE: TeamState = {
   teams: { data: [], isLoading: false },
   current: { team: <Team>{}, isLoading: false },
   addTeam: { isLoading: false },
@@ -48,16 +48,16 @@ const teamReducer: Reducer<TeamState, TeamActions> = (
         draft.addTeam.isLoading = false;
         break;
       case TeamActionTypes.DELETE_TEAM_REQUESTED:
-        draft.teams.isLoading = true;
+        draft.current.isLoading = true;
         break;
       case TeamActionTypes.DELETE_TEAM_SUCCEEDED:
-        draft.teams.isLoading = false;
+        draft.current.isLoading = false;
         draft.teams.data = state.teams.data.filter(
           team => team._id !== action.team._id,
         );
         break;
       case TeamActionTypes.DELETE_TEAM_FAILED:
-        draft.teams.isLoading = false;
+        draft.current.isLoading = false;
         break;
       case TeamActionTypes.EDIT_TEAM_REQUESTED:
         draft.editTeam.isLoading = true;

@@ -23,8 +23,9 @@ describe('StatBar Component', () => {
 
   it('Should display correct bar values', () => {
     const { getByTestId } = render(<StatBar {...statBar} />);
+    const statDisplay = getByTestId('stat-bar__stat-display');
 
-    expect(getByTestId('stat-bar__stat-display')).toHaveStyleRule(
+    expect(statDisplay).toHaveStyleRule(
       'height',
       `${(statBar.data / MAX_STAT) * 100}%`,
     );

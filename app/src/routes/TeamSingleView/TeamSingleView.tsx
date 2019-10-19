@@ -97,10 +97,15 @@ const TeamSingleView: React.FC<TeamSingleViewProps> = ({
           {owner && owner.login}
         </StyledOwner>
       </StyledPaper>
-      <StyledDeleteFab icon={<DeleteIcon />} onClick={handleDeleteTeam}>
-        <DeleteIcon />
-      </StyledDeleteFab>
-      <StyledEditFab icon={<EditIcon />} onClick={openEditTeamModal} />
+      <StyledDeleteFab
+        icon={<DeleteIcon data-testid="team-single-view__delete-icon" />}
+        onClick={handleDeleteTeam}
+      />
+
+      <StyledEditFab
+        icon={<EditIcon data-testid="team-single-view__edit-icon" />}
+        onClick={openEditTeamModal}
+      />
     </Loading>
   );
 };

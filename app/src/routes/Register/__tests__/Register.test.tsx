@@ -2,7 +2,6 @@ import { cleanup, fireEvent } from '@testing-library/react';
 import * as React from 'react';
 import { renderWithRouter } from '../../../../test/utils/renderWithRouter';
 import Register from '../Register';
-import { createMemoryHistory } from 'history';
 import Login from '../../Login/Login';
 
 describe('Register Component', () => {
@@ -13,7 +12,7 @@ describe('Register Component', () => {
       <Register registerUser={jest.fn()} isLoading />,
     );
 
-    expect(getByTestId('loading_spinner')).toBeTruthy();
+    expect(getByTestId('loading-spinner')).toBeTruthy();
   });
 
   it('Should not allow to register with empty values', () => {
@@ -21,8 +20,9 @@ describe('Register Component', () => {
     const { getByTestId } = renderWithRouter(
       <Register registerUser={mockRegisterUser} isLoading={false} />,
     );
+    const registerButton = getByTestId('register__register-button');
 
-    fireEvent.click(getByTestId('register__register-button'));
+    fireEvent.click(registerButton);
 
     expect(mockRegisterUser).toBeCalledTimes(0);
   });
@@ -40,6 +40,7 @@ describe('Register Component', () => {
     const loginInput = getByLabelText('Login');
     const passwordInput = getByLabelText('Password');
     const emailInput = getByLabelText('Email');
+    const registerButton = getByTestId('register__register-button');
 
     fireEvent.change(loginInput, {
       target: { value: registerData.login, name: 'login' },
@@ -50,20 +51,20 @@ describe('Register Component', () => {
     fireEvent.change(emailInput, {
       target: { value: registerData.email, name: 'email' },
     });
-    fireEvent.click(getByTestId('register__register-button'));
+    fireEvent.click(registerButton);
 
     expect(mockRegisterUser).toHaveBeenCalledWith(registerData);
   });
 
   it('Should redirect to login', () => {
     const route = '/test';
-    const history = createMemoryHistory({ initialEntries: [route] });
-    const { getByTestId } = renderWithRouter(
+    const { getByTestId, history } = renderWithRouter(
       <Register registerUser={jest.fn()} isLoading={false} />,
-      { route, history },
+      { route },
     );
+    const loginLink = getByTestId('register__login-link');
 
-    fireEvent.click(getByTestId('register__login-link'));
+    fireEvent.click(loginLink);
 
     expect(history.location.pathname).toEqual('/');
   });

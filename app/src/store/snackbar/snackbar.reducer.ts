@@ -6,7 +6,7 @@ import {
 import { Reducer } from 'react';
 import produce from 'immer';
 
-const INITIAL_STATE: SnackbarState = {
+export const INITIAL_STATE: SnackbarState = {
   snackbarData: [],
 };
 

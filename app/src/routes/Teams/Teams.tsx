@@ -52,16 +52,18 @@ const Teams: React.FC<TeamsProps> = ({
 
   return (
     <Loading isLoading={isLoading}>
-      <div data-testid="teams">
-        <StyledContainer
-          loadMore={handleLoadedChange}
-          hasMore={hasMore}
-          loader={<LazyLoading key={loaded} />}
-        >
-          {items}
-        </StyledContainer>
-        <StyledZoomFab onClick={openAddTeamModal} icon={<AddIcon />} />
-      </div>
+      <StyledContainer
+        loadMore={handleLoadedChange}
+        hasMore={hasMore}
+        loader={<LazyLoading key={loaded} />}
+        data-testid="teams"
+      >
+        {items}
+      </StyledContainer>
+      <StyledZoomFab
+        onClick={openAddTeamModal}
+        icon={<AddIcon data-testid="teams__add-team" />}
+      />
     </Loading>
   );
 };

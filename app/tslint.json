@@ -7,5 +7,8 @@
     "exclude": [
       "src/**/__tests__/*.ts","src/**/__tests__/*.tsx"
     ]
+  },
+  "rules": {
+    "jsx-boolean-value": [true, "never"]
   }
 }

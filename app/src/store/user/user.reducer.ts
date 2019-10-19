@@ -2,7 +2,7 @@ import { UserActions, UserActionTypes, UserState } from './user.types';
 import { Reducer } from 'react';
 import produce from 'immer';
 
-const INITIAL_STATE: UserState = {
+export const INITIAL_STATE: UserState = {
   userData: { login: '', _id: '' },
   isAuthenticated: false,
   isLoading: false,
@@ -57,6 +57,8 @@ const userReducer: Reducer<UserState, UserActions> = (
         break;
       case UserActionTypes.AUTHORIZE_USER_FAILED:
         draft.isLoading = false;
+        break;
+      default:
         break;
     }
   });

@@ -2,7 +2,6 @@ import { cleanup, fireEvent } from '@testing-library/react';
 import Login from '../Login';
 import * as React from 'react';
 import { renderWithRouter } from '../../../../test/utils/renderWithRouter';
-import { createMemoryHistory } from 'history';
 
 describe('Login Component', () => {
   afterEach(cleanup);
@@ -12,7 +11,7 @@ describe('Login Component', () => {
       <Login loginUser={jest.fn()} isLoading />,
     );
 
-    expect(getByTestId('loading_spinner')).toBeTruthy();
+    expect(getByTestId('loading-spinner')).toBeTruthy();
   });
 
   it('Should not allow to login with empty values', () => {
@@ -20,8 +19,9 @@ describe('Login Component', () => {
     const { getByTestId } = renderWithRouter(
       <Login loginUser={mockLoginUser} isLoading={false} />,
     );
+    const loginButton = getByTestId('login__login-button');
 
-    fireEvent.click(getByTestId('login__login-button'));
+    fireEvent.click(loginButton);
 
     expect(mockLoginUser).toBeCalledTimes(0);
   });
@@ -34,12 +34,13 @@ describe('Login Component', () => {
     );
     const loginInput = getByLabelText('Login');
     const passwordInput = getByLabelText('Password');
+    const loginButton = getByTestId('login__login-button');
 
     fireEvent.change(loginInput, { target: { value: text, name: 'login' } });
     fireEvent.change(passwordInput, {
       target: { value: text, name: 'password' },
     });
-    fireEvent.click(getByTestId('login__login-button'));
+    fireEvent.click(loginButton);
 
     expect(mockLoginUser).toHaveBeenCalledWith({
       login: text,
@@ -48,14 +49,12 @@ describe('Login Component', () => {
   });
 
   it('Should redirect to register', () => {
-    const route = '/test';
-    const history = createMemoryHistory({ initialEntries: [route] });
-    const { getByTestId } = renderWithRouter(
+    const { getByTestId, history } = renderWithRouter(
       <Login loginUser={jest.fn()} isLoading={false} />,
-      { route, history },
     );
+    const registerLink = getByTestId('login__register-link');
 
-    fireEvent.click(getByTestId('login__register-link'));
+    fireEvent.click(registerLink);
 
     expect(history.location.pathname).toEqual('/register');
   });

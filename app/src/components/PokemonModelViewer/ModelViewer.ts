@@ -5,14 +5,14 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { RefObject } from 'react';
 
 export default class ModelViewer {
-  static cameraSettings = {
+  private static cameraSettings = {
     fov: 90,
     aspect: 2,
     near: 0.1,
     far: 200,
   };
 
-  static defaultCameraPosition = {
+  private static defaultCameraPosition = {
     x: 0,
     y: 0,
     z: 8,

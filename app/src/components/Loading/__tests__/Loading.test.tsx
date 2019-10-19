@@ -15,7 +15,7 @@ describe('Loading Component', () => {
       </Loading>,
     );
 
-    expect(getByTestId(/loading_spinner/)).not.toBeNull();
+    expect(getByTestId(/loading-spinner/)).not.toBeNull();
   });
 
   it('Should hide spinner when isLoading is false', () => {
@@ -25,7 +25,7 @@ describe('Loading Component', () => {
       </Loading>,
     );
 
-    expect(queryByTestId(/loading_spinner/)).toBeNull();
+    expect(queryByTestId(/loading-spinner/)).toBeNull();
   });
 
   it('Should display children correctly', () => {

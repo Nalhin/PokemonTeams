@@ -2,7 +2,7 @@ import { ModalActions, ModalActionTypes, ModalState } from './modal.types';
 import { Reducer } from 'redux';
 import produce from 'immer';
 
-const INITIAL_STATE: ModalState = {
+export const INITIAL_STATE: ModalState = {
   openModals: [],
 };
 

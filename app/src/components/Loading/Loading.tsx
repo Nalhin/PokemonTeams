@@ -43,7 +43,7 @@ const Loading: React.FC<LoadingProps> = ({
       data-testid="loading_wrapper"
     >
       {isLoading && (
-        <SpinnerWrapper data-testid="loading_spinner">
+        <SpinnerWrapper data-testid="loading-spinner">
           <BounceLoader
             loading={isLoading}
             color={'#36D7B7'}

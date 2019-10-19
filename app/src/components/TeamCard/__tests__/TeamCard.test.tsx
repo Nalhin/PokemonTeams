@@ -2,7 +2,6 @@ import * as React from 'react';
 import { renderWithRouter } from '../../../../test/utils/renderWithRouter';
 import TeamCard from '../TeamCard';
 import { cleanup, fireEvent } from '@testing-library/react';
-import { createMemoryHistory } from 'history';
 import { fakeTeam } from '../../../../test/fixtures/team';
 import { matchers } from 'jest-emotion';
 import { TEAM_COLORS } from '../../../styles/team';
@@ -15,11 +14,12 @@ describe('TeamCard Component', () => {
 
   it('Should redirect onClick', () => {
     const route = '/test';
-    const history = createMemoryHistory({ initialEntries: [route] });
-    const { getByTestId } = renderWithRouter(<TeamCard team={fakeTeam} />, {
-      route,
-      history,
-    });
+    const { getByTestId, history } = renderWithRouter(
+      <TeamCard team={fakeTeam} />,
+      {
+        route,
+      },
+    );
     const container = getByTestId(/team__card/i);
 
     fireEvent.click(container);

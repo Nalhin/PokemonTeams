@@ -3,7 +3,6 @@ import { renderWithRouter } from '../../../../test/utils/renderWithRouter';
 import NavLink from '../NavLink';
 import { cleanup, fireEvent } from '@testing-library/react';
 import { matchers } from 'jest-emotion';
-import { createMemoryHistory } from 'history';
 
 expect.extend(matchers);
 
@@ -46,12 +45,9 @@ describe('NavLink Component', () => {
   });
 
   it('Should redirect when clicked', () => {
-    const route = '/test';
     const newRoute = '/other-route';
-    const history = createMemoryHistory({ initialEntries: [route] });
-    const { getByText } = renderWithRouter(
+    const { getByText, history } = renderWithRouter(
       <NavLink to={newRoute}>{mockNavLinkText}</NavLink>,
-      { route, history },
     );
 
     fireEvent.click(getByText(mockNavLinkText));

@@ -8,7 +8,7 @@ import {
 import { Reducer } from 'redux';
 import { Pokemon } from '../../interfaces/pokemon';
 
-const INITIAL_STATE: PokemonState = {
+export const INITIAL_STATE: PokemonState = {
   pokemonData: { data: [], isLoading: false },
   current: { data: <Pokemon>{}, isLoading: false },
 };
