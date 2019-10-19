@@ -23,7 +23,7 @@ describe('Pokemon reducer', () => {
     expect(reducer).toEqual(expectedState);
   });
 
-  it('Should handle GET_ALL_POKEMON_REQUESTED', () => {
+  it('Should handle GET_ALL_POKEMON_REQUESTED action', () => {
     const initialState: PokemonState = {
       pokemonData: { data: [], isLoading: false },
       current: { data: <Pokemon>{}, isLoading: false },
@@ -38,7 +38,7 @@ describe('Pokemon reducer', () => {
     expect(reducer).toEqual(expectedState);
   });
 
-  it('Should handle GET_POKEMON_BY_ID_REQUESTED', () => {
+  it('Should handle GET_POKEMON_BY_ID_REQUESTED action', () => {
     const reducer = pokemonReducer(undefined, getPokemonByIdRequested('1'));
 
     const expectedState: PokemonState = {
@@ -48,7 +48,7 @@ describe('Pokemon reducer', () => {
 
     expect(reducer).toEqual(expectedState);
   });
-  it('Should handle GET_ALL_POKEMON_SUCCEEDED', () => {
+  it('Should handle GET_ALL_POKEMON_SUCCEEDED action', () => {
     const initialState: PokemonState = {
       pokemonData: { data: [], isLoading: true },
       current: { data: <Pokemon>{}, isLoading: false },
@@ -64,7 +64,7 @@ describe('Pokemon reducer', () => {
     expect(reducer).toEqual(expectedState);
   });
 
-  it('Should handle GET_POKEMON_BY_ID_SUCCEEDED', () => {
+  it('Should handle GET_POKEMON_BY_ID_SUCCEEDED action', () => {
     const initialState: PokemonState = {
       pokemonData: { data: [], isLoading: false },
       current: { data: <Pokemon>{}, isLoading: true },
@@ -80,7 +80,7 @@ describe('Pokemon reducer', () => {
     expect(reducer).toEqual(expectedState);
   });
 
-  it('Should handle GET_ALL_POKEMON_FAILED', () => {
+  it('Should handle GET_ALL_POKEMON_FAILED action', () => {
     const initialState: PokemonState = {
       pokemonData: { data: [], isLoading: true },
       current: { data: <Pokemon>{}, isLoading: false },
@@ -95,7 +95,7 @@ describe('Pokemon reducer', () => {
     expect(reducer).toEqual(expectedState);
   });
 
-  it('Should handle GET_POKEMON_BY_ID_FAILED', () => {
+  it('Should handle GET_POKEMON_BY_ID_FAILED action', () => {
     const initialState: PokemonState = {
       pokemonData: { data: [], isLoading: false },
       current: { data: <Pokemon>{}, isLoading: true },
