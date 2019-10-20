@@ -4,5 +4,5 @@ module.exports = {
   transform: {
     '^.+\\.[t|j]sx?$': 'babel-jest'
   },
-  testRegex: "/__tests__/.*\\.(ts|tsx|js)$",
+  testRegex: "/__tests__/.*\\.(ts|tsx|js)$"
 };

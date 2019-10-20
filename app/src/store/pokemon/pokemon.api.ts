@@ -2,9 +2,7 @@ import axios from 'axios';
 import { url } from '../url';
 
 export const fetchGetAllPokemon = () => {
-  return axios.get(`${url}/pokemon`, {
-    withCredentials: true,
-  });
+  return axios.get(`${url}/pokemon`);
 };
 
 export const fetchGetPokemonById = (id: string) => {

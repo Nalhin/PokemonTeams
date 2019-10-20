@@ -1,5 +1,5 @@
 import { Snackbar, SnackbarTypes } from '../interfaces/snackbar';
-import { uniqueId } from 'lodash';
+import uniqueId from 'lodash/uniqueId';
 
 export const generateSnackbar = (
   message: string,
