@@ -1,9 +1,19 @@
 import { runSaga } from 'redux-saga';
-import { loginUserSaga, registerUserSaga } from '../user.saga';
 import {
+  authorizeUserSaga,
+  loginUserSaga,
+  logoutUserSaga,
+  registerUserSaga,
+} from '../user.saga';
+import {
+  authorizeUserFailed,
+  authorizeUserSucceeded,
   loginUserFailed,
   loginUserRequested,
   loginUserSucceeded,
+  logoutUserFailed,
+  logoutUserRequested,
+  logoutUserSucceeded,
   registerUserFailed,
   registerUserRequested,
   registerUserSucceeded,
@@ -13,7 +23,7 @@ import { fakeUser } from '../../../../test/fixtures/user';
 import { PokemonActions } from '../../pokemon/pokemon.types';
 import {
   fakeSnackbarErrorAction,
-  fakeSnackbarLoginUserAction,
+  generateFakeSnackbarAction,
 } from '../../../../test/fixtures/snackbar';
 import * as userApi from '../../user/user.api';
 import {
@@ -21,6 +31,7 @@ import {
   fakeAxiosSuccessResponse,
 } from '../../../../test/fixtures/axios';
 import { fakeRegisterData } from '../../../../test/fixtures/registerData';
+import { SnackbarTypes } from '../../../interfaces/snackbar';
 
 const dispatchedActions: PokemonActions[] = [];
 const fakeStore = {
@@ -42,7 +53,10 @@ describe('User Saga', () => {
     });
     const expectedDispatchedActions = [
       loginUserSucceeded(fakeUser),
-      fakeSnackbarLoginUserAction,
+      generateFakeSnackbarAction(
+        `Welcome ${fakeUser.login}`,
+        SnackbarTypes.success,
+      ),
     ];
 
     await runSaga(fakeStore, loginUserSaga, loginUserRequested(fakeLoginData));
@@ -75,7 +89,10 @@ describe('User Saga', () => {
     });
     const expectedDispatchedActions = [
       registerUserSucceeded(fakeUser),
-      fakeSnackbarLoginUserAction,
+      generateFakeSnackbarAction(
+        `Welcome ${fakeUser.login}`,
+        SnackbarTypes.success,
+      ),
     ];
 
     await runSaga(
@@ -109,8 +126,68 @@ describe('User Saga', () => {
     expect(dispatchedActions).toEqual(expectedDispatchedActions);
   });
 
-  it('Should logoutUser successfully', () => {});
-  it('Should handle logoutUser errors', () => {});
-  it('Should authorizeUser successfully', () => {});
-  it('Should handle authorizeUser errors', () => {});
+  it('Should logoutUser successfully', async () => {
+    const apiMock = jest.spyOn(userApi, 'fetchLogoutUser').mockResolvedValue({
+      ...fakeAxiosSuccessResponse,
+    });
+    const expectedDispatchedActions = [
+      generateFakeSnackbarAction('Logout successful', SnackbarTypes.success),
+      logoutUserSucceeded(),
+    ];
+
+    await runSaga(fakeStore, logoutUserSaga, logoutUserRequested());
+
+    expect(apiMock).toHaveBeenCalledTimes(1);
+    expect(dispatchedActions).toEqual(expectedDispatchedActions);
+  });
+
+  it('Should handle logoutUser errors', async () => {
+    const apiMock = jest.spyOn(userApi, 'fetchLogoutUser').mockRejectedValue({
+      ...fakeAxiosError,
+    });
+    const expectedDispatchedActions = [
+      fakeSnackbarErrorAction,
+      logoutUserFailed(),
+    ];
+
+    await runSaga(fakeStore, logoutUserSaga, logoutUserRequested());
+
+    expect(apiMock).toHaveBeenCalledTimes(1);
+    expect(dispatchedActions).toEqual(expectedDispatchedActions);
+  });
+
+  it('Should authorizeUser successfully', async () => {
+    const apiMock = jest
+      .spyOn(userApi, 'fetchAuthorizeUser')
+      .mockResolvedValue({
+        ...fakeAxiosSuccessResponse,
+        data: fakeUser,
+      });
+    const expectedDispatchedActions = [
+      authorizeUserSucceeded(fakeUser),
+      generateFakeSnackbarAction(
+        `Welcome back ${fakeUser.login}`,
+        SnackbarTypes.info,
+      ),
+    ];
+
+    await runSaga(fakeStore, authorizeUserSaga);
+
+    expect(apiMock).toHaveBeenCalledTimes(1);
+    expect(dispatchedActions).toEqual(expectedDispatchedActions);
+  });
+
+  it('Should handle authorizeUser errors', async () => {
+    const apiMock = jest
+      .spyOn(userApi, 'fetchAuthorizeUser')
+      .mockRejectedValue({
+        ...fakeAxiosError,
+      });
+    const expectedDispatchedActions = [authorizeUserFailed()];
+
+    await runSaga(fakeStore, authorizeUserSaga);
+
+    expect(apiMock).toHaveBeenCalledTimes(1);
+    expect(dispatchedActions).toEqual(expectedDispatchedActions);
+  });
 });

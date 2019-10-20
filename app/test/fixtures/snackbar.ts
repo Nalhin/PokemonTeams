@@ -11,7 +11,12 @@ export const fakeSnackbarErrorAction = {
   type: 'ADD_SNACKBAR',
 };
 
-export const fakeSnackbarLoginUserAction = {
-  snackbar: { id: '1', message: 'Welcome 1', type: 0 },
-  type: 'ADD_SNACKBAR',
+export const generateFakeSnackbarAction = (
+  message: string,
+  type: SnackbarTypes,
+) => {
+  return {
+    snackbar: { id: '1', message, type },
+    type: 'ADD_SNACKBAR',
+  };
 };
