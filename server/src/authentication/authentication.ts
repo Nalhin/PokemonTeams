@@ -1,7 +1,6 @@
 import * as jwt from 'jsonwebtoken';
 import UserModel from '../user/user.model';
-import { Response } from 'express';
-import { NextFunction } from 'express';
+import { NextFunction, Response } from 'express';
 import { AuthenticationRequest } from './authentication.interface';
 
 export const authentication = async (
@@ -11,11 +10,10 @@ export const authentication = async (
 ) => {
   try {
     const { token } = req.cookies;
-
     const verified = jwt.verify(token, process.env.SECRET);
     const user = await UserModel.findOne({ _id: verified._id, tokens: token });
 
-    if (!user) res.status(401).send();
+    if (!user) res.status(401).send({ error: 'Unauthorized.' });
 
     req.locals = { user };
     next();

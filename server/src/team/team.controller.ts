@@ -8,6 +8,7 @@ export const getTeams = async (req: Request, res: Response) => {
     const teams: Team[] = await TeamModel.find({})
       .populate('roster')
       .populate('owner', 'login');
+
     res.send(teams);
   } catch (e) {
     res.status(500).send(e);
@@ -17,12 +18,18 @@ export const getTeams = async (req: Request, res: Response) => {
 export const saveTeam = async (req: AuthenticationRequest, res: Response) => {
   try {
     const teamData: Team = req.body;
+
     const team = await new TeamModel({
       ...teamData,
       owner: req.locals.user._id,
     }).save();
 
-    res.status(201).send(team);
+    const populatedTeam = await team
+      .populate('roster')
+      .populate('owner', 'login')
+      .execPopulate();
+
+    res.status(201).send(populatedTeam);
   } catch (e) {
     res.status(500).send(e);
   }
@@ -56,6 +63,7 @@ export const editTeam = async (req: AuthenticationRequest, res: Response) => {
       { type, name, description, roster },
       { new: true },
     ).populate('roster');
+
     return res.status(201).send(updatedTeam);
   } catch (e) {
     res.status(500).send(e);

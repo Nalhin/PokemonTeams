@@ -7,7 +7,6 @@ import { User } from './user.interface';
 export interface IUser extends User {
   generateAuthenticationToken: () => Promise<string>;
   isPasswordValid(password: string): Promise<boolean>;
-  generateAuthenticationCookie(): string;
 }
 
 const UserSchema: Schema = new Schema({

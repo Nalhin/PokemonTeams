@@ -7,7 +7,8 @@
     "lint": "eslint src",
     "start": "webpack-dev-server --env.development",
     "build": "webpack --env.production",
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "test:cov": "jest --coverage"
   },
   "dependencies": {
     "@emotion/core": "^10.0.15",
