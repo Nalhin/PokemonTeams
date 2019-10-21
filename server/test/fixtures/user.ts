@@ -1,14 +1,8 @@
-import * as mongoose from 'mongoose';
+import * as faker from 'faker';
 
-export const fakeUser = {
-  login: 'login',
-  password: 'password',
-  email: 'email@email',
-};
+export const getFakeUser =()=> ({
+  login: faker.internet.userName(),
+  password: faker.internet.password(),
+  email: faker.internet.email(),
+});
 
-export const fakeUserId = new mongoose.Types.ObjectId();
-
-export const fakeUserWithId = {
-  ...fakeUser,
-  _id: fakeUserId,
-};

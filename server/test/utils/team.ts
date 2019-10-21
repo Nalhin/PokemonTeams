@@ -10,9 +10,11 @@ export const generateOwnerAndTeam = async (fakeOwner, fakeTeam) => {
     ...fakeTeam,
     owner: fakeOwnerId,
     _id: fakeTeamId,
-  });
+  }).save();
+
   const fakeTeamWithFakeOwner = {
-    ...fakeTeamWithFakeOwnerId,
+    ...fakeTeam,
+    _id: fakeTeamId,
     owner: {
       _id: owner._id,
       login: owner.login,
@@ -30,7 +32,6 @@ export const generateOwnerAndTeam = async (fakeOwner, fakeTeam) => {
 export const generateAuthCookie = async user => {
   const token = await user.generateAuthenticationToken();
   const cookie = `token=${token};`;
-
   return cookie;
 };
 

@@ -1,8 +1,7 @@
 import UserModel from '../../src/user/user.model';
-import { fakeUser } from '../fixtures/user';
 import * as mongoose from 'mongoose';
 
-export const generateAuthCookieAndUser = async () => {
+export const generateAuthCookieAndUser = async fakeUser => {
   const fakeUserId = new mongoose.Types.ObjectId();
   const user = await new UserModel({ ...fakeUser, _id: fakeUserId }).save();
   const token = await user.generateAuthenticationToken();
@@ -10,7 +9,7 @@ export const generateAuthCookieAndUser = async () => {
   return { cookie, fakeUserId };
 };
 
-export const generateUserWithId = async () => {
+export const generateUserWithId = async fakeUser => {
   const fakeUserId = new mongoose.Types.ObjectId();
   const user = await new UserModel({ ...fakeUser, _id: fakeUserId }).save();
   return { user, fakeUserId };

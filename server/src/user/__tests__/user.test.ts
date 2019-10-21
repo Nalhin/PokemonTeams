@@ -1,7 +1,7 @@
 import * as request from 'supertest';
 import UserModel from '../user.model';
 import app from '../../app';
-import { fakeUser } from '../../../test/fixtures/user';
+import { getFakeUser } from '../../../test/fixtures/user';
 import * as mongoose from 'mongoose';
 import {
   generateAuthCookieAndUser,
@@ -15,6 +15,7 @@ describe('POST /user/register', () => {
 
   it('Should register user correctly', async () => {
     const fakeUserId = new mongoose.Types.ObjectId();
+    const fakeUser = getFakeUser();
     const expectedResponseStatus = 201;
     const expectedResponseBody = {
       login: fakeUser.login,
@@ -38,6 +39,7 @@ describe('POST /user/register', () => {
   });
 
   it('Should not allow to register the same user', async () => {
+    const fakeUser = getFakeUser();
     const expectedFirstResponseStatus = 201;
     const expectedSecondResponseStatus = 400;
 
@@ -60,7 +62,8 @@ describe('POST /user/login', () => {
   });
 
   it('Should login existing user correctly', async () => {
-    const { user, fakeUserId } = await generateUserWithId();
+    const fakeUser = getFakeUser();
+    const { user, fakeUserId } = await generateUserWithId(fakeUser);
     await user.generateAuthenticationToken();
     const token = user.tokens[0];
     const requestData = {
@@ -86,6 +89,7 @@ describe('POST /user/login', () => {
   });
 
   it('Should respond with 404, if password is incorrect', async () => {
+    const fakeUser = getFakeUser();
     await new UserModel(fakeUser).save();
     const requestData = {
       login: fakeUser.login,
@@ -101,6 +105,7 @@ describe('POST /user/login', () => {
   });
 
   it('Should respond with 404, if login is incorrect', async () => {
+    const fakeUser = getFakeUser();
     await new UserModel(fakeUser).save();
     const requestData = {
       login: '',
@@ -143,7 +148,8 @@ describe('POST /user/authorize', () => {
   });
 
   it('Should authorize user with valid token', async () => {
-    const { cookie, fakeUserId } = await generateAuthCookieAndUser();
+    const fakeUser = getFakeUser();
+    const { cookie, fakeUserId } = await generateAuthCookieAndUser(fakeUser);
     const expectedResponseBody = {
       login: fakeUser.login,
       _id: fakeUserId,
@@ -161,10 +167,11 @@ describe('POST /user/authorize', () => {
   });
 
   it('Should return 401, if authentication cookie is not valid', async () => {
-    const expectedResponseStatus = 401;
+    const fakeUser = getFakeUser();
     const user = await new UserModel(fakeUser).save();
     await user.generateAuthenticationToken();
     const invalidCookie = `token=fake;`;
+    const expectedResponseStatus = 401;
 
     const response = await request(app)
       .get('/user/authorize')

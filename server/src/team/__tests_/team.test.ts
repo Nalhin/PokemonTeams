@@ -4,26 +4,30 @@ import app from '../../app';
 import TeamModel from '../team.model';
 import UserModel from '../../user/user.model';
 import { fakeTeam } from '../../../test/fixtures/team';
-import { fakeUser } from '../../../test/fixtures/user';
+import { getFakeUser } from '../../../test/fixtures/user';
 import {
   generateAuthCookie,
   generateAuthCookieAndUser,
   generateOwnerAndTeam,
 } from '../../../test/utils/team';
+import PokemonModel from '../../pokemon/pokemon.model';
+import { fakePokemon } from '../../../test/fixtures/pokemon';
 
 describe('GET /team', () => {
   beforeEach(async () => {
     await TeamModel.deleteMany({});
     await UserModel.deleteMany({});
+    await PokemonModel.deleteMany({});
   });
 
   it('Should respond with one team', async () => {
+    const fakeUser = getFakeUser();
     const { fakeTeamWithFakeOwner } = await generateOwnerAndTeam(
       fakeUser,
       fakeTeam,
     );
-    const expectedStatus = 200;
     const expectedResponseBody = [fakeTeamWithFakeOwner];
+    const expectedStatus = 200;
 
     const response = await request(app).get('/team');
 
@@ -33,23 +37,69 @@ describe('GET /team', () => {
       expectedResponseBody[0].owner.login,
     );
   });
+
+  it('Should populate response with pokemon and owner', async () => {
+    const fakePokemonId = new mongoose.Types.ObjectId();
+    const fakePokemonWithId = { ...fakePokemon, _id: fakePokemonId };
+    await new PokemonModel(fakePokemonWithId).save();
+    const fakeUser = getFakeUser();
+    const { fakeTeamWithFakeOwner } = await generateOwnerAndTeam(fakeUser, {
+      ...fakeTeam,
+      roster: [fakePokemonId],
+    });
+    const expectedResponseBody = [
+      { ...fakeTeamWithFakeOwner, roster: [fakePokemonWithId] },
+    ];
+    const expectedStatus = 200;
+
+    const response = await request(app).get('/team');
+
+    expect(response.status).toBe(expectedStatus);
+    expect(response.body.length).toEqual(1);
+    expect(response.body[0].owner.login).toEqual(
+      expectedResponseBody[0].owner.login,
+    );
+    expect(response.body[0].roster[0].name).toEqual(
+      expectedResponseBody[0].roster[0].name,
+    );
+  });
 });
 
 describe('GET /team/:id', () => {
   beforeEach(async () => {
     await TeamModel.deleteMany({});
     await UserModel.deleteMany({});
+    await PokemonModel.deleteMany({});
   });
 
   it('Should respond with the correct team', async () => {
     await new TeamModel(fakeTeam).save();
+    const fakeUser = getFakeUser();
     const { fakeTeamId } = await generateOwnerAndTeam(fakeUser, fakeTeam);
     const expectedResponseStatus = 200;
 
     const response = await request(app).get(`/team/${fakeTeamId}`);
 
     expect(response.status).toBe(expectedResponseStatus);
-    expect(response.body).not.toBe(null);
+    expect(JSON.stringify(response.body._id)).toEqual(
+      JSON.stringify(fakeTeamId),
+    );
+  });
+
+  it('Should populate response with owner and pokemon', async () => {
+    const fakePokemonId = new mongoose.Types.ObjectId();
+    const fakePokemonWithId = { ...fakePokemon, _id: fakePokemonId };
+    await new PokemonModel(fakePokemonWithId).save();
+    const fakeUser = getFakeUser();
+    const { fakeTeamId } = await generateOwnerAndTeam(fakeUser, {
+      ...fakeTeam,
+      roster: [fakePokemonId],
+    });
+    const expectedResponseStatus = 200;
+
+    const response = await request(app).get(`/team/${fakeTeamId}`);
+
+    expect(response.status).toBe(expectedResponseStatus);
     expect(JSON.stringify(response.body._id)).toEqual(
       JSON.stringify(fakeTeamId),
     );
@@ -73,6 +123,7 @@ describe('POST /team', () => {
   });
 
   it('Should allow to save team, if user is authenticated', async () => {
+    const fakeUser = getFakeUser();
     const { cookie, fakeUserId } = await generateAuthCookieAndUser(fakeUser);
     const expectedResponseStatus = 201;
 
@@ -107,6 +158,7 @@ describe('POST "team/:id"', () => {
   });
 
   it('Should allow to edit team, if user is authenticated', async () => {
+    const fakeUser = getFakeUser();
     const {
       owner,
       fakeTeamId,
@@ -128,34 +180,35 @@ describe('POST "team/:id"', () => {
   });
 
   it('Should not allow to edit team, if user is not the owner', async () => {
-    const user = await new UserModel(fakeUser).save();
-    const cookie = await generateAuthCookie(user);
+    const fakeOwner = getFakeUser();
     const { fakeTeamId, fakeTeamWithFakeOwner } = await generateOwnerAndTeam(
-      fakeUser,
+      fakeOwner,
       fakeTeam,
     );
+    const fakeUser = getFakeUser();
+    const user = await new UserModel(fakeUser).save();
+    const cookie = await generateAuthCookie(user);
+    const editedFakeTeam = { ...fakeTeamWithFakeOwner, name: 'new' };
     const expectedResponseStatus = 401;
-    const newFakeTeam = { ...fakeTeamWithFakeOwner, name: 'new' };
 
     const response = await request(app)
       .post(`/team/${fakeTeamId}`)
       .set('Cookie', cookie)
-      .send(newFakeTeam);
+      .send(editedFakeTeam);
     const team = await TeamModel.findById(fakeTeamId);
 
     expect(response.status).toBe(expectedResponseStatus);
-    expect(team.toObject({ versionKey: false })).toMatchObject(
-      fakeTeamWithFakeOwner,
-    );
+    expect(team.name).toBe(fakeTeamWithFakeOwner.name);
   });
 
   it('Should not allow to edit team without authentication', async () => {
-    const expectedResponseStatus = 401;
+    const fakeUser = getFakeUser();
     const { fakeTeamWithFakeOwner } = await generateOwnerAndTeam(
       fakeUser,
       fakeTeam,
     );
     const newFakeTeam = { ...fakeTeamWithFakeOwner, name: 'new' };
+    const expectedResponseStatus = 401;
 
     const response = await request(app)
       .post('/team')
@@ -172,6 +225,7 @@ describe('DELETE /team/:id', () => {
   });
 
   it('Should remove team correctly', async () => {
+    const fakeUser = getFakeUser();
     const { fakeTeamId, owner } = await generateOwnerAndTeam(
       fakeUser,
       fakeTeam,
@@ -192,10 +246,9 @@ describe('DELETE /team/:id', () => {
   });
 
   it('Should not allow to delete team, if user is not the owner', async () => {
-    const { fakeTeamId, fakeTeamWithFakeOwner } = await generateOwnerAndTeam(
-      fakeUser,
-      fakeTeam,
-    );
+    const fakeOwner = getFakeUser();
+    const { fakeTeamId } = await generateOwnerAndTeam(fakeOwner, fakeTeam);
+    const fakeUser = getFakeUser();
     const user = await new UserModel(fakeUser).save();
     const cookie = await generateAuthCookie(user);
     const expectedResponseStatus = 401;
@@ -206,14 +259,13 @@ describe('DELETE /team/:id', () => {
     const team = await TeamModel.findById(fakeTeamId);
 
     expect(response.status).toBe(expectedResponseStatus);
-    expect(team.toObject({ versionKey: false })).toMatchObject(
-      fakeTeamWithFakeOwner,
-    );
+    expect(team).toBeTruthy();
   });
 
   it('Should not allow to remove team without authentication', async () => {
-    const expectedResponseStatus = 401;
+    const fakeUser = getFakeUser();
     const { fakeTeamId } = await generateOwnerAndTeam(fakeUser, fakeTeam);
+    const expectedResponseStatus = 401;
 
     const response = await request(app).delete(`/team/${fakeTeamId}`);
 
