@@ -12,7 +12,6 @@ const EditTeamModal: React.FC<EditTeamModalProps> = ({
   team,
   closeModal,
   isLoading,
-  isOpen,
   openPickPokemonModal,
 }) => {
   const [teamState, setTeamState] = React.useState<Team>({} as Team);
@@ -59,6 +58,7 @@ const EditTeamModal: React.FC<EditTeamModalProps> = ({
 
   return (
     <TeamModal
+      testId="edit-team-modal"
       teamState={teamState}
       isLoading={isLoading}
       closeModal={closeModal}
@@ -66,7 +66,6 @@ const EditTeamModal: React.FC<EditTeamModalProps> = ({
       addPokemon={addPokemon}
       handleTeamChange={handleTeamChange}
       removeFromRoster={removeFromRoster}
-      isOpen={isOpen}
       handleConfirm={handleConfirm}
       openPickPokemonModal={openPickPokemonModal}
     />

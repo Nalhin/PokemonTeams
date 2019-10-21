@@ -5,6 +5,7 @@ import {
   GetPokemonByIdFailedAction,
   GetPokemonByIdRequestedAction,
   GetPokemonByIdSucceededAction,
+  LoadMorePokemonAction,
   PokemonActionTypes,
 } from './pokemon.types';
 import { Pokemon } from '../../interfaces/pokemon';
@@ -40,4 +41,11 @@ export const getPokemonByIdSucceeded = (
 
 export const getPokemonByIdFailed = (): GetPokemonByIdFailedAction => ({
   type: PokemonActionTypes.GET_POKEMON_BY_ID_FAILED,
+});
+
+export const loadMorePokemon = (
+  amountToLoad: number,
+): LoadMorePokemonAction => ({
+  type: PokemonActionTypes.LOAD_MORE_POKEMON,
+  amountToLoad,
 });

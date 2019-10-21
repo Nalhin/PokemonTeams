@@ -20,12 +20,12 @@ const SpinnerWrapper = styled.div`
   align-items: center;
   justify-content: center;
   background: rgba(255, 255, 255, 0.6);
-  z-index: 1001;
+  z-index: 2001;
 `;
 
 interface LoadingProps {
   isLoading: boolean;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   isRelative?: boolean;
   className?: string;
 }

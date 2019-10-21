@@ -26,22 +26,21 @@ const StyledZoomFab = styled(ZoomFab)`
 interface TeamsProps extends TeamsContainerProps {}
 
 const LOAD_AMOUNT = 10;
-const INITIAL_LOAD = 20;
 
 const Teams: React.FC<TeamsProps> = ({
   teams,
   isLoading,
   getTeams,
   openAddTeamModal,
+  loaded,
+  loadMoreTeams,
 }) => {
-  const [loaded, setLoaded] = React.useState(INITIAL_LOAD);
-
   React.useEffect(() => {
     getTeams();
   }, [getTeams]);
 
   const handleLoadedChange = () => {
-    setLoaded(loaded + LOAD_AMOUNT);
+    loadMoreTeams(LOAD_AMOUNT);
   };
 
   const hasMore = loaded < teams.length;

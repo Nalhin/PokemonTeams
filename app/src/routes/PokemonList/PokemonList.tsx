@@ -18,21 +18,20 @@ const StyledPokemonContainer = styled(InfiniteScroll)`
 interface PokemonListProps extends PokemonListContainerProps {}
 
 const LOAD_AMOUNT = 50;
-const INITIAL_LOAD = 50;
 
 const PokemonList: React.FC<PokemonListProps> = ({
   pokemonData,
   isLoading,
   getAllPokemon,
+  loadMorePokemon,
+  loaded,
 }) => {
-  const [loaded, setLoaded] = React.useState(INITIAL_LOAD);
-
   React.useEffect(() => {
     getAllPokemon();
   }, [getAllPokemon]);
 
   const handleLoadedChange = () => {
-    setLoaded(loaded + LOAD_AMOUNT);
+    loadMorePokemon(LOAD_AMOUNT);
   };
 
   const hasMore = loaded < pokemonData.length;

@@ -40,7 +40,7 @@ interface TeamModalProps {
   openPickPokemonModal: () => void;
   removeFromRoster: (position: number) => void;
   handleConfirm: () => void;
-  isOpen: boolean;
+  testId: string;
 }
 
 const TeamModal: React.FC<TeamModalProps> = ({
@@ -49,14 +49,14 @@ const TeamModal: React.FC<TeamModalProps> = ({
   setType,
   teamState,
   handleConfirm,
-  isOpen,
   isLoading,
   closeModal,
   openPickPokemonModal,
+  testId,
 }) => {
   const { description, type, name, roster } = teamState;
   return (
-    <StyledModal open={isOpen} onClose={closeModal}>
+    <StyledModal open onClose={closeModal} data-testid={testId}>
       <StyledContainer data-testid="teams">
         <StyledLoading isLoading={isLoading} isRelative>
           <TeamTypeRadioGroup value={type} onChange={setType} />

@@ -20,7 +20,7 @@ import { fakeRegisterData } from '../../../../test/fixtures/registerData';
 
 describe('User Reducer', () => {
   it('Should return the initial state', () => {
-    const expectedState = INITIAL_STATE;
+    const expectedState = { ...INITIAL_STATE };
 
     const reducer = userReducer(undefined, authorizeUserFailed());
 
@@ -70,7 +70,7 @@ describe('User Reducer', () => {
   });
 
   it('Should handle REGISTER_USER_REQUESTED action', () => {
-    const initialState = INITIAL_STATE;
+    const initialState: UserState = { ...INITIAL_STATE };
     const expectedState: UserState = {
       ...INITIAL_STATE,
       isLoading: true,
@@ -113,7 +113,7 @@ describe('User Reducer', () => {
   });
 
   it('Should handle LOGOUT_USER_REQUESTED action', () => {
-    const initialState: UserState = INITIAL_STATE;
+    const initialState: UserState = { ...INITIAL_STATE };
     const expectedState: UserState = { ...INITIAL_STATE, isLoading: true };
     const action = logoutUserRequested();
 
@@ -153,7 +153,7 @@ describe('User Reducer', () => {
   });
 
   it('Should handle AUTHORIZE_USER_REQUESTED action', () => {
-    const initialState = INITIAL_STATE;
+    const initialState = { ...INITIAL_STATE };
     const expectedState: UserState = { ...INITIAL_STATE, isLoading: true };
     const action = authorizeUserRequested();
 
@@ -178,7 +178,7 @@ describe('User Reducer', () => {
 
   it('Should handle AUTHORIZE_USER_FAILED action', () => {
     const initialState: UserState = { ...INITIAL_STATE, isLoading: true };
-    const expectedState = INITIAL_STATE;
+    const expectedState: UserState = { ...INITIAL_STATE };
     const action = authorizeUserFailed();
 
     const reducer = userReducer(initialState, action);

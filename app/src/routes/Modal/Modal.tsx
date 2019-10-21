@@ -1,8 +1,18 @@
 import * as React from 'react';
-import AddTeamModal from './TeamModal/AddTeamModal.container';
-import EditTeamModal from './TeamModal/EditTeamModal.container';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { ModalContainerProps } from './Modal.container';
+import { ModalTypes } from '../../store/modal/modal.types';
+import Loading from '../../components/Loading/Loading';
+
+const AddTeamModal = React.lazy(() =>
+  import('./TeamModal/AddTeamModal.container'),
+);
+const EditTeamModal = React.lazy(() =>
+  import('./TeamModal/EditTeamModal.container'),
+);
+const DeleteTeamModal = React.lazy(() =>
+  import('./DeleteTeamModal/DeleteTeamModal.container'),
+);
 
 interface ModalProps extends ModalContainerProps, RouteComponentProps {}
 
@@ -10,6 +20,7 @@ const Modal: React.FC<ModalProps> = ({
   history,
   isModalOpen,
   closeAllModal,
+  openModals,
 }) => {
   React.useEffect(() => {
     const unlisted = history.listen((location, action) => {
@@ -21,10 +32,18 @@ const Modal: React.FC<ModalProps> = ({
   }, [history, isModalOpen]);
 
   return (
-    <React.Fragment>
-      <AddTeamModal />
-      <EditTeamModal />
-    </React.Fragment>
+    <React.Suspense fallback={<Loading isLoading />}>
+      {openModals.map(modal => {
+        switch (modal) {
+          case ModalTypes.addTeam:
+            return <AddTeamModal key={modal} />;
+          case ModalTypes.editTeam:
+            return <EditTeamModal key={modal} />;
+          case ModalTypes.deleteTeam:
+            return <DeleteTeamModal key={modal} />;
+        }
+      })}
+    </React.Suspense>
   );
 };
 

@@ -64,20 +64,14 @@ const TeamSingleView: React.FC<TeamSingleViewProps> = ({
   isLoading,
   match,
   openEditTeamModal,
-  deleteTeam,
+  openDeleteTeamModal,
   team,
-  history,
 }) => {
   React.useEffect(() => {
     getTeam(match.params.id);
   }, [getTeam]);
 
-  const handleDeleteTeam = () => {
-    deleteTeam(match.params.id, history);
-  };
-
   const { roster, description, owner, type, name } = team;
-
   return (
     <Loading isLoading={isLoading}>
       <StyledPaper data-testid="team-single-view" type={type}>
@@ -99,9 +93,8 @@ const TeamSingleView: React.FC<TeamSingleViewProps> = ({
       </StyledPaper>
       <StyledDeleteFab
         icon={<DeleteIcon data-testid="team-single-view__delete-icon" />}
-        onClick={handleDeleteTeam}
+        onClick={openDeleteTeamModal}
       />
-
       <StyledEditFab
         icon={<EditIcon data-testid="team-single-view__edit-icon" />}
         onClick={openEditTeamModal}

@@ -1,7 +1,7 @@
 import { Pokemon } from '../../interfaces/pokemon';
 
 export interface PokemonState {
-  readonly pokemonData: { data: Pokemon[]; isLoading: boolean };
+  readonly pokemonData: { data: Pokemon[]; isLoading: boolean; loaded: number };
   readonly current: { data: Pokemon; isLoading: boolean };
 }
 
@@ -12,6 +12,7 @@ export enum PokemonActionTypes {
   GET_POKEMON_BY_ID_REQUESTED = 'GET_POKEMON_BY_ID_REQUESTED',
   GET_POKEMON_BY_ID_SUCCEEDED = 'GET_POKEMON_BY_ID_SUCCEEDED',
   GET_POKEMON_BY_ID_FAILED = 'GET_POKEMON_BY_ID_FAILED',
+  LOAD_MORE_POKEMON = 'LOAD_MORE_POKEMON',
 }
 
 export interface GetAllPokemonRequestedAction {
@@ -41,10 +42,16 @@ export interface GetPokemonByIdFailedAction {
   type: typeof PokemonActionTypes.GET_POKEMON_BY_ID_FAILED;
 }
 
+export interface LoadMorePokemonAction {
+  type: typeof PokemonActionTypes.LOAD_MORE_POKEMON;
+  amountToLoad: number;
+}
+
 export type PokemonActions =
   | GetAllPokemonRequestedAction
   | GetAllPokemonSucceededAction
   | GetAllPokemonFailedAction
   | GetPokemonByIdRequestedAction
   | GetPokemonByIdSucceededAction
-  | GetPokemonByIdFailedAction;
+  | GetPokemonByIdFailedAction
+  | LoadMorePokemonAction;

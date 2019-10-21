@@ -1,6 +1,5 @@
-import pokemonReducer from '../pokemon.reducer';
+import pokemonReducer, { INITIAL_STATE } from '../pokemon.reducer';
 import { PokemonState } from '../pokemon.types';
-import { Pokemon } from '../../../interfaces/pokemon';
 import {
   getAllPokemonFailed,
   getAllPokemonRequested,
@@ -8,14 +7,15 @@ import {
   getPokemonByIdFailed,
   getPokemonByIdRequested,
   getPokemonByIdSucceeded,
+  loadMorePokemon,
 } from '../pokemon.actions';
 import { fakePokemon } from '../../../../test/fixtures/pokemon';
 
 describe('Pokemon reducer', () => {
   it('Should return the initial state', () => {
     const expectedState: PokemonState = {
-      pokemonData: { data: [], isLoading: true },
-      current: { data: <Pokemon>{}, isLoading: false },
+      ...INITIAL_STATE,
+      pokemonData: { ...INITIAL_STATE.pokemonData, isLoading: true },
     };
 
     const reducer = pokemonReducer(undefined, getAllPokemonRequested());
@@ -24,13 +24,10 @@ describe('Pokemon reducer', () => {
   });
 
   it('Should handle GET_ALL_POKEMON_REQUESTED action', () => {
-    const initialState: PokemonState = {
-      pokemonData: { data: [], isLoading: false },
-      current: { data: <Pokemon>{}, isLoading: false },
-    };
+    const initialState: PokemonState = { ...INITIAL_STATE };
     const expectedState: PokemonState = {
-      pokemonData: { data: [], isLoading: true },
-      current: { data: <Pokemon>{}, isLoading: false },
+      ...INITIAL_STATE,
+      pokemonData: { ...INITIAL_STATE.pokemonData, isLoading: true },
     };
 
     const reducer = pokemonReducer(initialState, getAllPokemonRequested());
@@ -38,25 +35,15 @@ describe('Pokemon reducer', () => {
     expect(reducer).toEqual(expectedState);
   });
 
-  it('Should handle GET_POKEMON_BY_ID_REQUESTED action', () => {
-    const reducer = pokemonReducer(undefined, getPokemonByIdRequested('1'));
-
-    const expectedState: PokemonState = {
-      pokemonData: { data: [], isLoading: false },
-      current: { data: <Pokemon>{}, isLoading: true },
-    };
-
-    expect(reducer).toEqual(expectedState);
-  });
   it('Should handle GET_ALL_POKEMON_SUCCEEDED action', () => {
     const initialState: PokemonState = {
-      pokemonData: { data: [], isLoading: true },
-      current: { data: <Pokemon>{}, isLoading: false },
+      ...INITIAL_STATE,
+      pokemonData: { ...INITIAL_STATE.pokemonData, isLoading: true },
     };
     const data = [fakePokemon, fakePokemon];
     const expectedState: PokemonState = {
-      pokemonData: { data, isLoading: false },
-      current: { data: <Pokemon>{}, isLoading: false },
+      ...INITIAL_STATE,
+      pokemonData: { ...INITIAL_STATE.pokemonData, data },
     };
 
     const reducer = pokemonReducer(initialState, getAllPokemonSucceeded(data));
@@ -64,30 +51,13 @@ describe('Pokemon reducer', () => {
     expect(reducer).toEqual(expectedState);
   });
 
-  it('Should handle GET_POKEMON_BY_ID_SUCCEEDED action', () => {
-    const initialState: PokemonState = {
-      pokemonData: { data: [], isLoading: false },
-      current: { data: <Pokemon>{}, isLoading: true },
-    };
-    const data = fakePokemon;
-    const expectedState: PokemonState = {
-      pokemonData: { data: [], isLoading: false },
-      current: { data, isLoading: false },
-    };
-
-    const reducer = pokemonReducer(initialState, getPokemonByIdSucceeded(data));
-
-    expect(reducer).toEqual(expectedState);
-  });
-
   it('Should handle GET_ALL_POKEMON_FAILED action', () => {
     const initialState: PokemonState = {
-      pokemonData: { data: [], isLoading: true },
-      current: { data: <Pokemon>{}, isLoading: false },
+      ...INITIAL_STATE,
+      pokemonData: { ...INITIAL_STATE.pokemonData, isLoading: true },
     };
     const expectedState: PokemonState = {
-      pokemonData: { data: [], isLoading: false },
-      current: { data: <Pokemon>{}, isLoading: false },
+      ...INITIAL_STATE,
     };
 
     const reducer = pokemonReducer(initialState, getAllPokemonFailed());
@@ -95,17 +65,62 @@ describe('Pokemon reducer', () => {
     expect(reducer).toEqual(expectedState);
   });
 
+  it('Should handle GET_POKEMON_BY_ID_REQUESTED action', () => {
+    const initialState: PokemonState = { ...INITIAL_STATE };
+    const expectedState: PokemonState = {
+      ...INITIAL_STATE,
+      current: { ...INITIAL_STATE.current, isLoading: true },
+    };
+
+    const reducer = pokemonReducer(initialState, getPokemonByIdRequested('1'));
+
+    expect(reducer).toEqual(expectedState);
+  });
+
+  it('Should handle GET_POKEMON_BY_ID_SUCCEEDED action', () => {
+    const initialState: PokemonState = {
+      ...INITIAL_STATE,
+      current: { ...INITIAL_STATE.current, isLoading: true },
+    };
+    const data = fakePokemon;
+    const expectedState: PokemonState = {
+      ...INITIAL_STATE,
+      current: { ...INITIAL_STATE.current, data },
+    };
+
+    const reducer = pokemonReducer(initialState, getPokemonByIdSucceeded(data));
+
+    expect(reducer).toEqual(expectedState);
+  });
+
   it('Should handle GET_POKEMON_BY_ID_FAILED action', () => {
     const initialState: PokemonState = {
-      pokemonData: { data: [], isLoading: false },
-      current: { data: <Pokemon>{}, isLoading: true },
+      ...INITIAL_STATE,
+      current: { ...INITIAL_STATE.current, isLoading: true },
     };
     const expectedState: PokemonState = {
-      pokemonData: { data: [], isLoading: false },
-      current: { data: <Pokemon>{}, isLoading: false },
+      ...INITIAL_STATE,
     };
 
     const reducer = pokemonReducer(initialState, getPokemonByIdFailed());
+
+    expect(reducer).toEqual(expectedState);
+  });
+  it('Should handle LOAD_MORE_POKEMON action', () => {
+    const amountToLoad = 20;
+    const initialState: PokemonState = {
+      ...INITIAL_STATE,
+    };
+    const expectedState: PokemonState = {
+      ...INITIAL_STATE,
+      pokemonData: {
+        ...INITIAL_STATE.pokemonData,
+        loaded: INITIAL_STATE.pokemonData.loaded + amountToLoad,
+      },
+    };
+    const action = loadMorePokemon(amountToLoad);
+
+    const reducer = pokemonReducer(initialState, action);
 
     expect(reducer).toEqual(expectedState);
   });

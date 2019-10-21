@@ -2,24 +2,23 @@ import { AppState } from '../../../store/rootReducer';
 import { ModalTypes } from '../../../store/modal/modal.types';
 import { bindActionCreators, Dispatch } from 'redux';
 import { RootAction } from '../../../store/rootAction';
-import { closeModal, openModal } from '../../../store/modal/modal.actions';
+import { closeModal } from '../../../store/modal/modal.actions';
 import { connect } from 'react-redux';
-import { saveTeamRequested } from '../../../store/team/team.actions';
-import AddTeamModal from './AddTeamModal';
+import { deleteTeamRequested } from '../../../store/team/team.actions';
+import DeleteTeamModal from './DeleteTeamModal';
 
 const mapStateToProps = (state: AppState) => {
-  const isLoading = state.team.addTeam.isLoading;
+  const teamId = state.team.current.team._id;
   return {
-    isLoading,
+    teamId,
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<RootAction>) => {
   return bindActionCreators(
     {
-      onConfirm: saveTeamRequested,
-      closeModal: () => closeModal(ModalTypes.addTeam),
-      openPickPokemonModal: () => openModal(ModalTypes.pickPokemon),
+      deleteTeam: deleteTeamRequested,
+      closeModal: () => closeModal(ModalTypes.deleteTeam),
     },
     dispatch,
   );
@@ -28,7 +27,7 @@ const mapDispatchToProps = (dispatch: Dispatch<RootAction>) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(AddTeamModal);
+)(DeleteTeamModal);
 
-export type AddTeamModalContainerProps = ReturnType<typeof mapStateToProps> &
+export type DeleteTeamModalContainerProps = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;

@@ -3,7 +3,7 @@ import { NewTeam } from '../../interfaces/newTeam';
 import { History } from 'history';
 
 export interface TeamState {
-  readonly teams: { data: Team[]; isLoading: boolean };
+  readonly teams: { data: Team[]; isLoading: boolean; loaded: number };
   readonly current: { team: Team; isLoading: boolean };
   readonly addTeam: { isLoading: boolean };
   readonly editTeam: { isLoading: boolean };
@@ -25,6 +25,7 @@ export enum TeamActionTypes {
   EDIT_TEAM_REQUESTED = 'EDIT_TEAM_REQUESTED',
   EDIT_TEAM_SUCCEEDED = 'EDIT_TEAM_SUCCEEDED',
   EDIT_TEAM_FAILED = 'EDIT_TEAM_FAILED',
+  LOAD_MORE_TEAMS = 'LOAD_MORE_TEAMS',
 }
 
 export interface GetTeamsRequestedAction {
@@ -86,6 +87,11 @@ export interface EditTeamFailedAction {
   type: TeamActionTypes.EDIT_TEAM_FAILED;
 }
 
+export interface LoadMoreTeamsAction {
+  type: TeamActionTypes.LOAD_MORE_TEAMS;
+  amountToLoad: number;
+}
+
 export type TeamActions =
   | GetTeamsRequestedAction
   | GetTeamsSucceededAction
@@ -101,4 +107,5 @@ export type TeamActions =
   | DeleteTeamFailedAction
   | EditTeamRequestedAction
   | EditTeamFailedAction
-  | EditTeamSucceededAction;
+  | EditTeamSucceededAction
+  | LoadMoreTeamsAction;

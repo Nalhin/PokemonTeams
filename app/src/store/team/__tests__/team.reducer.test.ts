@@ -12,6 +12,7 @@ import {
   getTeamsFailed,
   getTeamsRequested,
   getTeamsSucceeded,
+  loadMoreTeams,
   saveTeamFailed,
   saveTeamRequested,
   saveTeamSucceeded,
@@ -22,7 +23,7 @@ import { createMemoryHistory } from 'history';
 
 describe('Team Reducer', () => {
   it('Should return the initial state', () => {
-    const expectedState = INITIAL_STATE;
+    const expectedState = { ...INITIAL_STATE };
 
     const reducer = teamReducer(undefined, getTeamsFailed());
 
@@ -43,7 +44,7 @@ describe('Team Reducer', () => {
   it('Should handle GET_TEAMS_SUCCEEDED action', () => {
     const expectedState: TeamState = {
       ...INITIAL_STATE,
-      teams: { data: [fakeTeam], isLoading: false },
+      teams: { ...INITIAL_STATE.teams, data: [fakeTeam], isLoading: false },
     };
     const action = getTeamsSucceeded([fakeTeam]);
 
@@ -86,7 +87,7 @@ describe('Team Reducer', () => {
     };
     const expectedState: TeamState = {
       ...INITIAL_STATE,
-      current: { team: fakeTeam, isLoading: false },
+      current: { ...INITIAL_STATE.current, team: fakeTeam, isLoading: false },
     };
     const action = getTeamByIdSucceeded(fakeTeam);
 
@@ -238,6 +239,25 @@ describe('Team Reducer', () => {
       ...INITIAL_STATE,
     };
     const action = editTeamFailed();
+
+    const reducer = teamReducer(initialState, action);
+
+    expect(reducer).toEqual(expectedState);
+  });
+
+  it('Should handle LOAD_MORE_TEAMS action', () => {
+    const amountToLoad = 20;
+    const initialState: TeamState = {
+      ...INITIAL_STATE,
+    };
+    const expectedState: TeamState = {
+      ...INITIAL_STATE,
+      teams: {
+        ...INITIAL_STATE.teams,
+        loaded: INITIAL_STATE.teams.loaded + 20,
+      },
+    };
+    const action = loadMoreTeams(amountToLoad);
 
     const reducer = teamReducer(initialState, action);
 

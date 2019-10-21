@@ -9,6 +9,8 @@ const props = {
   isLoading: false,
   getTeams: jest.fn(),
   openAddTeamModal: jest.fn(),
+  loadMoreTeams: jest.fn(),
+  loaded: 20,
 };
 
 describe('Teams Component', () => {

@@ -11,6 +11,7 @@ import {
   GetTeamsFailedAction,
   GetTeamsRequestedAction,
   GetTeamsSucceededAction,
+  LoadMoreTeamsAction,
   SaveTeamFailedAction,
   SaveTeamRequestedAction,
   SaveTeamSucceededAction,
@@ -97,4 +98,9 @@ export const editTeamSucceeded = (team: Team): EditTeamSucceededAction => ({
 
 export const editTeamFailed = (): EditTeamFailedAction => ({
   type: TeamActionTypes.EDIT_TEAM_FAILED,
+});
+
+export const loadMoreTeams = (amountToLoad: number): LoadMoreTeamsAction => ({
+  type: TeamActionTypes.LOAD_MORE_TEAMS,
+  amountToLoad,
 });

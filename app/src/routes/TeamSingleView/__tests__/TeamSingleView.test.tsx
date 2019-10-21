@@ -8,7 +8,7 @@ const props = {
   getTeam: jest.fn(),
   isLoading: true,
   openEditTeamModal: jest.fn(),
-  deleteTeam: jest.fn(),
+  openDeleteTeamModal: jest.fn(),
   team: fakeTeam,
 };
 
@@ -51,15 +51,15 @@ describe('TeamSingleView Component', () => {
     expect(editTeam).toHaveBeenCalledTimes(1);
   });
 
-  it('Should allow to delete team', () => {
-    const deleteTeam = jest.fn();
+  it('Should allow to open delete team modal', () => {
+    const openDeleteTeamModal = jest.fn();
     const { getByTestId } = renderWithRouter(
-      <TeamSingleView {...props} deleteTeam={deleteTeam} />,
+      <TeamSingleView {...props} openDeleteTeamModal={openDeleteTeamModal} />,
     );
     const deleteIcon = getByTestId('team-single-view__delete-icon');
 
     fireEvent.click(deleteIcon);
 
-    expect(deleteTeam).toHaveBeenCalledTimes(1);
+    expect(openDeleteTeamModal).toHaveBeenCalledTimes(1);
   });
 });

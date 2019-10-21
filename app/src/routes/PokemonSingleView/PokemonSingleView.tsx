@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Pokemon } from '../../interfaces/pokemon';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import PokemonModelViewer from '../../components/PokemonModelViewer/PokemonModelViewer';
 import Loading from '../../components/Loading/Loading';
 import { PokemonSingleViewContainerProps } from './PokemonSingleView.container';
 import Paper from '@material-ui/core/Paper';
@@ -10,6 +9,10 @@ import Typography from '@material-ui/core/Typography';
 import { PADDING } from '../../styles/padding';
 import Tag from '../../components/Tag/Tag';
 import PokemonStats from '../../components/PokemonStats/PokemonStats';
+
+const PokemonModelViewer = React.lazy(() =>
+  import('../../components/PokemonModelViewer/PokemonModelViewer'),
+);
 
 const StyledTagContainer = styled.div`
   display: flex;
@@ -33,6 +36,12 @@ const StyledPokemonDescription = styled.div`
   display: flex;
   max-width: 300px;
   flex-direction: column;
+`;
+
+const StyledModelPlaceholder = styled.div`
+  margin: ${PADDING.BASE} auto;
+  width: 100%;
+  padding-top: 75%;
 `;
 
 interface RouterProps {
@@ -70,7 +79,15 @@ const PokemonSingleView: React.FC<PokemonSingleViewProps> = ({
               pokemon.tags.map(tag => <StyledTag tag={tag} key={tag} />)}
           </StyledTagContainer>
         </StyledPokemonDescription>
-        <PokemonModelViewer id={match.params.id} />
+        <React.Suspense
+          fallback={
+            <Loading isLoading={!isLoading} isRelative>
+              <StyledModelPlaceholder />
+            </Loading>
+          }
+        >
+          <PokemonModelViewer id={match.params.id} />
+        </React.Suspense>
         <StyledPokemonDescription>
           <PokemonStats
             hp={pokemon.hp}

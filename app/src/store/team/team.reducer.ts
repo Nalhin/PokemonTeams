@@ -5,7 +5,7 @@ import { Team } from '../../interfaces/team';
 import { TeamActions, TeamActionTypes, TeamState } from './team.types';
 
 export const INITIAL_STATE: TeamState = {
-  teams: { data: [], isLoading: false },
+  teams: { data: [], isLoading: false, loaded: 20 },
   current: { team: <Team>{}, isLoading: false },
   addTeam: { isLoading: false },
   editTeam: { isLoading: false },
@@ -68,6 +68,9 @@ const teamReducer: Reducer<TeamState, TeamActions> = (
         break;
       case TeamActionTypes.EDIT_TEAM_FAILED:
         draft.editTeam.isLoading = false;
+        break;
+      case TeamActionTypes.LOAD_MORE_TEAMS:
+        draft.teams.loaded += action.amountToLoad;
         break;
       default:
         break;

@@ -18,7 +18,6 @@ const AddTeamModal: React.FC<AddTeamModalProps> = ({
   onConfirm,
   isLoading,
   closeModal,
-  isOpen,
   openPickPokemonModal,
 }) => {
   const [teamState, setTeamState] = React.useState<NewTeam>({
@@ -64,6 +63,7 @@ const AddTeamModal: React.FC<AddTeamModalProps> = ({
 
   return (
     <TeamModal
+      testId="add-team-modal"
       teamState={teamState}
       isLoading={isLoading}
       closeModal={closeModal}
@@ -71,7 +71,6 @@ const AddTeamModal: React.FC<AddTeamModalProps> = ({
       addPokemon={addPokemon}
       handleTeamChange={handleTeamChange}
       removeFromRoster={removeFromRoster}
-      isOpen={isOpen}
       handleConfirm={handleConfirm}
       openPickPokemonModal={openPickPokemonModal}
     />

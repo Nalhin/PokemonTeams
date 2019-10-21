@@ -9,7 +9,7 @@ import { Reducer } from 'redux';
 import { Pokemon } from '../../interfaces/pokemon';
 
 export const INITIAL_STATE: PokemonState = {
-  pokemonData: { data: [], isLoading: false },
+  pokemonData: { data: [], isLoading: false, loaded: 50 },
   current: { data: <Pokemon>{}, isLoading: false },
 };
 
@@ -39,6 +39,9 @@ const pokemonReducer: Reducer<PokemonState, PokemonActions> = (
         break;
       case PokemonActionTypes.GET_POKEMON_BY_ID_FAILED:
         draft.current.isLoading = false;
+        break;
+      case PokemonActionTypes.LOAD_MORE_POKEMON:
+        draft.pokemonData.loaded += action.amountToLoad;
         break;
       default:
         break;

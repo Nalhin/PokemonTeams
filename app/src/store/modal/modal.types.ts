@@ -2,6 +2,7 @@ export enum ModalTypes {
   pickPokemon,
   addTeam,
   editTeam,
+  deleteTeam,
 }
 
 export interface ModalState {
