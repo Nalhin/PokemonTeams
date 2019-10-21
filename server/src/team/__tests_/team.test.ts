@@ -33,8 +33,8 @@ describe('GET /team', () => {
 
     expect(response.status).toBe(expectedStatus);
     expect(response.body.length).toEqual(1);
-    expect(response.body[0].owner.login).toEqual(
-      expectedResponseBody[0].owner.login,
+    expect(JSON.stringify(response.body[0]._id)).toEqual(
+      JSON.stringify(expectedResponseBody[0]._id),
     );
   });
 
