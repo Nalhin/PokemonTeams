@@ -1,38 +1,27 @@
-import urllib.request
 import io
-from zipfile import ZipFile
 import json
 import os
-import subprocess
 import shutil
+import subprocess
+import urllib.request
+from zipfile import ZipFile
 
 temp_path = './files'
 output = './models'
-
-fbx = ('.fbx', '.FBX')
-obj = ('.obj', '.OBJ')
-dae = ('.dae', '.DAE')
+pokemon_data_path = './pokemon_data.json'
 
 
-def download_and_extract_file(download_url):
+def download_and_extract_file(download_url, pokemon_id):
     print(f'Downloading {pokemon_id} ...')
     resp = urllib.request.urlopen(download_url)
     zipfile = ZipFile(io.BytesIO(resp.read()), 'r')
     zipfile.extractall(temp_path)
 
 
-def find_fbx_file_path():
+def find_file_with_extension(extension):
     for root, dirs, files in os.walk(temp_path):
         for file in files:
-            if file.endswith(('.fbx', '.FBX')):
-                return os.path.join(root, file)
-
-
-def find_file_with_format(format):
-    for root, dirs, files in os.walk(temp_path):
-        for file in files:
-            if file.endswith(format):
-                print(file)
+            if file.endswith(extension):
                 return os.path.join(root, file)
 
 
@@ -58,27 +47,27 @@ def remove_excess_files():
     shutil.rmtree(f'{temp_path}/')
 
 
-with open('pokemon_data.json') as f:
-    data = json.load(f)
+converters = [{"formatter": convert_from_fbx, "extension": ('.fbx', '.FBX')},
+              {"formatter": convert_from_obj, "extension": ('.obj', '.OBJ')},
+              {"formatter": convert_from_dae, "extension": ('.dae', '.DAE')}]
 
-models_in_different_format = []
 
-for d in data:
-    pokemon_id = d["id"]
-    download_url = d['download_url']
-    download_and_extract_file(download_url)
-    file_path = find_file_with_format(fbx)
-    if file_path:
-        convert_from_fbx(file_path, pokemon_id)
-    else:
-        file_path = find_file_with_format(obj)
-        if file_path:
-            convert_from_obj(file_path, pokemon_id)
-        else:
-            file_path = find_file_with_format(dae)
+def main():
+    with open(pokemon_data_path) as f:
+        data = json.load(f)
+
+    for element in data:
+        pokemon_id = element["id"]
+        download_url = element['download_url']
+        download_and_extract_file(download_url, pokemon_id)
+        for extension in converters:
+            file_path = find_file_with_extension(extension["extension"])
             if file_path:
-                convert_from_dae(file_path, pokemon_id)
+                extension["formatter"](file_path, pokemon_id)
+                break
 
-    remove_excess_files()
+        remove_excess_files()
 
-print(models_in_different_format)
+
+if __name__ == '__main__':
+    main()
