@@ -23,6 +23,10 @@ const StyledZoomFab = styled(ZoomFab)`
   right: ${PADDING.BASE};
 `;
 
+const StyledLazyLoading = styled(LazyLoading)`
+  grid-column: 1 / -1;
+`;
+
 interface TeamsProps extends TeamsContainerProps {}
 
 const LOAD_AMOUNT = 10;
@@ -54,7 +58,7 @@ const Teams: React.FC<TeamsProps> = ({
       <StyledContainer
         loadMore={handleLoadedChange}
         hasMore={hasMore}
-        loader={<LazyLoading key={loaded} />}
+        loader={<StyledLazyLoading key={loaded} />}
         data-testid="teams"
       >
         {items}

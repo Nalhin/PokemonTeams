@@ -6,7 +6,7 @@ export enum ModalTypes {
 }
 
 export interface ModalState {
-  readonly openModals: ModalTypes[];
+  readonly openedModals: ModalTypes[];
 }
 
 export enum ModalActionTypes {

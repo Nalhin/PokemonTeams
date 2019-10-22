@@ -7,20 +7,10 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { PADDING } from '../../../styles/padding';
 import { Pokemon } from '../../../interfaces/pokemon';
-import PickPokemonModalPokemon from './PickPokemonModalPokemon';
-import TeamRoster from '../../../components/TeamRoster/TeamRoster';
-import * as InfiniteScroll from 'react-infinite-scroller';
-import LazyLoading from '../../../components/Loading/LazyLoading';
-
-interface PickPokemonModalProps extends PickPokemonModalContainerProps {
-  addPokemon: (pokemon: Pokemon) => void;
-  roster: Pokemon[];
-}
-
-const StyledTeamRoster = styled(TeamRoster)`
-  max-width: 300px;
-  margin: 0 auto;
-`;
+import { ModalTypes } from '../../../store/modal/modal.types';
+import Button from '../../../components/Button/Button';
+import PickPokemonModalPokemonList from './PickPokemonModalPokemonList';
+import PickPokemonModalRoster from './PickPokemonModalRoster';
 
 const StyledModal = styled(Modal)`
   display: flex;
@@ -31,83 +21,73 @@ const StyledModal = styled(Modal)`
 const StyledModalContainer = styled(Paper)`
   width: 80%;
   max-width: 300px;
-  height: 300px;
-  overflow: auto;
   margin: auto;
 `;
 
 const StyledHeader = styled.div`
   text-align: center;
-  padding: ${PADDING.BASE};
+  padding: ${PADDING.X_BASE};
   position: sticky;
   z-index: 1000;
   background: #fff;
   top: 0;
 `;
 
-const StyledWrapper = styled(InfiniteScroll)`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-`;
+interface PickPokemonModalProps extends PickPokemonModalContainerProps {}
 
-const LOAD_AMOUNT = 100;
-const INITIAL_LOAD = 50;
+interface PickPokemonModalState {
+  readonly roster: Pokemon[];
+}
 
-const PickPokemonModal: React.FC<PickPokemonModalProps> = ({
-  pokemonData,
-  isLoading,
-  getAllPokemon,
-  isOpen,
-  closeModal,
-  addPokemon,
-  roster,
-}) => {
-  const [loaded, setLoaded] = React.useState(INITIAL_LOAD);
+class PickPokemonModal extends React.PureComponent<PickPokemonModalProps> {
+  state: PickPokemonModalState = { roster: [] };
 
-  React.useEffect(() => {
-    if (isOpen) getAllPokemon();
-  }, [getAllPokemon, isOpen]);
+  componentDidMount(): void {
+    this.props.getAllPokemon();
+  }
 
-  const handleLoadedChange = () => {
-    setLoaded(loaded + LOAD_AMOUNT);
+  handleAddRoster = (pokemon: Pokemon) => {
+    if (this.state.roster.length < 5)
+      this.setState({ roster: [...this.state.roster, pokemon] });
   };
 
-  const hasMore = loaded < pokemonData.length;
+  handleRemoveRoster = (index: number) => {
+    this.setState({
+      roster: [...this.state.roster.filter((pokemon, i) => i !== index)],
+    });
+  };
 
-  const items = pokemonData
-    .slice(0, loaded)
-    .map(pokemon => (
-      <PickPokemonModalPokemon
-        pokemon={pokemon}
-        addPokemon={addPokemon}
-        roster={roster}
-        key={pokemon._id}
-      />
-    ));
-  return (
-    <StyledModal open={isOpen} onClose={closeModal}>
-      <Loading isLoading={isLoading} isRelative>
+  handleCloseModal = () => {
+    this.props.closeModal(ModalTypes.pickPokemon);
+  };
+
+  render() {
+    const { pokemonData, isLoading } = this.props;
+
+    return (
+      <StyledModal open onClose={this.handleCloseModal}>
         <StyledModalContainer>
-          <StyledHeader>
-            <Typography variant="h5" component="h3">
-              Current Roster
-            </Typography>
-            <StyledTeamRoster roster={roster} />
-          </StyledHeader>
-          <StyledWrapper
-            loadMore={handleLoadedChange}
-            hasMore={hasMore}
-            useWindow={false}
-            loader={<LazyLoading key={loaded} />}
-          >
-            {items}
-          </StyledWrapper>
+          <Loading isLoading={isLoading} isRelative>
+            <StyledHeader>
+              <Typography variant="h5" component="h3">
+                Current Roster
+              </Typography>
+              <PickPokemonModalRoster
+                handleRemoveRoster={this.handleRemoveRoster}
+                roster={this.state.roster}
+              />
+            </StyledHeader>
+            <PickPokemonModalPokemonList
+              pokemonData={pokemonData}
+              handleAddRoster={this.handleAddRoster}
+            />
+            <Button>Yes</Button>
+            <Button onClick={this.handleCloseModal}>No</Button>
+          </Loading>
         </StyledModalContainer>
-      </Loading>
-    </StyledModal>
-  );
-};
+      </StyledModal>
+    );
+  }
+}
 
 export default PickPokemonModal;

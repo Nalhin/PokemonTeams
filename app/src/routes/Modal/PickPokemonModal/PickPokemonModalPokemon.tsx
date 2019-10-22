@@ -6,7 +6,6 @@ import styled from '@emotion/styled';
 interface PickPokemonModalPokemonProps {
   pokemon: Pokemon;
   addPokemon: (pokemon: Pokemon) => void;
-  roster: Pokemon[];
 }
 
 const StyledPokemonSmall = styled(PokemonSmall)`
@@ -18,11 +17,9 @@ const StyledPokemonSmall = styled(PokemonSmall)`
 const PickPokemonModalPokemon: React.FC<PickPokemonModalPokemonProps> = ({
   pokemon,
   addPokemon,
-  roster,
 }) => {
   const handleAddPokemon = React.useCallback(() => addPokemon(pokemon), [
     pokemon._id,
-    roster,
   ]);
 
   return (

@@ -3,7 +3,7 @@ import { Reducer } from 'redux';
 import produce from 'immer';
 
 export const INITIAL_STATE: ModalState = {
-  openModals: [],
+  openedModals: [],
 };
 
 const modalReducer: Reducer<ModalState, ModalActions> = (
@@ -13,15 +13,15 @@ const modalReducer: Reducer<ModalState, ModalActions> = (
   return produce(state, draft => {
     switch (action.type) {
       case ModalActionTypes.CLOSE_MODAL:
-        draft.openModals = draft.openModals.filter(
+        draft.openedModals = draft.openedModals.filter(
           modal => modal !== action.modalType,
         );
         break;
       case ModalActionTypes.OPEN_MODAL:
-        draft.openModals.push(action.modalType);
+        draft.openedModals.push(action.modalType);
         break;
       case ModalActionTypes.CLOSE_ALL_MODAL:
-        draft.openModals = [];
+        draft.openedModals = [];
         break;
     }
   });

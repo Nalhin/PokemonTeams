@@ -7,12 +7,15 @@ const StyledLoaderContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
 `;
 
-const LazyLoading = () => {
+interface LazyLoading {
+  className?: string;
+}
+
+const LazyLoading: React.FC<LazyLoading> = ({ className }) => {
   return (
-    <StyledLoaderContainer>
+    <StyledLoaderContainer className={className}>
       <BounceLoader loading color={COLORS.LOADER} sizeUnit="px" size={150} />
     </StyledLoaderContainer>
   );

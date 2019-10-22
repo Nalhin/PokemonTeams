@@ -8,7 +8,7 @@ import { PADDING } from '../../styles/padding';
 const Container = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   margin: ${PADDING.BASE} 0;
 `;
 
@@ -16,6 +16,12 @@ const StyledTypography = styled(Typography)`
   margin: 0 auto;
   height: 40px;
   font-size: 16px;
+`;
+
+const StyledPokemonSmall = styled(PokemonSmall)`
+  &:not(:first-of-type) {
+    margin-left: ${PADDING.BASE};
+  }
 `;
 
 interface TeamRosterProps {
@@ -28,7 +34,7 @@ const TeamRoster: React.FC<TeamRosterProps> = ({ roster, className }) => {
     <Container className={className}>
       {roster.length ? (
         roster.map((pokemon, i) => (
-          <PokemonSmall key={`${pokemon._id}#${i}`} pokemon={pokemon} />
+          <StyledPokemonSmall key={`${pokemon._id}#${i}`} pokemon={pokemon} />
         ))
       ) : (
         <StyledTypography

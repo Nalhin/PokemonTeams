@@ -8,11 +8,11 @@ import { connect } from 'react-redux';
 import Modal from './Modal';
 
 const mapStateToProps = (state: AppState) => {
-  const openModals = state.modal.openModals;
-  const isModalOpen = !!state.modal.openModals.length;
+  const openedModals = state.modal.openedModals;
+  const isModalOpen = !!state.modal.openedModals.length;
   return {
     isModalOpen,
-    openModals,
+    openedModals,
   };
 };
 

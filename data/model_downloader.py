@@ -7,7 +7,7 @@ import urllib.request
 from zipfile import ZipFile
 
 temp_path = './files'
-output = './models'
+output = './assets/models'
 pokemon_data_path = './pokemon_data.json'
 
 
@@ -39,7 +39,7 @@ def convert_from_obj(file_path, pokemon_id):
 
 def convert_from_dae(file_path, pokemon_id):
     subprocess.call(
-        f'./converters/COLLADA2GLTF-bin.exe -i "{file_path}" -o {output}/{pokemon_id} -b -d')
+        f'./converters/COLLADA2GLTF-bin.exe -i "{file_path}" -o {output}/{pokemon_id} -b -v 2.0 -m')
     print(f'{pokemon_id} converted from dae successfully')
 
 

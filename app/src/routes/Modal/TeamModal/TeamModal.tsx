@@ -6,7 +6,6 @@ import Input from '../../../components/Input/Input';
 import { Typography } from '@material-ui/core';
 import TeamRoster from '../../../components/TeamRoster/TeamRoster';
 import Button from '../../../components/Button/Button';
-import PickPokemonModal from '../PickPokemonModal/PickPokemonModal.container';
 import { NewTeam } from '../../../interfaces/newTeam';
 import styled from '@emotion/styled';
 import Modal from '@material-ui/core/Modal';
@@ -45,7 +44,6 @@ interface TeamModalProps {
 
 const TeamModal: React.FC<TeamModalProps> = ({
   handleTeamChange,
-  addPokemon,
   setType,
   teamState,
   handleConfirm,
@@ -78,7 +76,6 @@ const TeamModal: React.FC<TeamModalProps> = ({
           <TeamRoster roster={roster} />
           <Button onClick={openPickPokemonModal}>Change Roster</Button>
           <Button onClick={handleConfirm}>Save</Button>
-          <PickPokemonModal addPokemon={addPokemon} roster={roster} />
         </StyledLoading>
       </StyledContainer>
     </StyledModal>

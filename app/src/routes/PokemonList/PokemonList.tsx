@@ -5,14 +5,19 @@ import styled from '@emotion/styled';
 import { PokemonListContainerProps } from './PokemonList.container';
 import PokemonCard from '../../components/PokemonCard/PokemonCard';
 import LazyLoading from '../../components/Loading/LazyLoading';
+import { PADDING } from '../../styles/padding';
+import { POKEMON_MAX_WIDTH } from '../../styles/sizes';
 
 const StyledPokemonContainer = styled(InfiniteScroll)`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(${POKEMON_MAX_WIDTH}, 1fr));
+  grid-gap: ${PADDING.LARGE};
   width: 90%;
-  margin: 0 auto;
+  margin: ${PADDING.LARGE} auto;
+`;
+
+const StyledLazyLoading = styled(LazyLoading)`
+  grid-column: 1 / -1;
 `;
 
 interface PokemonListProps extends PokemonListContainerProps {}
@@ -46,7 +51,7 @@ const PokemonList: React.FC<PokemonListProps> = ({
         data-testid="pokemon-list"
         loadMore={handleLoadedChange}
         hasMore={hasMore}
-        loader={<LazyLoading key={loaded} />}
+        loader={<StyledLazyLoading key={loaded} />}
       >
         {items}
       </StyledPokemonContainer>

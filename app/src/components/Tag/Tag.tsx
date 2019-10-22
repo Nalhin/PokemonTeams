@@ -17,6 +17,9 @@ const StyledTag = styled.div`
   padding: ${PADDING.SMALL};
   color: ${(props: Tag) => TAGS_COLOR[props.tag].color};
   background: ${(props: Tag) => TAGS_COLOR[props.tag].background};
+  &:not(:first-of-type) {
+    margin-left: ${PADDING.X_BASE};
+  }
 `;
 
 const Tag: React.FC<TagProps> = ({ tag, className }) => {

@@ -14,13 +14,17 @@ const DeleteTeamModal = React.lazy(() =>
   import('./DeleteTeamModal/DeleteTeamModal.container'),
 );
 
+const PickPokemonModal = React.lazy(() =>
+  import('./PickPokemonModal/PickPokemonModal.container'),
+);
+
 interface ModalProps extends ModalContainerProps, RouteComponentProps {}
 
 const Modal: React.FC<ModalProps> = ({
   history,
   isModalOpen,
   closeAllModal,
-  openModals,
+  openedModals,
 }) => {
   React.useEffect(() => {
     const unlisted = history.listen((location, action) => {
@@ -33,7 +37,7 @@ const Modal: React.FC<ModalProps> = ({
 
   return (
     <React.Suspense fallback={<Loading isLoading />}>
-      {openModals.map(modal => {
+      {openedModals.map(modal => {
         switch (modal) {
           case ModalTypes.addTeam:
             return <AddTeamModal key={modal} />;
@@ -41,6 +45,8 @@ const Modal: React.FC<ModalProps> = ({
             return <EditTeamModal key={modal} />;
           case ModalTypes.deleteTeam:
             return <DeleteTeamModal key={modal} />;
+          case ModalTypes.pickPokemon:
+            return <PickPokemonModal key={modal} />;
         }
       })}
     </React.Suspense>

@@ -29,7 +29,7 @@ const PokemonSmall: React.FC<PokemonSmallProps> = ({
         className={className}
         onClick={onClick}
         alt={pokemon.name}
-        src={`/icons/${pokemon.pokedexId}.png`}
+        src={`/assets/icons/${pokemon.pokedexId}.png`}
       />
     </Tooltip>
   );

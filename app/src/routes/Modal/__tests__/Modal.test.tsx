@@ -7,7 +7,7 @@ describe('Modal Component', () => {
   it('Should fire closeAllModal if history gets popped', () => {
     const closeAllModal = jest.fn();
     const { history } = renderWithStore(
-      <Modal closeAllModal={closeAllModal} isModalOpen openModals={[]} />,
+      <Modal closeAllModal={closeAllModal} isModalOpen openedModals={[]} />,
     );
 
     history.goBack();
@@ -16,9 +16,13 @@ describe('Modal Component', () => {
   });
 
   it('Should display loading indicator if modal is shown', () => {
-    const openModals = [ModalTypes.addTeam];
+    const openedModals = [ModalTypes.addTeam];
     const { getByTestId } = renderWithStore(
-      <Modal closeAllModal={jest.fn()} isModalOpen openModals={openModals} />,
+      <Modal
+        closeAllModal={jest.fn()}
+        isModalOpen
+        openedModals={openedModals}
+      />,
     );
     const loading = getByTestId('loading-spinner');
 
@@ -29,7 +33,7 @@ describe('Modal Component', () => {
   it('Should display EditTeamModal', async () => {
     const openModals = [ModalTypes.editTeam];
     const { findByTestId } = renderWithStore(
-      <Modal closeAllModal={jest.fn()} isModalOpen openModals={openModals} />,
+      <Modal closeAllModal={jest.fn()} isModalOpen openedModals={openModals} />,
     );
 
     const deleteTeamModal = await findByTestId('edit-team-modal');
@@ -39,7 +43,7 @@ describe('Modal Component', () => {
   it('Should display DeleteTeamModal', async () => {
     const openModals = [ModalTypes.deleteTeam];
     const { findByTestId } = renderWithStore(
-      <Modal closeAllModal={jest.fn()} isModalOpen openModals={openModals} />,
+      <Modal closeAllModal={jest.fn()} isModalOpen openedModals={openModals} />,
     );
 
     const deleteTeamModal = await findByTestId('delete-team-modal');

@@ -19,7 +19,7 @@ const PokemonModelViewer: React.FC<PokemonModelViewerProps> = ({ id }) => {
   React.useEffect(() => {
     const modelViewer = new ModelViewer();
     modelViewer.configureViewer(modelContainer);
-    modelViewer.loadModel(`/models/${id}.glb`);
+    modelViewer.loadModel(`/assets/models/${id}.glb`);
 
     let animationFrameId: number;
     const animateModel = () => {

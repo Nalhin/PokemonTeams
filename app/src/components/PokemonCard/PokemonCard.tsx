@@ -5,25 +5,29 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { Pokemon } from '../../interfaces/pokemon';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { PADDING } from '../../styles/padding';
 import Tag from '../Tag/Tag';
+import { POKEMON_MAX_WIDTH } from '../../styles/sizes';
 
 const StyledCard = styled(Card)`
-  max-width: 160px;
-  margin: ${PADDING.BASE} auto;
+  max-width: ${POKEMON_MAX_WIDTH};
+  margin: 0 auto;
 `;
 
 const StyledCardMedia = styled(CardMedia)`
   height: 125px;
-  width: 148px;
+  width: ${POKEMON_MAX_WIDTH};
 `;
 
 const StyledTagContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+`;
+
+const StyledCardContent = styled(CardContent)`
+  padding: ${PADDING.X_BASE};
 `;
 
 interface PokemonCardProps extends RouteComponentProps {
@@ -38,8 +42,8 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon, history }) => {
   return (
     <StyledCard onClick={redirectToPokemon}>
       <CardActionArea>
-        <StyledCardMedia image={`/icons/${pokemon.pokedexId}.png`} />
-        <CardContent>
+        <StyledCardMedia image={`/assets/images/${pokemon.pokedexId}.png`} />
+        <StyledCardContent>
           <Typography variant="body2" color="textSecondary" component="p">
             #{pokemon.pokedexId}
           </Typography>
@@ -51,7 +55,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon, history }) => {
               <Tag tag={tag} key={tag} />
             ))}
           </StyledTagContainer>
-        </CardContent>
+        </StyledCardContent>
       </CardActionArea>
     </StyledCard>
   );

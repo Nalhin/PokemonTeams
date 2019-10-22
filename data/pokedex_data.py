@@ -1,6 +1,5 @@
 import json
 import operator
-
 import requests
 from bs4 import BeautifulSoup
 
@@ -24,12 +23,11 @@ def get_number(cell):
     return int(cell.text)
 
 
-columns = ('pokedexId', 'name', 'tags', 'total', 'hp', 'attack', 'defense', 'spellAttack', 'spellDefense', 'speed')
-parse_function = {0: get_id, 1: get_name, 2: get_tags}
-
-
 def get_row_data(row, model_data, data):
+    columns = ('pokedexId', 'name', 'tags', 'total', 'hp', 'attack', 'defense', 'spellAttack', 'spellDefense', 'speed')
+    parse_function = {0: get_id, 1: get_name, 2: get_tags}
     row_data = {}
+
     for i, cell in enumerate(row.findAll('td')):
         if i in parse_function:
             row_data[columns[i]] = parse_function[i](cell)
@@ -44,7 +42,6 @@ def get_row_data(row, model_data, data):
 def main():
     page = requests.get('https://pokemondb.net/pokedex/all')
     soup = BeautifulSoup(page.content, 'html.parser')
-
     pokedex = soup.find('table', id="pokedex").tbody
 
     data = []
