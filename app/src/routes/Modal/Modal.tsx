@@ -15,7 +15,7 @@ const DeleteTeamModal = React.lazy(() =>
 );
 
 const PickPokemonModal = React.lazy(() =>
-  import('./PickPokemonModal/PickPokemonModal.container'),
+  import('./RosterModal/RosterModal.container'),
 );
 
 interface ModalProps extends ModalContainerProps, RouteComponentProps {}
@@ -45,7 +45,7 @@ const Modal: React.FC<ModalProps> = ({
             return <EditTeamModal key={modal} />;
           case ModalTypes.deleteTeam:
             return <DeleteTeamModal key={modal} />;
-          case ModalTypes.pickPokemon:
+          case ModalTypes.roster:
             return <PickPokemonModal key={modal} />;
         }
       })}

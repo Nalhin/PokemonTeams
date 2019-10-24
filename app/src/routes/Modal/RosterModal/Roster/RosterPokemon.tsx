@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Pokemon } from '../../../interfaces/pokemon';
-import PokemonSmall from '../../../components/PokemonSmall/PokemonSmall';
+import { Pokemon } from '../../../../interfaces/pokemon';
+import PokemonSmall from '../../../../components/PokemonSmall/PokemonSmall';
 import styled from '@emotion/styled';
-import { PADDING } from '../../../styles/padding';
+import { PADDING } from '../../../../styles/padding';
 
 const StyledPokemonSmall = styled(PokemonSmall)`
   &:not(:first-of-type) {
@@ -20,7 +20,7 @@ interface PickPokemonModalPokemonProps {
   index: number;
 }
 
-const PickPokemonModalRosterPokemon: React.FC<PickPokemonModalPokemonProps> = ({
+const RosterPokemon: React.FC<PickPokemonModalPokemonProps> = ({
   pokemon,
   removePokemon,
   index,
@@ -34,8 +34,9 @@ const PickPokemonModalRosterPokemon: React.FC<PickPokemonModalPokemonProps> = ({
       hideTooltip
       onClick={handleAddPokemon}
       pokemon={pokemon}
+      testId="roster-modal__roster-pokemon"
     />
   );
 };
 
-export default PickPokemonModalRosterPokemon;
+export default RosterPokemon;

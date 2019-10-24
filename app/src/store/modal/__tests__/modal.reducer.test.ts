@@ -1,12 +1,20 @@
 import { ModalState, ModalTypes } from '../modal.types';
-import { closeAllModal, closeModal, openModal } from '../modal.actions';
+import {
+  addToRosterModalSucceeded,
+  closeAllModal,
+  closeModal,
+  openModal,
+  removeFromRosterModal,
+  setRosterModal,
+} from '../modal.actions';
 import modalReducer, { INITIAL_STATE } from '../modal.reducer';
+import { fakePokemon } from '../../../../test/fixtures/pokemon';
 
 describe('Modal Reducer', () => {
   it('Should return the initial state', () => {
     const initialState = { ...INITIAL_STATE };
-    const action = closeModal(ModalTypes.editTeam);
 
+    const action = closeModal(ModalTypes.editTeam);
     const reducer = modalReducer(undefined, action);
 
     expect(reducer).toEqual(initialState);
@@ -21,8 +29,8 @@ describe('Modal Reducer', () => {
       ...INITIAL_STATE,
       openedModals: [ModalTypes.addTeam],
     };
-    const action = closeModal(ModalTypes.editTeam);
 
+    const action = closeModal(ModalTypes.editTeam);
     const reducer = modalReducer(initialState, action);
 
     expect(reducer).toEqual(expectedState);
@@ -36,8 +44,8 @@ describe('Modal Reducer', () => {
       ...INITIAL_STATE,
       openedModals: [ModalTypes.addTeam],
     };
-    const action = openModal(ModalTypes.addTeam);
 
+    const action = openModal(ModalTypes.addTeam);
     const reducer = modalReducer(initialState, action);
 
     expect(reducer).toEqual(expectedState);
@@ -51,8 +59,53 @@ describe('Modal Reducer', () => {
     const expectedState: ModalState = {
       ...INITIAL_STATE,
     };
-    const action = closeAllModal();
 
+    const action = closeAllModal();
+    const reducer = modalReducer(initialState, action);
+
+    expect(reducer).toEqual(expectedState);
+  });
+
+  it('Should handle SET_ROSTER_MODAL action', () => {
+    const initialState: ModalState = {
+      ...INITIAL_STATE,
+    };
+    const expectedState: ModalState = {
+      ...INITIAL_STATE,
+      rosterModal: { roster: [fakePokemon] },
+    };
+
+    const action = setRosterModal([fakePokemon]);
+    const reducer = modalReducer(initialState, action);
+
+    expect(reducer).toEqual(expectedState);
+  });
+
+  it('Should handle ADD_TO_ROSTER_MODAL_SUCCEEDED action', () => {
+    const initialState: ModalState = {
+      ...INITIAL_STATE,
+    };
+    const expectedState: ModalState = {
+      ...INITIAL_STATE,
+      rosterModal: { roster: [fakePokemon] },
+    };
+
+    const action = addToRosterModalSucceeded(fakePokemon);
+    const reducer = modalReducer(initialState, action);
+
+    expect(reducer).toEqual(expectedState);
+  });
+
+  it('Should handle REMOVE_FROM_ROSTER_MODAL', () => {
+    const initialState: ModalState = {
+      ...INITIAL_STATE,
+      rosterModal: { roster: [fakePokemon] },
+    };
+    const expectedState: ModalState = {
+      ...INITIAL_STATE,
+    };
+
+    const action = removeFromRosterModal(0);
     const reducer = modalReducer(initialState, action);
 
     expect(reducer).toEqual(expectedState);

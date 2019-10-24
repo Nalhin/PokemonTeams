@@ -37,8 +37,8 @@ describe('Pokemon Saga', () => {
         ...fakeAxiosSuccessResponse,
         data: [fakePokemon],
       });
-    const expectedDispatchedActions = [getAllPokemonSucceeded([fakePokemon])];
 
+    const expectedDispatchedActions = [getAllPokemonSucceeded([fakePokemon])];
     await runSaga(fakeStore, getAllPokemonSaga, getAllPokemonRequested());
 
     expect(apiMock).toHaveBeenCalledTimes(1);

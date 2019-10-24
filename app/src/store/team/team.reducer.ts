@@ -9,6 +9,7 @@ export const INITIAL_STATE: TeamState = {
   current: { team: <Team>{}, isLoading: false },
   addTeam: { isLoading: false },
   editTeam: { isLoading: false },
+  rosterModal: { roster: [] },
 };
 
 const teamReducer: Reducer<TeamState, TeamActions> = (

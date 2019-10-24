@@ -1,14 +1,9 @@
 import React from 'react';
-import { Pokemon } from '../../../interfaces/pokemon';
-import PickPokemonModalRosterPokemon from './PickPokemonModalRosterPokemon';
+import { Pokemon } from '../../../../interfaces/pokemon';
+import RosterPokemon from './RosterPokemon';
 import styled from '@emotion/styled';
-import { PADDING } from '../../../styles/padding';
+import { PADDING } from '../../../../styles/padding';
 import Typography from '@material-ui/core/Typography';
-
-interface PickPokemonModalRoster {
-  roster: Pokemon[];
-  handleRemoveRoster: (index: number) => void;
-}
 
 const Container = styled.div`
   display: flex;
@@ -22,8 +17,12 @@ const StyledTypography = styled(Typography)`
   height: 40px;
   font-size: 16px;
 `;
+interface ModalRosterProps {
+  roster: Pokemon[];
+  handleRemoveRoster: (index: number) => void;
+}
 
-const PickPokemonModalRoster: React.FC<PickPokemonModalRoster> = ({
+const ModalRoster: React.FC<ModalRosterProps> = ({
   roster,
   handleRemoveRoster,
 }) => {
@@ -31,7 +30,7 @@ const PickPokemonModalRoster: React.FC<PickPokemonModalRoster> = ({
     <Container>
       {roster.length ? (
         roster.map((pokemon, index) => (
-          <PickPokemonModalRosterPokemon
+          <RosterPokemon
             pokemon={pokemon}
             index={index}
             key={index}
@@ -51,4 +50,4 @@ const PickPokemonModalRoster: React.FC<PickPokemonModalRoster> = ({
   );
 };
 
-export default PickPokemonModalRoster;
+export default ModalRoster;

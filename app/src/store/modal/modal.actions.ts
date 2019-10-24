@@ -1,10 +1,15 @@
 import {
+  AddToRosterModalRequestedAction,
+  AddToRosterModalSucceededAction,
   CloseAllModalAction,
   CloseModalAction,
   ModalActionTypes,
   ModalTypes,
   OpenModalAction,
+  RemoveFromRosterModalAction,
+  SetRosterModalAction,
 } from './modal.types';
+import { Pokemon } from '../../interfaces/pokemon';
 
 export const openModal = (modalType: ModalTypes): OpenModalAction => ({
   type: ModalActionTypes.OPEN_MODAL,
@@ -18,4 +23,30 @@ export const closeModal = (modalType: ModalTypes): CloseModalAction => ({
 
 export const closeAllModal = (): CloseAllModalAction => ({
   type: ModalActionTypes.CLOSE_ALL_MODAL,
+});
+
+export const setRosterModal = (roster: Pokemon[]): SetRosterModalAction => ({
+  type: ModalActionTypes.SET_ROSTER_MODAL,
+  roster,
+});
+
+export const addToRosterModalRequested = (
+  pokemon: Pokemon,
+): AddToRosterModalRequestedAction => ({
+  type: ModalActionTypes.ADD_TO_ROSTER_MODAL_REQUESTED,
+  pokemon,
+});
+
+export const addToRosterModalSucceeded = (
+  pokemon: Pokemon,
+): AddToRosterModalSucceededAction => ({
+  type: ModalActionTypes.ADD_TO_ROSTER_MODAL_SUCCEEDED,
+  pokemon,
+});
+
+export const removeFromRosterModal = (
+  index: number,
+): RemoveFromRosterModalAction => ({
+  type: ModalActionTypes.REMOVE_FROM_ROSTER_MODAL,
+  index,
 });

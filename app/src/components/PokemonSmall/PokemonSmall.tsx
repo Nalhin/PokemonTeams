@@ -15,6 +15,7 @@ interface PokemonSmallProps {
   className?: string;
   onClick?: () => any;
   hideTooltip?: boolean;
+  testId?: string;
 }
 
 const PokemonSmall: React.FC<PokemonSmallProps> = ({
@@ -22,6 +23,7 @@ const PokemonSmall: React.FC<PokemonSmallProps> = ({
   onClick,
   className,
   hideTooltip,
+  testId,
 }) => {
   return (
     <Tooltip title={pokemon.name} disableHoverListener={hideTooltip}>
@@ -30,6 +32,7 @@ const PokemonSmall: React.FC<PokemonSmallProps> = ({
         onClick={onClick}
         alt={pokemon.name}
         src={`/assets/icons/${pokemon.pokedexId}.png`}
+        data-testid={testId}
       />
     </Tooltip>
   );

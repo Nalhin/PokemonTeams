@@ -1,12 +1,14 @@
 import { Team } from '../../interfaces/team';
 import { NewTeam } from '../../interfaces/newTeam';
 import { History } from 'history';
+import { Pokemon } from '../../interfaces/pokemon';
 
 export interface TeamState {
   readonly teams: { data: Team[]; isLoading: boolean; loaded: number };
   readonly current: { team: Team; isLoading: boolean };
   readonly addTeam: { isLoading: boolean };
   readonly editTeam: { isLoading: boolean };
+  readonly rosterModal: { roster: Pokemon[] };
 }
 
 export enum TeamActionTypes {

@@ -4,6 +4,7 @@ import produce from 'immer';
 
 export const INITIAL_STATE: ModalState = {
   openedModals: [],
+  rosterModal: { roster: [] },
 };
 
 const modalReducer: Reducer<ModalState, ModalActions> = (
@@ -22,6 +23,17 @@ const modalReducer: Reducer<ModalState, ModalActions> = (
         break;
       case ModalActionTypes.CLOSE_ALL_MODAL:
         draft.openedModals = [];
+        break;
+      case ModalActionTypes.SET_ROSTER_MODAL:
+        draft.rosterModal.roster = action.roster;
+        break;
+      case ModalActionTypes.ADD_TO_ROSTER_MODAL_SUCCEEDED:
+        draft.rosterModal.roster.push(action.pokemon);
+        break;
+      case ModalActionTypes.REMOVE_FROM_ROSTER_MODAL:
+        draft.rosterModal.roster = draft.rosterModal.roster.filter(
+          (pokemon, i) => i !== action.index,
+        );
         break;
     }
   });

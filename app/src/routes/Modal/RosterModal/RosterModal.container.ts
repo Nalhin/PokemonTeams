@@ -1,17 +1,23 @@
 import { bindActionCreators, Dispatch } from 'redux';
-import PickPokemonModal from './PickPokemonModal';
+import RosterModal from './RosterModal';
 import { connect } from 'react-redux';
 import { AppState } from '../../../store/rootReducer';
 import { getAllPokemonRequested } from '../../../store/pokemon/pokemon.actions';
 import { RootAction } from '../../../store/rootAction';
-import { closeModal } from '../../../store/modal/modal.actions';
+import {
+  addToRosterModalRequested,
+  closeModal,
+  removeFromRosterModal,
+} from '../../../store/modal/modal.actions';
 
 const mapStateToProps = (state: AppState) => {
   const pokemonData = state.pokemon.pokemonData.data;
   const isLoading = state.pokemon.pokemonData.isLoading;
+  const roster = state.modal.rosterModal.roster;
   return {
     pokemonData,
     isLoading,
+    roster,
   };
 };
 
@@ -20,6 +26,8 @@ const mapDispatchToProps = (dispatch: Dispatch<RootAction>) => {
     {
       getAllPokemon: getAllPokemonRequested,
       closeModal,
+      addToRosterModal: addToRosterModalRequested,
+      removeFromRosterModal,
     },
     dispatch,
   );
@@ -28,9 +36,7 @@ const mapDispatchToProps = (dispatch: Dispatch<RootAction>) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(PickPokemonModal);
+)(RosterModal);
 
-export type PickPokemonModalContainerProps = ReturnType<
-  typeof mapStateToProps
-> &
+export type RosterModalContainerProps = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Pokemon } from '../../../interfaces/pokemon';
 import Loading from '../../../components/Loading/Loading';
 import TeamTypeRadioGroup from '../../../components/TeamTypeRadioGroup/TeamTypeRadioGroup';
 import Input from '../../../components/Input/Input';
@@ -32,12 +31,10 @@ const StyledLoading = styled(Loading)`
 interface TeamModalProps {
   teamState: NewTeam;
   setType: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  addPokemon: (pokemon: Pokemon) => void;
   handleTeamChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   isLoading: boolean;
   closeModal: () => void;
   openPickPokemonModal: () => void;
-  removeFromRoster: (position: number) => void;
   handleConfirm: () => void;
   testId: string;
 }

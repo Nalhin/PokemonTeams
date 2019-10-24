@@ -19,7 +19,7 @@ const mapDispatchToProps = (dispatch: Dispatch<RootAction>) => {
     {
       onConfirm: saveTeamRequested,
       closeModal: () => closeModal(ModalTypes.addTeam),
-      openPickPokemonModal: () => openModal(ModalTypes.pickPokemon),
+      openPickPokemonModal: () => openModal(ModalTypes.roster),
     },
     dispatch,
   );
