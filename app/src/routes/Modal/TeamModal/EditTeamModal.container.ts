@@ -1,17 +1,22 @@
 import { bindActionCreators, Dispatch } from 'redux';
 import { RootAction } from '../../../store/rootAction';
-import { closeModal, openModal } from '../../../store/modal/modal.actions';
+import {
+  closeModal,
+  openModal,
+  setRosterModal,
+  setTeamModal,
+} from '../../../store/modal/modal.actions';
 import { ModalTypes } from '../../../store/modal/modal.types';
 import { connect } from 'react-redux';
 import { editTeamRequested } from '../../../store/team/team.actions';
 import { AppState } from '../../../store/rootReducer';
-import EditTeamModal from './EditTeamModal';
+import TeamModal from './TeamModal';
 
 const mapStateToProps = (state: AppState) => {
   const isLoading = state.team.editTeam.isLoading;
-  const team = state.team.current.team;
+  const teamState = state.modal.teamModal.team;
   return {
-    team,
+    teamState,
     isLoading,
   };
 };
@@ -21,7 +26,9 @@ const mapDispatchToProps = (dispatch: Dispatch<RootAction>) => {
     {
       onConfirm: editTeamRequested,
       closeModal: () => closeModal(ModalTypes.editTeam),
-      openPickPokemonModal: () => openModal(ModalTypes.roster),
+      openModal,
+      setRosterModal,
+      setTeamModal,
     },
     dispatch,
   );
@@ -30,7 +37,8 @@ const mapDispatchToProps = (dispatch: Dispatch<RootAction>) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(EditTeamModal);
+  // @ts-ignore
+)(TeamModal);
 
 export type EditTeamModalContainerProps = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;

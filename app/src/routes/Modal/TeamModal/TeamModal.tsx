@@ -1,15 +1,18 @@
 import * as React from 'react';
-import Loading from '../../../components/Loading/Loading';
+import { AddTeamModalContainerProps } from './AddTeamModal.container';
 import TeamTypeRadioGroup from '../../../components/TeamTypeRadioGroup/TeamTypeRadioGroup';
 import Input from '../../../components/Input/Input';
 import { Typography } from '@material-ui/core';
 import TeamRoster from '../../../components/TeamRoster/TeamRoster';
 import Button from '../../../components/Button/Button';
-import { NewTeam } from '../../../interfaces/newTeam';
-import styled from '@emotion/styled';
-import Modal from '@material-ui/core/Modal';
+import Loading from '../../../components/Loading/Loading';
 import Paper from '@material-ui/core/Paper';
+import Modal from '@material-ui/core/Modal';
+import styled from '@emotion/styled';
 import { PADDING } from '../../../styles/padding';
+import { EditTeamModalContainerProps } from './EditTeamModal.container';
+import { ModalTypes, TeamCombined } from '../../../store/modal/modal.types';
+import debounce from 'lodash/debounce';
 
 const StyledModal = styled(Modal)`
   display: flex;
@@ -28,41 +31,75 @@ const StyledLoading = styled(Loading)`
   flex-direction: column;
 `;
 
-interface TeamModalProps {
-  teamState: NewTeam;
-  setType: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  handleTeamChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  isLoading: boolean;
-  closeModal: () => void;
-  openPickPokemonModal: () => void;
-  handleConfirm: () => void;
-  testId: string;
-}
+type TeamModalProps = AddTeamModalContainerProps | EditTeamModalContainerProps;
+
+const debounceTimer = 500;
 
 const TeamModal: React.FC<TeamModalProps> = ({
-  handleTeamChange,
-  setType,
-  teamState,
-  handleConfirm,
+  onConfirm,
   isLoading,
   closeModal,
-  openPickPokemonModal,
-  testId,
+  openModal,
+  teamState,
+  setTeamModal,
+  setRosterModal,
 }) => {
-  const { description, type, name, roster } = teamState;
+  const [inputState, setInputState] = React.useState({
+    name: teamState.name,
+    description: teamState.description,
+  });
+
+  const delayedSetTeamModal = React.useRef(
+    debounce((team: TeamCombined) => setTeamModal(team), debounceTimer),
+  ).current;
+
+  const handleTeamChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputState({
+      ...teamState,
+      [event.target.name]: event.target.value,
+    });
+    delayedSetTeamModal({
+      ...teamState,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const setType = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTeamModal({ ...teamState, type: Number(event.target.value) });
+  };
+
+  const onBlur = () => {
+    setTeamModal({ ...teamState, ...inputState });
+    delayedSetTeamModal.cancel();
+  };
+
+  const handleConfirm = () => {
+    // @ts-ignore
+    onConfirm(teamState);
+  };
+
+  const handleOpenRosterModal = () => {
+    setRosterModal(teamState.roster);
+    openModal(ModalTypes.roster);
+  };
+
+  const { type, roster } = teamState;
+  const { name, description } = inputState;
   return (
-    <StyledModal open onClose={closeModal} data-testid={testId}>
+    <StyledModal open onClose={closeModal}>
       <StyledContainer data-testid="teams">
         <StyledLoading isLoading={isLoading} isRelative>
           <TeamTypeRadioGroup value={type} onChange={setType} />
           <Input
             onChange={handleTeamChange}
+            onBlur={onBlur}
             value={name}
             name="name"
             label="Team name"
           />
           <Input
             onChange={handleTeamChange}
+            onBlur={onBlur}
             value={description}
             name="description"
             label="Team description"
@@ -71,8 +108,9 @@ const TeamModal: React.FC<TeamModalProps> = ({
             Roster
           </Typography>
           <TeamRoster roster={roster} />
-          <Button onClick={openPickPokemonModal}>Change Roster</Button>
+          <Button onClick={handleOpenRosterModal}>Change Roster</Button>
           <Button onClick={handleConfirm}>Save</Button>
+          <Button onClick={closeModal}>Cancel</Button>
         </StyledLoading>
       </StyledContainer>
     </StyledModal>

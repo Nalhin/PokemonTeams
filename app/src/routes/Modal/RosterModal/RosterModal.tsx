@@ -41,6 +41,7 @@ const RosterModal: React.FC<RosterModalProps> = ({
   removeFromRosterModal,
   getAllPokemon,
   closeModal,
+  saveRoster,
   roster,
 }) => {
   React.useEffect(() => {
@@ -51,6 +52,10 @@ const RosterModal: React.FC<RosterModalProps> = ({
     closeModal(ModalTypes.roster);
   };
 
+  const handleSaveRoster = () => {
+    saveRoster(roster);
+    handleCloseModal();
+  };
   return (
     <StyledModal open onClose={handleCloseModal}>
       <StyledModalContainer>
@@ -68,7 +73,9 @@ const RosterModal: React.FC<RosterModalProps> = ({
             pokemonData={pokemonData}
             handleAddRoster={addToRosterModal}
           />
-          <Button data-testid="roster-modal__save">Save</Button>
+          <Button onClick={handleSaveRoster} data-testid="roster-modal__save">
+            Save
+          </Button>
           <Button onClick={handleCloseModal} data-testid="roster-modal__close">
             Close
           </Button>

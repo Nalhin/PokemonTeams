@@ -8,6 +8,9 @@ import {
   OpenModalAction,
   RemoveFromRosterModalAction,
   SetRosterModalAction,
+  SetTeamModalAction,
+  SetTeamModalRosterAction,
+  TeamCombined,
 } from './modal.types';
 import { Pokemon } from '../../interfaces/pokemon';
 
@@ -49,4 +52,16 @@ export const removeFromRosterModal = (
 ): RemoveFromRosterModalAction => ({
   type: ModalActionTypes.REMOVE_FROM_ROSTER_MODAL,
   index,
+});
+
+export const setTeamModal = (team: TeamCombined): SetTeamModalAction => ({
+  type: ModalActionTypes.SET_TEAM_MODAL,
+  team,
+});
+
+export const setTeamModalRoster = (
+  roster: Pokemon[],
+): SetTeamModalRosterAction => ({
+  type: ModalActionTypes.SET_TEAM_MODAL_ROSTER,
+  roster,
 });

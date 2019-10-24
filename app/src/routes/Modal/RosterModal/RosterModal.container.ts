@@ -8,6 +8,7 @@ import {
   addToRosterModalRequested,
   closeModal,
   removeFromRosterModal,
+  setTeamModalRoster,
 } from '../../../store/modal/modal.actions';
 
 const mapStateToProps = (state: AppState) => {
@@ -28,6 +29,7 @@ const mapDispatchToProps = (dispatch: Dispatch<RootAction>) => {
       closeModal,
       addToRosterModal: addToRosterModalRequested,
       removeFromRosterModal,
+      saveRoster: setTeamModalRoster,
     },
     dispatch,
   );

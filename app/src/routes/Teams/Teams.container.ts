@@ -7,8 +7,7 @@ import {
   loadMoreTeams,
 } from '../../store/team/team.actions';
 import { RootAction } from '../../store/rootAction';
-import { ModalTypes } from '../../store/modal/modal.types';
-import { openModal } from '../../store/modal/modal.actions';
+import { openModal, setTeamModal } from '../../store/modal/modal.actions';
 
 const mapStateToProps = (state: AppState) => {
   const teams = state.team.teams.data;
@@ -25,7 +24,8 @@ const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
   bindActionCreators(
     {
       getTeams: getTeamsRequested,
-      openAddTeamModal: () => openModal(ModalTypes.addTeam),
+      openModal,
+      setTeamModal,
       loadMoreTeams,
     },
     dispatch,

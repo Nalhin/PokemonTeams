@@ -62,7 +62,9 @@ export const editTeam = async (req: AuthenticationRequest, res: Response) => {
       _id,
       { type, name, description, roster },
       { new: true },
-    ).populate('roster');
+    )
+      .populate('roster')
+      .populate('owner');
 
     return res.status(201).send(updatedTeam);
   } catch (e) {

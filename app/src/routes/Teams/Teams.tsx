@@ -8,6 +8,8 @@ import styled from '@emotion/styled';
 import { PADDING } from '../../styles/padding';
 import LazyLoading from '../../components/Loading/LazyLoading';
 import ZoomFab from '../../components/ZoomFab/ZoomFab';
+import { NewTeam } from '../../interfaces/newTeam';
+import { ModalTypes } from '../../store/modal/modal.types';
 
 const StyledContainer = styled(InfiniteScroll)`
   display: flex;
@@ -31,17 +33,30 @@ interface TeamsProps extends TeamsContainerProps {}
 
 const LOAD_AMOUNT = 10;
 
+export const INITIAL_TEAM_STATE: NewTeam = {
+  description: '',
+  name: '',
+  type: 0,
+  roster: [],
+};
+
 const Teams: React.FC<TeamsProps> = ({
   teams,
   isLoading,
   getTeams,
-  openAddTeamModal,
+  openModal,
+  setTeamModal,
   loaded,
   loadMoreTeams,
 }) => {
   React.useEffect(() => {
     getTeams();
   }, [getTeams]);
+
+  const openAddTeamModal = () => {
+    setTeamModal(INITIAL_TEAM_STATE);
+    openModal(ModalTypes.addTeam);
+  };
 
   const handleLoadedChange = () => {
     loadMoreTeams(LOAD_AMOUNT);

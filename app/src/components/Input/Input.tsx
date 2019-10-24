@@ -12,14 +12,22 @@ export interface InputProps {
   name: string;
   label: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: () => void;
 }
 
-const Input: React.FC<InputProps> = ({ value, name, label, onChange }) => {
+const Input: React.FC<InputProps> = ({
+  value,
+  name,
+  label,
+  onChange,
+  onBlur,
+}) => {
   return (
     <StyledTextField
       value={value}
       name={name}
       onChange={onChange}
+      onBlur={onBlur}
       label={label}
       type="text"
       id={name}

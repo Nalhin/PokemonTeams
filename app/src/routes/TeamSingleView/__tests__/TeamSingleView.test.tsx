@@ -3,12 +3,13 @@ import { renderWithRouter } from '../../../../test/utils/renderWithRouter';
 import TeamSingleView from '../TeamSingleView';
 import { fakeTeam } from '../../../../test/fixtures/team';
 import { cleanup, fireEvent } from '@testing-library/react';
+import { ModalTypes } from '../../../store/modal/modal.types';
 
 const props = {
   getTeam: jest.fn(),
   isLoading: true,
-  openEditTeamModal: jest.fn(),
-  openDeleteTeamModal: jest.fn(),
+  openModal: jest.fn(),
+  setTeamModal: jest.fn(),
   team: fakeTeam,
 };
 
@@ -40,26 +41,35 @@ describe('TeamSingleView Component', () => {
   });
 
   it('Should allow to open editTeamModal', () => {
-    const editTeam = jest.fn();
+    const openModal = jest.fn();
+    const setTeamModal = jest.fn();
     const { getByTestId } = renderWithRouter(
-      <TeamSingleView {...props} openEditTeamModal={editTeam} />,
+      <TeamSingleView
+        {...props}
+        openModal={openModal}
+        setTeamModal={setTeamModal}
+      />,
     );
     const editIcon = getByTestId('team-single-view__edit-icon');
 
     fireEvent.click(editIcon);
 
-    expect(editTeam).toHaveBeenCalledTimes(1);
+    expect(openModal).toHaveBeenCalledTimes(1);
+    expect(openModal).toHaveBeenCalledWith(ModalTypes.editTeam);
+    expect(setTeamModal).toHaveBeenCalledTimes(1);
+    expect(setTeamModal).toHaveBeenCalledWith(props.team);
   });
 
   it('Should allow to open delete team modal', () => {
-    const openDeleteTeamModal = jest.fn();
+    const openModal = jest.fn();
     const { getByTestId } = renderWithRouter(
-      <TeamSingleView {...props} openDeleteTeamModal={openDeleteTeamModal} />,
+      <TeamSingleView {...props} openModal={openModal} />,
     );
     const deleteIcon = getByTestId('team-single-view__delete-icon');
 
     fireEvent.click(deleteIcon);
 
-    expect(openDeleteTeamModal).toHaveBeenCalledTimes(1);
+    expect(openModal).toHaveBeenCalledTimes(1);
+    expect(openModal).toHaveBeenCalledWith(ModalTypes.deleteTeam);
   });
 });

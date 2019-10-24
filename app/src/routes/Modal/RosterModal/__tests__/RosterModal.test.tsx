@@ -11,6 +11,7 @@ const props = {
   removeFromRosterModal: jest.fn(),
   getAllPokemon: jest.fn(),
   closeModal: jest.fn(),
+  saveRoster: jest.fn(),
   roster: [fakePokemon],
 };
 
@@ -48,7 +49,25 @@ describe('RosterModal Component', () => {
     expect(removeFromRosterModal).toHaveBeenCalledWith(index);
   });
 
-  it('Should allow to save team', () => {});
+  it('Should allow to save team', () => {
+    const closeModal = jest.fn();
+    const saveRoster = jest.fn();
+    const { getByTestId } = render(
+      <RosterModal
+        {...props}
+        closeModal={closeModal}
+        saveRoster={saveRoster}
+      />,
+    );
+    const saveButton = getByTestId('roster-modal__save');
+
+    fireEvent.click(saveButton);
+
+    expect(closeModal).toHaveBeenCalledTimes(1);
+    expect(closeModal).toHaveBeenCalledWith(ModalTypes.roster);
+    expect(saveRoster).toHaveBeenCalledTimes(1);
+    expect(saveRoster).toHaveBeenCalledWith(props.roster);
+  });
 
   it('Should allow to close modal', () => {
     const closeModal = jest.fn();

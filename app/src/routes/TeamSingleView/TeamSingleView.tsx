@@ -12,6 +12,7 @@ import { TeamType } from '../../interfaces/team';
 import { TEAM_COLORS } from '../../styles/team';
 import PokemonCard from '../../components/PokemonCard/PokemonCard';
 import ZoomFab from '../../components/ZoomFab/ZoomFab';
+import { ModalTypes } from '../../store/modal/modal.types';
 
 const StyledEditFab = styled(ZoomFab)`
   bottom: ${PADDING.BASE};
@@ -63,13 +64,22 @@ const TeamSingleView: React.FC<TeamSingleViewProps> = ({
   getTeam,
   isLoading,
   match,
-  openEditTeamModal,
-  openDeleteTeamModal,
+  openModal,
+  setTeamModal,
   team,
 }) => {
   React.useEffect(() => {
     getTeam(match.params.id);
   }, [getTeam]);
+
+  const openDeleteTeamModal = () => {
+    openModal(ModalTypes.deleteTeam);
+  };
+
+  const openEditTeamModal = () => {
+    setTeamModal(team);
+    openModal(ModalTypes.editTeam);
+  };
 
   const { roster, description, owner, type, name } = team;
   return (

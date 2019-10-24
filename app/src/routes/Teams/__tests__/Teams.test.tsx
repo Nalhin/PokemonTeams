@@ -1,14 +1,16 @@
 import { cleanup, fireEvent } from '@testing-library/react';
 import React from 'react';
-import Teams from '../Teams';
+import Teams, { INITIAL_TEAM_STATE } from '../Teams';
 import { fakeTeam } from '../../../../test/fixtures/team';
 import { renderWithRouter } from '../../../../test/utils/renderWithRouter';
+import { ModalTypes } from '../../../store/modal/modal.types';
 
 const props = {
   teams: [fakeTeam],
   isLoading: false,
   getTeams: jest.fn(),
-  openAddTeamModal: jest.fn(),
+  openModal: jest.fn(),
+  setTeamModal: jest.fn(),
   loadMoreTeams: jest.fn(),
   loaded: 20,
 };
@@ -24,15 +26,18 @@ describe('Teams Component', () => {
   });
 
   it('Should allow to add team', () => {
-    const addTeam = jest.fn();
+    const openModal = jest.fn();
+    const setTeamModal = jest.fn();
     const { getByTestId } = renderWithRouter(
-      <Teams {...props} openAddTeamModal={addTeam} />,
+      <Teams {...props} openModal={openModal} setTeamModal={setTeamModal} />,
     );
     const addTeamIcon = getByTestId('teams__add-team');
 
     fireEvent.click(addTeamIcon);
 
-    expect(addTeam).toHaveBeenCalledTimes(1);
+    expect(openModal).toHaveBeenCalledTimes(1);
+    expect(openModal).toHaveBeenCalledWith(ModalTypes.addTeam);
+    expect(setTeamModal).toHaveBeenCalledWith(INITIAL_TEAM_STATE);
   });
 
   it('Should fire getTeams on init', () => {

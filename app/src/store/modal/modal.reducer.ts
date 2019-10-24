@@ -1,10 +1,16 @@
-import { ModalActions, ModalActionTypes, ModalState } from './modal.types';
+import {
+  ModalActions,
+  ModalActionTypes,
+  ModalState,
+  TeamCombined,
+} from './modal.types';
 import { Reducer } from 'redux';
 import produce from 'immer';
 
 export const INITIAL_STATE: ModalState = {
   openedModals: [],
   rosterModal: { roster: [] },
+  teamModal: { team: {} as TeamCombined },
 };
 
 const modalReducer: Reducer<ModalState, ModalActions> = (
@@ -34,6 +40,14 @@ const modalReducer: Reducer<ModalState, ModalActions> = (
         draft.rosterModal.roster = draft.rosterModal.roster.filter(
           (pokemon, i) => i !== action.index,
         );
+        break;
+      case ModalActionTypes.SET_TEAM_MODAL:
+        draft.teamModal.team = action.team;
+        break;
+      case ModalActionTypes.SET_TEAM_MODAL_ROSTER:
+        draft.teamModal.team.roster = action.roster;
+        break;
+      default:
         break;
     }
   });

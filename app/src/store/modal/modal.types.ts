@@ -1,4 +1,6 @@
 import { Pokemon } from '../../interfaces/pokemon';
+import { NewTeam } from '../../interfaces/newTeam';
+import { Team } from '../../interfaces/team';
 
 export enum ModalTypes {
   roster,
@@ -7,9 +9,12 @@ export enum ModalTypes {
   deleteTeam,
 }
 
+export type TeamCombined = NewTeam | Team;
+
 export interface ModalState {
   readonly openedModals: ModalTypes[];
   readonly rosterModal: { roster: Pokemon[] };
+  readonly teamModal: { team: TeamCombined };
 }
 
 export enum ModalActionTypes {
@@ -20,6 +25,8 @@ export enum ModalActionTypes {
   ADD_TO_ROSTER_MODAL_REQUESTED = 'ADD_TO_ROSTER_MODAL_REQUESTED',
   ADD_TO_ROSTER_MODAL_SUCCEEDED = 'ADD_TO_ROSTER_MODAL_SUCCEEDED',
   REMOVE_FROM_ROSTER_MODAL = 'REMOVE_FROM_ROSTER_MODAL',
+  SET_TEAM_MODAL = 'SET_TEAM_MODAL',
+  SET_TEAM_MODAL_ROSTER = 'SET_TEAM_MODAL_ROSTER',
 }
 
 export interface OpenModalAction {
@@ -56,6 +63,15 @@ export interface RemoveFromRosterModalAction {
   index: number;
 }
 
+export interface SetTeamModalAction {
+  type: ModalActionTypes.SET_TEAM_MODAL;
+  team: TeamCombined;
+}
+
+export interface SetTeamModalRosterAction {
+  type: ModalActionTypes.SET_TEAM_MODAL_ROSTER;
+  roster: Pokemon[];
+}
 export type ModalActions =
   | OpenModalAction
   | CloseModalAction
@@ -63,4 +79,6 @@ export type ModalActions =
   | SetRosterModalAction
   | AddToRosterModalRequestedAction
   | AddToRosterModalSucceededAction
-  | RemoveFromRosterModalAction;
+  | RemoveFromRosterModalAction
+  | SetTeamModalAction
+  | SetTeamModalRosterAction;
