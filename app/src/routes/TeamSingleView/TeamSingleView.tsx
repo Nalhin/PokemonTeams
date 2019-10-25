@@ -52,6 +52,10 @@ const StyledOwner = styled(Typography)`
   justify-content: flex-end;
 `;
 
+const StyledPokemonCard = styled(PokemonCard)`
+  margin: ${PADDING.BASE} auto;
+`;
+
 interface RouterProps {
   id: string;
 }
@@ -94,7 +98,7 @@ const TeamSingleView: React.FC<TeamSingleViewProps> = ({
         <StyledPokemonContainer>
           {roster &&
             roster.map((pokemon, i) => (
-              <PokemonCard pokemon={pokemon} key={i} />
+              <StyledPokemonCard pokemon={pokemon} key={i} />
             ))}
         </StyledPokemonContainer>
         <StyledOwner variant="body2" component="p">

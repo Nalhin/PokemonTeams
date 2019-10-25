@@ -190,6 +190,27 @@ describe('Team Saga', () => {
     expect(dispatchedActions).toEqual(expectedDispatchedActions);
   });
 
+  it('Should not allow to editTeam with empty fields', async () => {
+    const fakeTeamWithEmptyField = { ...fakeTeam, description: '' };
+    const apiMock = jest.spyOn(teamApi, 'fetchEditTeam').mockResolvedValue({
+      ...fakeAxiosSuccessResponse,
+      data: fakeTeamWithEmptyField,
+    });
+    const expectedDispatchedActions = [
+      generateFakeSnackbarAction('Team has empty fields.', SnackbarTypes.error),
+      editTeamFailed(),
+    ];
+
+    await runSaga(
+      fakeStore,
+      editTeamSaga,
+      editTeamRequested(fakeTeamWithEmptyField),
+    );
+
+    expect(apiMock).toHaveBeenCalledTimes(0);
+    expect(dispatchedActions).toEqual(expectedDispatchedActions);
+  });
+
   it('Should handle editTeam errors', async () => {
     const apiMock = jest.spyOn(teamApi, 'fetchEditTeam').mockRejectedValue({
       ...fakeAxiosError,
@@ -223,6 +244,27 @@ describe('Team Saga', () => {
 
     expect(apiMock).toHaveBeenCalledWith(fakeTeam);
     expect(apiMock).toHaveBeenCalledTimes(1);
+    expect(dispatchedActions).toEqual(expectedDispatchedActions);
+  });
+
+  it('Should not allow to saveTeam with empty fields', async () => {
+    const fakeTeamWithEmptyField = { ...fakeTeam, description: '' };
+    const apiMock = jest.spyOn(teamApi, 'fetchSaveTeam').mockResolvedValue({
+      ...fakeAxiosSuccessResponse,
+      data: fakeTeamWithEmptyField,
+    });
+    const expectedDispatchedActions = [
+      generateFakeSnackbarAction('Team has empty fields.', SnackbarTypes.error),
+      saveTeamFailed(),
+    ];
+
+    await runSaga(
+      fakeStore,
+      saveTeamSaga,
+      saveTeamRequested(fakeTeamWithEmptyField),
+    );
+
+    expect(apiMock).toHaveBeenCalledTimes(0);
     expect(dispatchedActions).toEqual(expectedDispatchedActions);
   });
 

@@ -18,6 +18,7 @@ const StyledContainer = styled(InfiniteScroll)`
   justify-content: space-between;
   width: 90%;
   margin: 0 auto;
+  overflow: auto;
 `;
 
 const StyledZoomFab = styled(ZoomFab)`

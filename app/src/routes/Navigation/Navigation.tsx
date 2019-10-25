@@ -5,6 +5,7 @@ import { COLORS } from '../../styles/colors';
 import styled from '@emotion/styled';
 import { NavigationContainerProps } from './Navigation.container';
 import { PADDING } from '../../styles/padding';
+import { Z_INDEX } from '../../styles/zIndex';
 
 const StyledAppBar = styled(AppBar)`
   background: ${COLORS.MAIN};
@@ -12,6 +13,7 @@ const StyledAppBar = styled(AppBar)`
   flex-direction: row;
   padding: 0 5%;
   height: 54px;
+  z-index: ${Z_INDEX.NAVBAR};
 `;
 
 const StyledNavigationLink = styled(NavLink)`
@@ -56,7 +58,9 @@ const Navigation: React.FC<NavigationProps> = ({
         </StyledNavLinkButton>
       ) : (
         <React.Fragment>
-          <StyledLoginNavLink to="/">Login</StyledLoginNavLink>
+          <StyledLoginNavLink to="/" activeWith={['/register']}>
+            Login
+          </StyledLoginNavLink>
         </React.Fragment>
       )}
     </StyledAppBar>

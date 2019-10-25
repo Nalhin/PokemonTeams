@@ -32,8 +32,8 @@ const PokemonList: React.FC<PokemonListProps> = ({
   loaded,
 }) => {
   React.useEffect(() => {
-    getAllPokemon();
-  }, [getAllPokemon]);
+    if (pokemonData.length === 0) getAllPokemon();
+  }, [getAllPokemon, pokemonData.length]);
 
   const handleLoadedChange = () => {
     loadMorePokemon(LOAD_AMOUNT);

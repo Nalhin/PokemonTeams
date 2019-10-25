@@ -19,7 +19,7 @@ const StyledCard = styled(Card)`
     ` ${TEAM_COLORS[props.type]}44`};
   max-width: 450px;
   min-width: 300px;
-  margin: ${PADDING.BASE};
+  margin: ${PADDING.BASE} auto;
   &:hover {
     cursor: pointer;
     background: ${(props: StyledFormControlLabelProps) =>

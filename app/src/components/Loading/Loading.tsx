@@ -11,8 +11,13 @@ const Wrapper = styled.div<WrapperProps>`
   ${props => props.isRelative && 'position: relative;'}
 `;
 
+interface SpinnerWrapperProps {
+  isFixed: boolean;
+}
+
 const SpinnerWrapper = styled.div`
-  position: absolute;
+  position: ${(props: SpinnerWrapperProps) =>
+    props.isFixed ? 'fixed' : 'absolute'};
   top: 0;
   left: 0;
   bottom: 0;
@@ -28,6 +33,7 @@ interface LoadingProps {
   isLoading: boolean;
   children?: React.ReactNode;
   isRelative?: boolean;
+  isFixed?: boolean;
   className?: string;
 }
 
@@ -36,6 +42,7 @@ const Loading: React.FC<LoadingProps> = ({
   children,
   isRelative,
   className,
+  isFixed,
 }) => {
   return (
     <Wrapper
@@ -44,7 +51,7 @@ const Loading: React.FC<LoadingProps> = ({
       data-testid="loading_wrapper"
     >
       {isLoading && (
-        <SpinnerWrapper data-testid="loading-spinner">
+        <SpinnerWrapper isFixed={isFixed} data-testid="loading-spinner">
           <BounceLoader
             loading={isLoading}
             color={'#36D7B7'}

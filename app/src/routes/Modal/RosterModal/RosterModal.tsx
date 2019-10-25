@@ -53,8 +53,8 @@ const RosterModal: React.FC<RosterModalProps> = ({
   roster,
 }) => {
   React.useEffect(() => {
-    getAllPokemon();
-  }, [getAllPokemon]);
+    if (pokemonData.length === 0) getAllPokemon();
+  }, [getAllPokemon, pokemonData.length]);
 
   const handleCloseModal = () => {
     closeModal(ModalTypes.roster);
@@ -65,7 +65,7 @@ const RosterModal: React.FC<RosterModalProps> = ({
     handleCloseModal();
   };
   return (
-    <StyledModal open onClose={handleCloseModal}>
+    <StyledModal open onClose={handleCloseModal} data-testid="roster-modal">
       <StyledModalContainer>
         <Loading isLoading={isLoading} isRelative>
           <StyledHeader>

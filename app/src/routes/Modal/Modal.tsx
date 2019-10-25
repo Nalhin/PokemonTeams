@@ -40,26 +40,38 @@ const Modal: React.FC<ModalProps> = ({
         switch (modal) {
           case ModalTypes.addTeam:
             return (
-              <React.Suspense fallback={<Loading isLoading />}>
-                <AddTeamModal key={modal} />
+              <React.Suspense
+                key={modal}
+                fallback={<Loading isLoading isFixed />}
+              >
+                <AddTeamModal />
               </React.Suspense>
             );
           case ModalTypes.editTeam:
             return (
-              <React.Suspense fallback={<Loading isLoading />}>
-                <EditTeamModal key={modal} />
+              <React.Suspense
+                key={modal}
+                fallback={<Loading isLoading isFixed />}
+              >
+                <EditTeamModal />
               </React.Suspense>
             );
           case ModalTypes.deleteTeam:
             return (
-              <React.Suspense fallback={<Loading isLoading />}>
-                <DeleteTeamModal key={modal} />
+              <React.Suspense
+                key={modal}
+                fallback={<Loading isLoading isFixed />}
+              >
+                <DeleteTeamModal />
               </React.Suspense>
             );
           case ModalTypes.roster:
             return (
-              <React.Suspense fallback={<Loading isLoading />}>
-                <PickPokemonModal key={modal} />
+              <React.Suspense
+                key={modal}
+                fallback={<Loading isLoading isFixed />}
+              >
+                <PickPokemonModal />
               </React.Suspense>
             );
         }

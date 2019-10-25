@@ -27,6 +27,25 @@ describe('NavLink Component', () => {
     );
   });
 
+  it('Should highlight activeWith route', () => {
+    const route = '/test';
+    const to = '/fake';
+    const { getByText } = renderWithRouter(
+      <NavLink to={to} activeWith={[route]}>
+        {mockNavLinkText}
+      </NavLink>,
+      { route },
+    );
+
+    expect(getByText(mockNavLinkText)).toHaveStyleRule(
+      'transform',
+      'scaleX(1)',
+      {
+        target: '::after',
+      },
+    );
+  });
+
   it('Should not highlight inactive route', () => {
     const route = '/test';
     const newRoute = '/other-route';

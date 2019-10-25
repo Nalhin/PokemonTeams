@@ -52,8 +52,9 @@ const PokemonSingleView: React.FC<PokemonSingleViewProps> = ({
   match,
 }) => {
   React.useEffect(() => {
-    getPokemonById(match.params.id);
-  }, [getPokemonById]);
+    if (String(pokemon.pokedexId) !== match.params.id)
+      getPokemonById(match.params.id);
+  }, [getPokemonById, pokemon.pokedexId]);
 
   return (
     <Loading isLoading={isLoading} isRelative>

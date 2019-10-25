@@ -33,6 +33,9 @@ import { generateErrorMessage } from '../../utils/generateErrorMessage';
 import { addSnackbar } from '../snackbar/sanckbar.action';
 import { generateSnackbar } from '../../utils/generateSnackbar';
 import { SnackbarTypes } from '../../interfaces/snackbar';
+import { hasEmptyFields } from '../../utils/hasEmptyField';
+import { Team } from '../../interfaces/team';
+import { NewTeam } from '../../interfaces/newTeam';
 
 export function* teamRootSaga(): SagaIterator {
   yield all([
@@ -92,6 +95,8 @@ export function* deleteTeamSaga(
 
 export function* editTeamSaga(action: EditTeamRequestedAction): SagaIterator {
   try {
+    if (hasEmptyFields<Team>(action.team))
+      throw new Error('Team has empty fields.');
     const response = yield call(fetchEditTeam, action.team);
     yield put(editTeamSucceeded(response.data));
     yield put(closeModal(ModalTypes.editTeam));
@@ -109,6 +114,8 @@ export function* editTeamSaga(action: EditTeamRequestedAction): SagaIterator {
 
 export function* saveTeamSaga(action: SaveTeamRequestedAction): SagaIterator {
   try {
+    if (hasEmptyFields<NewTeam>(action.team))
+      throw new Error('Team has empty fields.');
     const response = yield call(fetchSaveTeam, action.team);
     yield put(saveTeamSucceeded(response.data));
     yield put(

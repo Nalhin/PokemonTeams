@@ -24,6 +24,28 @@ describe('RosterModal Component', () => {
     expect(loadingSpinner).toBeTruthy();
   });
 
+  it('Should fire loadPokemon', () => {
+    const getAllPokemon = jest.fn();
+    render(
+      <RosterModal {...props} getAllPokemon={getAllPokemon} pokemonData={[]} />,
+    );
+
+    expect(getAllPokemon).toHaveBeenCalledTimes(1);
+  });
+
+  it('Should not fire loadPokemon, if pokemonData is already cached', () => {
+    const getAllPokemon = jest.fn();
+    render(
+      <RosterModal
+        {...props}
+        getAllPokemon={getAllPokemon}
+        pokemonData={[fakePokemon]}
+      />,
+    );
+
+    expect(getAllPokemon).toHaveBeenCalledTimes(0);
+  });
+
   it('Should allow to add pokemon', () => {
     const addToRosterModal = jest.fn();
     const { getByTestId } = render(

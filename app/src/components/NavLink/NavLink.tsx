@@ -40,6 +40,7 @@ interface NavLinkProps extends RouteComponentProps {
   to: string;
   children?: React.ReactNode;
   className?: string;
+  activeWith?: string[];
 }
 
 const NavLink: React.FC<NavLinkProps> = ({
@@ -48,18 +49,28 @@ const NavLink: React.FC<NavLinkProps> = ({
   history,
   location,
   className,
+  activeWith,
 }) => {
   const onClick = () => {
     history.push(to);
   };
-
-  const isActive = '/' + location.pathname.split('/')[1] === to;
+  const firstPartOfAddress = '/' + location.pathname.split('/')[1];
+  const isToActive = firstPartOfAddress === to;
+  const isActiveWith = activeWith.includes(firstPartOfAddress);
 
   return (
-    <StyledNavLink onClick={onClick} isActive={isActive} className={className}>
+    <StyledNavLink
+      onClick={onClick}
+      isActive={isToActive || isActiveWith}
+      className={className}
+    >
       {children}
     </StyledNavLink>
   );
+};
+
+NavLink.defaultProps = {
+  activeWith: [],
 };
 
 export default withRouter(NavLink);

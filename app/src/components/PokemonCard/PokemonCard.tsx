@@ -32,15 +32,20 @@ const StyledCardContent = styled(CardContent)`
 
 interface PokemonCardProps extends RouteComponentProps {
   pokemon: Pokemon;
+  className?: string;
 }
 
-const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon, history }) => {
+const PokemonCard: React.FC<PokemonCardProps> = ({
+  pokemon,
+  history,
+  className,
+}) => {
   const redirectToPokemon = (): void => {
     history.push(`/pokemon/${pokemon.pokedexId}`);
   };
 
   return (
-    <StyledCard onClick={redirectToPokemon}>
+    <StyledCard onClick={redirectToPokemon} className={className}>
       <CardActionArea>
         <StyledCardMedia image={`/assets/images/${pokemon.pokedexId}.png`} />
         <StyledCardContent>

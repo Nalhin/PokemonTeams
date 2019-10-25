@@ -21,7 +21,7 @@ const StyledModal = styled(Modal)`
 `;
 
 const StyledContainer = styled(Paper)`
-  width: 80%;
+  width: 90%;
   max-width: 450px;
   padding: ${PADDING.LARGE};
 `;
@@ -87,7 +87,7 @@ const TeamModal: React.FC<TeamModalProps> = ({
   const { name, description } = inputState;
   return (
     <StyledModal open onClose={closeModal}>
-      <StyledContainer data-testid="teams">
+      <StyledContainer data-testid="team-modal">
         <StyledLoading isLoading={isLoading} isRelative>
           <TeamTypeRadioGroup value={type} onChange={setType} />
           <Input
@@ -108,9 +108,18 @@ const TeamModal: React.FC<TeamModalProps> = ({
             Roster
           </Typography>
           <TeamRoster roster={roster} />
-          <Button onClick={handleOpenRosterModal}>Change Roster</Button>
-          <Button onClick={handleConfirm}>Save</Button>
-          <Button onClick={closeModal}>Cancel</Button>
+          <Button
+            onClick={handleOpenRosterModal}
+            data-testid="team-modal__change-roster"
+          >
+            Change Roster
+          </Button>
+          <Button onClick={handleConfirm} data-testid="team-modal__save">
+            Save
+          </Button>
+          <Button onClick={closeModal} data-testid="team-modal__close">
+            Close
+          </Button>
         </StyledLoading>
       </StyledContainer>
     </StyledModal>

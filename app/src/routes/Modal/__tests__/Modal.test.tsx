@@ -29,17 +29,17 @@ describe('Modal Component', () => {
     expect(loading).toBeTruthy();
   });
 
-  it('Should display AddTeamModal', () => {});
-  it('Should display EditTeamModal', async () => {
+  it('Should display TeamModal', async () => {
     const openModals = [ModalTypes.editTeam];
     const { findByTestId } = renderWithStore(
       <Modal closeAllModal={jest.fn()} isModalOpen openedModals={openModals} />,
     );
 
-    const deleteTeamModal = await findByTestId('edit-team-modal');
+    const deleteTeamModal = await findByTestId('team-modal');
 
     expect(deleteTeamModal).toBeTruthy();
   });
+
   it('Should display DeleteTeamModal', async () => {
     const openModals = [ModalTypes.deleteTeam];
     const { findByTestId } = renderWithStore(
@@ -49,5 +49,16 @@ describe('Modal Component', () => {
     const deleteTeamModal = await findByTestId('delete-team-modal');
 
     expect(deleteTeamModal).toBeTruthy();
+  });
+
+  it('Should display RosterModal', async () => {
+    const openModals = [ModalTypes.roster];
+    const { findByTestId } = renderWithStore(
+      <Modal closeAllModal={jest.fn()} isModalOpen openedModals={openModals} />,
+    );
+
+    const rosterModal = await findByTestId('roster-modal');
+
+    expect(rosterModal).toBeTruthy();
   });
 });
