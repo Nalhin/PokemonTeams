@@ -13,7 +13,6 @@ const EditTeamModal = React.lazy(() =>
 const DeleteTeamModal = React.lazy(() =>
   import('./DeleteTeamModal/DeleteTeamModal.container'),
 );
-
 const PickPokemonModal = React.lazy(() =>
   import('./RosterModal/RosterModal.container'),
 );
@@ -36,20 +35,36 @@ const Modal: React.FC<ModalProps> = ({
   }, [history, isModalOpen]);
 
   return (
-    <React.Suspense fallback={<Loading isLoading />}>
+    <React.Fragment>
       {openedModals.map(modal => {
         switch (modal) {
           case ModalTypes.addTeam:
-            return <AddTeamModal key={modal} />;
+            return (
+              <React.Suspense fallback={<Loading isLoading />}>
+                <AddTeamModal key={modal} />
+              </React.Suspense>
+            );
           case ModalTypes.editTeam:
-            return <EditTeamModal key={modal} />;
+            return (
+              <React.Suspense fallback={<Loading isLoading />}>
+                <EditTeamModal key={modal} />
+              </React.Suspense>
+            );
           case ModalTypes.deleteTeam:
-            return <DeleteTeamModal key={modal} />;
+            return (
+              <React.Suspense fallback={<Loading isLoading />}>
+                <DeleteTeamModal key={modal} />
+              </React.Suspense>
+            );
           case ModalTypes.roster:
-            return <PickPokemonModal key={modal} />;
+            return (
+              <React.Suspense fallback={<Loading isLoading />}>
+                <PickPokemonModal key={modal} />
+              </React.Suspense>
+            );
         }
       })}
-    </React.Suspense>
+    </React.Fragment>
   );
 };
 

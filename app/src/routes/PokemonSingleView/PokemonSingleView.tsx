@@ -9,10 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import { PADDING } from '../../styles/padding';
 import Tag from '../../components/Tag/Tag';
 import PokemonStats from '../../components/PokemonStats/PokemonStats';
-
-const PokemonModelViewer = React.lazy(() =>
-  import('../../components/PokemonModelViewer/PokemonModelViewer'),
-);
+import PokemonModelViewer from '../../components/PokemonModelViewer/PokemonModelViewer';
 
 const StyledTagContainer = styled.div`
   display: flex;
@@ -36,12 +33,6 @@ const StyledPokemonDescription = styled.div`
   display: flex;
   max-width: 300px;
   flex-direction: column;
-`;
-
-const StyledModelPlaceholder = styled.div`
-  margin: ${PADDING.BASE} auto;
-  width: 100%;
-  padding-top: 75%;
 `;
 
 interface RouterProps {
@@ -79,15 +70,7 @@ const PokemonSingleView: React.FC<PokemonSingleViewProps> = ({
               pokemon.tags.map(tag => <StyledTag tag={tag} key={tag} />)}
           </StyledTagContainer>
         </StyledPokemonDescription>
-        <React.Suspense
-          fallback={
-            <Loading isLoading={!isLoading} isRelative>
-              <StyledModelPlaceholder />
-            </Loading>
-          }
-        >
-          <PokemonModelViewer id={match.params.id} />
-        </React.Suspense>
+        <PokemonModelViewer id={match.params.id} />
         <StyledPokemonDescription>
           <PokemonStats
             hp={pokemon.hp}

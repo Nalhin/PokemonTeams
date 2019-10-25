@@ -2,6 +2,7 @@ import * as React from 'react';
 import { SnackbarsContainerProps } from './Snackbars.container';
 import Snackbar from '../../components/Snackbar/Snackbar';
 import styled from '@emotion/styled';
+import { Z_INDEX } from '../../styles/zIndex';
 
 const StyledContainer = styled.div`
   left: 0;
@@ -13,7 +14,7 @@ const StyledContainer = styled.div`
   flex-direction: column-reverse;
   align-items: center;
   pointer-events: none;
-  z-index: 2002;
+  z-index: ${Z_INDEX.SNACKBAR};
 `;
 
 interface Snackbars extends SnackbarsContainerProps {}

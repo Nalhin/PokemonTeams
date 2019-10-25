@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
 import { BounceLoader } from 'react-spinners';
+import { Z_INDEX } from '../../styles/zIndex';
 
 interface WrapperProps {
   isRelative: boolean;
@@ -20,7 +21,7 @@ const SpinnerWrapper = styled.div`
   align-items: center;
   justify-content: center;
   background: rgba(255, 255, 255, 0.5);
-  z-index: 2001;
+  z-index: ${Z_INDEX.LOADING};
 `;
 
 interface LoadingProps {

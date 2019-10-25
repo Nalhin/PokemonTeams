@@ -27,9 +27,17 @@ const StyledHeader = styled.div`
   text-align: center;
   padding: ${PADDING.X_BASE};
   position: sticky;
-  z-index: 1000;
   background: #fff;
   top: 0;
+`;
+
+const StyledButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const StyledButton = styled(Button)`
+  margin-right: ${PADDING.BASE};
 `;
 
 interface RosterModalProps extends RosterModalContainerProps {}
@@ -73,12 +81,20 @@ const RosterModal: React.FC<RosterModalProps> = ({
             pokemonData={pokemonData}
             handleAddRoster={addToRosterModal}
           />
-          <Button onClick={handleSaveRoster} data-testid="roster-modal__save">
-            Save
-          </Button>
-          <Button onClick={handleCloseModal} data-testid="roster-modal__close">
-            Close
-          </Button>
+          <StyledButtonContainer>
+            <StyledButton
+              onClick={handleSaveRoster}
+              data-testid="roster-modal__save"
+            >
+              Save
+            </StyledButton>
+            <StyledButton
+              onClick={handleCloseModal}
+              data-testid="roster-modal__close"
+            >
+              Close
+            </StyledButton>
+          </StyledButtonContainer>
         </Loading>
       </StyledModalContainer>
     </StyledModal>

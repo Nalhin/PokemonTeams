@@ -9,21 +9,18 @@ jest.mock('../../components/PokemonModelViewer/PokemonModelViewer', () => {
   return () => <div />;
 });
 
-jest.mock('react-infinite-scroller'),
-  () => {
-    return () => <div />;
-  };
-
 describe('View Component', () => {
   afterEach(cleanup);
 
-  it('Should handle "/" route', () => {
+  it('Should handle "/" route', async () => {
     const route = '/';
-    const { getByTestId } = renderWithStore(<View />, {
+    const { findByTestId } = renderWithStore(<View />, {
       route,
     });
 
-    expect(getByTestId('login')).toBeTruthy();
+    const login = await findByTestId('login');
+
+    expect(login).toBeTruthy();
   });
 
   it('Should redirect from "/" if user is logged in', () => {
@@ -35,21 +32,23 @@ describe('View Component', () => {
         isAuthenticated: true,
       },
     };
-    const { queryByTestId } = renderWithStore(<View />, {
+    const { history } = renderWithStore(<View />, {
       route,
       initialState,
     });
 
-    expect(queryByTestId('login')).toBeFalsy();
+    expect(history.location.pathname).not.toBe(route);
   });
 
-  it('Should handle "/register" route', () => {
+  it('Should handle "/register" route', async () => {
     const route = '/register';
-    const { getByTestId } = renderWithStore(<View />, {
+    const { findByTestId } = renderWithStore(<View />, {
       route,
     });
 
-    expect(getByTestId('register')).toBeTruthy();
+    const register = await findByTestId('register');
+
+    expect(register).toBeTruthy();
   });
 
   it('Should redirect from "/register" if user is logged in', () => {
@@ -61,48 +60,57 @@ describe('View Component', () => {
         isAuthenticated: true,
       },
     };
-    const { queryByTestId } = renderWithStore(<View />, {
+    const { history } = renderWithStore(<View />, {
       route,
       initialState,
     });
-
-    expect(queryByTestId('register')).toBeFalsy();
+    expect(history.location.pathname).not.toBe(route);
   });
 
-  it('Should handle "/pokemon" route', () => {
+  it('Should handle "/pokemon" route', async () => {
     const route = '/pokemon';
-    const { getByTestId } = renderWithStore(<View />, {
+    const { findByTestId } = renderWithStore(<View />, {
       route,
     });
 
-    expect(getByTestId('pokemon-list')).toBeTruthy();
+    const pokemon = await findByTestId('pokemon-list');
+
+    expect(pokemon).toBeTruthy();
   });
 
-  it('Should handle "/pokemon/:id" route', () => {
+  it('Should handle "/pokemon/:id" route', async () => {
     const route = '/pokemon/2';
-    const { getByTestId } = renderWithStore(<View />, { route });
+    const { findByTestId } = renderWithStore(<View />, { route });
 
-    expect(getByTestId('pokemon-single-view')).toBeTruthy();
+    const pokemonSingleView = await findByTestId('pokemon-single-view');
+
+    expect(pokemonSingleView).toBeTruthy();
   });
 
-  it('Should handle "/teams" route', () => {
+  it('Should handle "/teams" route', async () => {
     const route = '/teams';
-    const { getByTestId } = renderWithStore(<View />, { route });
+    const { findByTestId } = renderWithStore(<View />, { route });
 
-    expect(getByTestId('teams')).toBeTruthy();
+    const teams = await findByTestId('teams');
+
+    expect(teams).toBeTruthy();
   });
 
-  it('Should handle "/teams/:id" route', () => {
+  it('Should handle "/teams/:id" route', async () => {
     const route = '/teams/:id';
-    const { getByTestId } = renderWithStore(<View />, { route });
+    const { findByTestId } = renderWithStore(<View />, { route });
 
-    expect(getByTestId('team-single-view')).toBeTruthy();
+    const teamSingleView = await findByTestId('team-single-view');
+
+    expect(teamSingleView).toBeTruthy();
   });
 
-  it('Should handle wrong route', () => {
+  it('Should handle wrong route', async () => {
     const route = '/route-that-does-not-exist';
-    const { getByTestId } = renderWithStore(<View />, { route });
+    const { findByTestId } = renderWithStore(<View />, { route });
 
-    expect(getByTestId(/no_match/i)).toBeTruthy();
+    const wrongRoute = await findByTestId(/no_match/i);
+
+    expect(wrongRoute).toBeTruthy();
   });
 });
