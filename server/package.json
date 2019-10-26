@@ -4,6 +4,7 @@
   "description": "mongodb with express",
   "main": "src/index.js",
   "scripts": {
+    "build": "babel src -d build",
     "start": "node src/index.ts",
     "start:dev": "env-cmd -e development nodemon --watch",
     "test": "env-cmd -e test jest --watch --runInBand"
