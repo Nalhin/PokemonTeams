@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import * as mongoose from 'mongoose';
 import { Pokemon } from './pokemon.interface';
 
 const PokemonSchema = new mongoose.Schema(

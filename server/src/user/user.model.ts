@@ -1,6 +1,7 @@
-import mongoose, { Schema } from 'mongoose';
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
+import * as mongoose from 'mongoose';
+import { Schema } from 'mongoose';
+import * as jwt from 'jsonwebtoken';
+import * as bcrypt from 'bcrypt';
 import { User } from './user.interface';
 
 export interface IUser extends User {
