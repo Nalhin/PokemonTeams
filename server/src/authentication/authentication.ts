@@ -1,4 +1,4 @@
-import * as jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import UserModel from '../user/user.model';
 import { NextFunction, Response } from 'express';
 import { AuthenticationRequest } from './authentication.interface';

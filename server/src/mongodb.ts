@@ -1,6 +1,6 @@
 import * as mongoose from 'mongoose';
 
-const url = process.env.MONGODB_URL;
+const url = process.env.MONGODB_URI;
 
 mongoose.connect(url, {
   useCreateIndex: true,

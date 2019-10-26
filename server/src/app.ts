@@ -1,8 +1,8 @@
-import * as express from 'express';
-import * as bodyParser from 'body-parser';
-import * as cors from 'cors';
-import * as logger from 'morgan';
-import * as cookieParser from 'cookie-parser';
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import logger from 'morgan';
+import cookieParser from 'cookie-parser';
 
 import pokemonRouter from './pokemon/pokemon.router';
 import teamRouter from './team/team.router';

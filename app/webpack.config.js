@@ -1,15 +1,16 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = env => {
   return {
     mode: env.development ? 'development' : 'production',
     entry: path.resolve(__dirname, './src/index.tsx'),
     output: {
-      publicPath: env.development ? '/' : './',
-      filename: 'bundle.[hash].js',
-      chunkFilename: 'chunk.[chunkhash].js',
+      publicPath: env.development ? '/' : '',
+      filename: 'static/bundle.[hash].js',
+      chunkFilename: 'static/chunk.[chunkhash].js',
       path: path.resolve(__dirname, 'dist'),
     },
     devtool: 'eval-source-map',
@@ -32,7 +33,7 @@ module.exports = env => {
         },
         {
           test: /\.(ts|tsx)$/,
-          exclude:[/node_modules/, /\.test.(ts|tsx)$/],
+          exclude: [/node_modules/, /\.test.(ts|tsx)$/],
           loader: ['babel-loader', 'ts-loader'],
         },
         {
@@ -45,7 +46,7 @@ module.exports = env => {
           options: {
             name: '[name].[ext]',
             useRelativePath: true,
-            outputPath: 'src/assets/images',
+            outputPath: 'public/assets/images',
           },
         },
       ],
@@ -62,6 +63,9 @@ module.exports = env => {
         filename: 'bundle.[hash].css',
         chunkFilename: 'chunk.[chunkhash].css',
       }),
+      new CopyPlugin([
+        { from: 'public', to: 'dest' },
+      ]),
     ],
     performance: {
       hints: false,

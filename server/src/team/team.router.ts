@@ -1,10 +1,10 @@
-import * as express from 'express';
+import express from 'express';
 import {
-  getTeams,
-  saveTeam,
-  getTeamById,
   deleteTeam,
   editTeam,
+  getTeamById,
+  getTeams,
+  saveTeam,
 } from './team.controller';
 import { authentication } from '../authentication/authentication';
 

@@ -4,7 +4,8 @@
   "description": "mongodb with express",
   "main": "src/index.js",
   "scripts": {
-    "start": "env-cmd -e development nodemon --watch",
+    "start": "node src/app.ts",
+    "start:dev": "env-cmd -e development nodemon --watch",
     "test": "env-cmd -e test jest --watch --runInBand"
   },
   "dependencies": {

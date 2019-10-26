@@ -1,4 +1,4 @@
-import * as express from 'express';
+import express from 'express';
 import { getAllPokemon, getPokemonById } from './pokemon.controller';
 
 const router = express.Router();
