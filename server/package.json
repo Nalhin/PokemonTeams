@@ -30,6 +30,8 @@
     "@types/mongoose": "^5.5.18",
     "@types/node": "^12.7.9",
     "@types/supertest": "^2.0.8",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
     "env-cmd": "^10.0.1",
     "faker": "^4.1.0",
     "jest": "^24.9.0",
