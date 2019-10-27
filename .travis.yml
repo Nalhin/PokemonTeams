@@ -1,7 +1,7 @@
 jobs:
   include:
     - name: "App"
-    - language: node_js
+      language: node_js
       node_js: '10.8'
       cache:
         directories:
@@ -17,7 +17,7 @@ jobs:
         - npx codecov@3
 
     - name: "Api"
-    - language: node_js
+      language: node_js
       node_js: '10.8'
       cache:
         directories:
