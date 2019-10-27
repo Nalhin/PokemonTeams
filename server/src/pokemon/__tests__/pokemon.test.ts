@@ -4,6 +4,10 @@ import PokemonModel from '../pokemon.model';
 import * as mongoose from 'mongoose';
 import { fakePokemon } from '../../../test/fixtures/pokemon';
 
+afterAll(() => {
+  mongoose.connection.close();
+});
+
 describe('GET /pokemon', () => {
   beforeEach(async () => {
     await PokemonModel.deleteMany({});

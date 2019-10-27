@@ -1,10 +1,12 @@
 import * as mongoose from 'mongoose';
 
-const url = process.env.MONGODB_URL;
+const uri = process.env.MONGODB_URI;
 
-mongoose.connect(url, {
+const options = {
   useCreateIndex: true,
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
-});
+};
+
+mongoose.connect(uri, options);

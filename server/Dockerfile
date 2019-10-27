@@ -1,0 +1,16 @@
+FROM node
+
+ENV PORT 5000
+ENV MONGODB_URI "mongodb://127.0.0.1:27017/PokemonDreamTeams"
+ENV SECRET "secret"
+
+WORKDIR /usr/app
+COPY package*.json ./
+RUN npm install
+COPY . .
+
+RUN npm run build
+WORKDIR ./dist
+
+EXPOSE 5000
+CMD node src/index.js

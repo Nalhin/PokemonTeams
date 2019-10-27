@@ -4,9 +4,8 @@
   "description": "Pokemon Dream Teams",
   "main": "src/index.ts",
   "scripts": {
-    "lint": "eslint src",
-    "start": "webpack-dev-server --env.development",
-    "build": "webpack --env.production",
+    "start": "webpack-dev-server --env.development --env.API_URL=https://localhost:5000",
+    "build": "webpack --env.production --env.API_URL=https://api.krzysztofolipra.com",
     "test": "jest --watch",
     "test:cov": "jest --coverage"
   },
@@ -48,6 +47,7 @@
     "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.6",
     "babel-plugin-emotion": "^10.0.15",
+    "copy-webpack-plugin": "^5.0.4",
     "css-loader": "^3.2.0",
     "file-loader": "^4.2.0",
     "html-webpack-plugin": "^3.2.0",

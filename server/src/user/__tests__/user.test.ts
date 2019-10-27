@@ -8,6 +8,10 @@ import {
   generateUserWithId,
 } from '../../../test/utils/user';
 
+afterAll(() => {
+  mongoose.connection.close();
+});
+
 describe('POST /user/register', () => {
   beforeEach(async () => {
     await UserModel.deleteMany({});

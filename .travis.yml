@@ -1,0 +1,32 @@
+jobs:
+  include:
+    - language: node_js
+      node_js: '10.8'
+      cache:
+        directories:
+          - ~/.npm
+          - ~/.cache
+      install:
+        -cd app
+        -npm install
+      script:
+        -cd app
+        -npm run test:cov
+      after_script:
+        -cd app
+        -npx codecov@3
+
+    - language: node_js
+      node_js: '10.8'
+      cache:
+        directories:
+          - ~/.npm
+          - ~/.cache
+      before_install:
+        - cd server
+      install:
+        -npm install
+      script:
+        -npm run test:cov
+      after_script:
+        -npx codecov@3
