@@ -7,6 +7,7 @@ import styled from '@emotion/styled';
 import { PADDING } from '../../../styles/padding';
 import Button from '../../../components/Button/Button';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Z_INDEX } from '../../../styles/zIndex';
 
 interface DeleteTeamModalProps
   extends DeleteTeamModalContainerProps,
@@ -16,6 +17,7 @@ const StyledModal = styled(Modal)`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: ${Z_INDEX.MODAL} !important;
 `;
 
 const StyledPaper = styled(Paper)`

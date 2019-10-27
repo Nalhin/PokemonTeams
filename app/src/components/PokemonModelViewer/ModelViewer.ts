@@ -1,5 +1,4 @@
-import * as THREE from 'three';
-import { PerspectiveCamera, Scene, WebGLRenderer } from 'three';
+import { AmbientLight, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { RefObject } from 'react';
@@ -23,9 +22,9 @@ export default class ModelViewer {
   private readonly camera: PerspectiveCamera;
 
   constructor() {
-    this.scene = new THREE.Scene();
-    this.renderer = new THREE.WebGLRenderer({ antialias: true });
-    this.camera = new THREE.PerspectiveCamera(
+    this.scene = new Scene();
+    this.renderer = new WebGLRenderer({ antialias: true });
+    this.camera = new PerspectiveCamera(
       ModelViewer.cameraSettings.fov,
       ModelViewer.cameraSettings.aspect,
       ModelViewer.cameraSettings.near,
@@ -65,7 +64,7 @@ export default class ModelViewer {
   private configureLight(): void {
     const color = 0xffffff;
     const intensity = 1;
-    const light = new THREE.AmbientLight(color, intensity);
+    const light = new AmbientLight(color, intensity);
     this.scene.add(light);
   }
 

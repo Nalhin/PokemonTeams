@@ -1,11 +1,13 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "mongodb with express",
+  "description": "pokemon-teams api",
   "main": "src/index.js",
   "scripts": {
+    "build": "tsc -b",
     "start": "env-cmd -e development nodemon --watch",
-    "test": "env-cmd -e test jest --watch --runInBand"
+    "test": "env-cmd -e test jest --runInBand",
+    "test:cov": "env-cmd -e test jest --runInBand --coverage"
   },
   "dependencies": {
     "bcrypt": "^3.0.6",
@@ -31,7 +33,6 @@
     "env-cmd": "^10.0.1",
     "faker": "^4.1.0",
     "jest": "^24.9.0",
-    "mongodb-memory-server": "^5.2.6",
     "morgan": "^1.9.1",
     "nodemon": "^1.19.3",
     "prettier": "^1.18.2",

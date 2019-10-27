@@ -10,11 +10,13 @@ import { ModalTypes } from '../../../store/modal/modal.types';
 import Button from '../../../components/Button/Button';
 import PickerPokemonList from './Picker/PickerPokemonList';
 import ModalRoster from './Roster/ModalRoster';
+import { Z_INDEX } from '../../../styles/zIndex';
 
 const StyledModal = styled(Modal)`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: ${Z_INDEX.MODAL} !important;
 `;
 
 const StyledModalContainer = styled(Paper)`

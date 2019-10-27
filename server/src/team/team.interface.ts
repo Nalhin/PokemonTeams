@@ -1,4 +1,4 @@
-import { Pokemon } from '../../../app/src/interfaces/pokemon';
+import { Pokemon } from '../pokemon/pokemon.interface';
 
 enum TeamType {
   Valor,

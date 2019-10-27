@@ -1,0 +1,32 @@
+{
+  "name": "pokemon-teams",
+  "version": 2,
+  "builds": [
+    {
+      "src": "app/package.json",
+      "use": "@now/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "^/static/(.*)",
+      "dest": "app/static/$1"
+    },
+    {
+      "src": "/assets/(.*)",
+      "headers": {
+        "cache-control": "s-maxage=604800"
+      },
+      "dest": "app/assets/$1"
+    },
+    {
+      "src": "^/favicon.ico$",
+      "dest": "app/favicon.ico"
+    },
+    { "handle": "filesystem" },
+    {"src": "^/(.*)", "dest": "/app/index.html"}
+  ]
+}
