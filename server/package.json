@@ -33,7 +33,6 @@
     "env-cmd": "^10.0.1",
     "faker": "^4.1.0",
     "jest": "^24.9.0",
-    "mongodb-memory-server": "^5.2.6",
     "morgan": "^1.9.1",
     "nodemon": "^1.19.3",
     "prettier": "^1.18.2",

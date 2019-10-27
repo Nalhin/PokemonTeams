@@ -1,5 +1,6 @@
 export const Z_INDEX = {
   LOADING: 2001,
-  SNACKBAR: 2002,
-  NAVBAR: 2003,
+  NAVBAR: 2002,
+  MODAL: 2003,
+  SNACKBAR: 2004,
 };

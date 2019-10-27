@@ -13,11 +13,13 @@ import { PADDING } from '../../../styles/padding';
 import { EditTeamModalContainerProps } from './EditTeamModal.container';
 import { ModalTypes, TeamCombined } from '../../../store/modal/modal.types';
 import debounce from 'lodash/debounce';
+import { Z_INDEX } from '../../../styles/zIndex';
 
 const StyledModal = styled(Modal)`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: ${Z_INDEX.MODAL} !important;
 `;
 
 const StyledContainer = styled(Paper)`
@@ -29,6 +31,15 @@ const StyledContainer = styled(Paper)`
 const StyledLoading = styled(Loading)`
   display: flex;
   flex-direction: column;
+`;
+
+const StyledButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const StyledButton = styled(Button)`
+  margin-left: ${PADDING.BASE};
 `;
 
 type TeamModalProps = AddTeamModalContainerProps | EditTeamModalContainerProps;
@@ -114,12 +125,17 @@ const TeamModal: React.FC<TeamModalProps> = ({
           >
             Change Roster
           </Button>
-          <Button onClick={handleConfirm} data-testid="team-modal__save">
-            Save
-          </Button>
-          <Button onClick={closeModal} data-testid="team-modal__close">
-            Close
-          </Button>
+          <StyledButtonContainer>
+            <StyledButton
+              onClick={handleConfirm}
+              data-testid="team-modal__save"
+            >
+              Save
+            </StyledButton>
+            <StyledButton onClick={closeModal} data-testid="team-modal__close">
+              Close
+            </StyledButton>
+          </StyledButtonContainer>
         </StyledLoading>
       </StyledContainer>
     </StyledModal>

@@ -4,7 +4,7 @@
   "description": "Pokemon Dream Teams",
   "main": "src/index.ts",
   "scripts": {
-    "start": "webpack-dev-server --env.development --env.API_URL=https://localhost:5000",
+    "start": "webpack-dev-server --env.development --env.API_URL=http://localhost:5000",
     "build": "webpack --env.production --env.API_URL=https://api.krzysztofolipra.com",
     "test": "jest --watch",
     "test:cov": "jest --coverage"

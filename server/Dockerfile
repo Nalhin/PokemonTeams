@@ -1,7 +1,7 @@
 FROM node
 
 ENV PORT 5000
-ENV MONGODB_URI "mongodb://127.0.0.1:27017/PokemonDreamTeams"
+ENV MONGODB_URI "mongodb://127.0.0.1:27017/PokemonTeams"
 ENV SECRET "secret"
 
 WORKDIR /usr/app

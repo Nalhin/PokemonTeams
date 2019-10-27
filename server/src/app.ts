@@ -14,7 +14,7 @@ const app: express.Application = express();
 if (process.env.NODE_ENV !== 'production') app.use(logger('dev'));
 app.use(cookieParser());
 app.use(bodyParser.json());
-app.use(cors({ credentials: true, origin: false }));
+app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 
 app.use(pokemonRouter);
 app.use(teamRouter);
