@@ -1,0 +1,34 @@
+jobs:
+  include:
+    - name: "App"
+      language: node_js
+      node_js: '10.8'
+      cache:
+        directories:
+          - ~/.npm
+          - ~/.cache
+      before_install:
+        - cd app
+      install:
+        - npm install
+      script:
+        - npm run test:cov
+      after_script:
+        - npx codecov@3
+
+    - name: "Server"
+      language: node_js
+      node_js: '10.8'
+      cache:
+        directories:
+          - ~/.npm
+          - ~/.cache
+      services: mongodb
+      before_install:
+        - cd server
+      install:
+        - npm install
+      script:
+        - npm run test:cov
+      after_script:
+        - npx codecov@3
