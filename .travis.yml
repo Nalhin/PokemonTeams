@@ -6,13 +6,14 @@ jobs:
         directories:
           - ~/.npm
           - ~/.cache
+      before_install:
+        - cd app
       install:
-        -cd app
-        -npm install
+        - npm install
       script:
-        -npm run test:cov
+        - npm run test:cov
       after_script:
-        -npx codecov@3
+        - npx codecov@3
 
     - language: node_js
       node_js: '10.8'
@@ -23,8 +24,8 @@ jobs:
       before_install:
         - cd server
       install:
-        -npm install
+        - npm install
       script:
-        -npm run test:cov
+        - npm run test:cov
       after_script:
-        -npx codecov@3
+        - npx codecov@3
