@@ -10,10 +10,8 @@ jobs:
         -cd app
         -npm install
       script:
-        -cd app
         -npm run test:cov
       after_script:
-        -cd app
         -npx codecov@3
 
     - language: node_js
