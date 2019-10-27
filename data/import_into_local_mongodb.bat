@@ -1,0 +1,1 @@
+mongoimport --db PokemonTeams --collection pokemon --file pokedex_data.json --jsonArray

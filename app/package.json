@@ -4,9 +4,8 @@
   "description": "Pokemon Teams frontend App",
   "main": "src/index.ts",
   "scripts": {
-    "lint": "eslint src",
-    "start": "webpack-dev-server --env.development",
-    "build": "webpack --env.production",
+    "start": "webpack-dev-server --env.development --env.API_URL=http://localhost:5000",
+    "build": "webpack --env.production --env.API_URL=https://api.krzysztofolipra.com",
     "test": "jest --watch",
     "test:cov": "jest --coverage"
   },

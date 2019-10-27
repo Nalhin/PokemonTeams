@@ -13,6 +13,10 @@ import {
 import PokemonModel from '../../pokemon/pokemon.model';
 import { fakePokemon } from '../../../test/fixtures/pokemon';
 
+afterAll(() => {
+  mongoose.connection.close();
+});
+
 describe('GET /team', () => {
   beforeEach(async () => {
     await TeamModel.deleteMany({});

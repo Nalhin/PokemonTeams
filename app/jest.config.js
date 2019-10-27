@@ -5,7 +5,6 @@ module.exports = {
     '^.+\\.[t|j]sx?$': 'babel-jest'
   },
   testRegex: "/__tests__/.*\\.(ts|tsx|js)$",
-  collectCoverage:true,
   collectCoverageFrom: [
     "src/**/*.{ts,tsx}",
   ]
