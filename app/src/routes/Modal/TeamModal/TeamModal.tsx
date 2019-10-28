@@ -115,7 +115,7 @@ const TeamModal: React.FC<TeamModalProps> = ({
             name="description"
             label="Team description"
           />
-          <Typography variant="subtitle1" component="h2">
+          <Typography variant="subtitle2" component="h2">
             Roster
           </Typography>
           <TeamRoster roster={roster} />
