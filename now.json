@@ -12,7 +12,7 @@
   ],
   "routes": [
     {
-      "src": "^/static/(.*)",
+      "src": "/static/(.*)",
       "dest": "app/static/$1"
     },
     {
@@ -27,6 +27,6 @@
       "dest": "app/favicon.ico"
     },
     { "handle": "filesystem" },
-    {"src": "/*", "dest": "/app/index.html"}
+    {"src": "^/(.*)", "dest": "/app/index.html"}
   ]
 }
