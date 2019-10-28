@@ -16,7 +16,9 @@ const StyledTypography = styled(Typography)`
   margin: 0 auto;
   height: 40px;
   font-size: 16px;
+  color: rgba(0, 0, 0, 0.54);
 `;
+
 interface ModalRosterProps {
   roster: Pokemon[];
   handleRemoveRoster: (index: number) => void;

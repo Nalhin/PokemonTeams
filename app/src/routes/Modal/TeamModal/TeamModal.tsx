@@ -42,6 +42,10 @@ const StyledButton = styled(Button)`
   margin-left: ${PADDING.BASE};
 `;
 
+const StyledTypography = styled(Typography)`
+  color: rgba(0, 0, 0, 0.54);
+`;
+
 type TeamModalProps = AddTeamModalContainerProps | EditTeamModalContainerProps;
 
 const debounceTimer = 500;
@@ -115,9 +119,9 @@ const TeamModal: React.FC<TeamModalProps> = ({
             name="description"
             label="Team description"
           />
-          <Typography variant="subtitle2" component="h2">
+          <StyledTypography variant="subtitle1" component="h2">
             Roster
-          </Typography>
+          </StyledTypography>
           <TeamRoster roster={roster} />
           <Button
             onClick={handleOpenRosterModal}
