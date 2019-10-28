@@ -24,6 +24,7 @@ jest.mock('../ModelViewer', () => {
 
 const props = {
   id: '1',
+  isLoadingDisabled: false,
 };
 
 describe('PokemonModelViewer', () => {
@@ -37,13 +38,28 @@ describe('PokemonModelViewer', () => {
     mockHandleResize.mockClear();
   });
 
+  it('Should display loading', () => {
+    const { getByTestId } = render(<PokemonModelViewer {...props} />);
+
+    const loadingSpinner = getByTestId('loading-spinner');
+
+    expect(loadingSpinner).toBeTruthy();
+  });
+
+  it('Should not display loading', () => {
+    const { queryByTestId } = render(
+      <PokemonModelViewer {...props} isLoadingDisabled={true} />,
+    );
+
+    const loadingSpinner = queryByTestId('loading-spinner');
+
+    expect(loadingSpinner).toBeFalsy();
+  });
+
   it('Should call ModelViewer methods correctly', () => {
     render(<PokemonModelViewer {...props} />);
 
     expect(mockConfigureViewer).toHaveBeenCalledTimes(1);
-    expect(mockLoadModel).toHaveBeenCalledWith(
-      `/assets/models/${props.id}.glb`,
-    );
     expect(mockAppendToContainer).toHaveBeenCalledTimes(1);
     expect(mockRemoveFromContainer).toHaveBeenCalledTimes(0);
   });

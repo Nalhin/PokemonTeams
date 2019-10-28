@@ -71,7 +71,10 @@ const PokemonSingleView: React.FC<PokemonSingleViewProps> = ({
               pokemon.tags.map(tag => <StyledTag tag={tag} key={tag} />)}
           </StyledTagContainer>
         </StyledPokemonDescription>
-        <PokemonModelViewer id={match.params.id} />
+        <PokemonModelViewer
+          id={match.params.id}
+          isLoadingDisabled={isLoading}
+        />
         <StyledPokemonDescription>
           <PokemonStats
             hp={pokemon.hp}

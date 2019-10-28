@@ -68,21 +68,15 @@ export default class ModelViewer {
     this.scene.add(light);
   }
 
-  public loadModel(path: string): void {
+  public loadModel(path: string, setIsLoading: () => void): void {
     const loader = new GLTFLoader();
-    loader.load(
-      path,
-      gltf => {
-        const model = gltf.scene;
-        model.scale.set(2, 2, 2);
-        model.position.set(0, -2, 0);
-        this.scene.add(model);
-      },
-      undefined,
-      error => {
-        console.error(error);
-      },
-    );
+    loader.load(path, gltf => {
+      const model = gltf.scene;
+      model.scale.set(2, 2, 2);
+      model.position.set(0, -2, 0);
+      this.scene.add(model);
+      setIsLoading();
+    });
   }
 
   public handleResize(container: RefObject<HTMLDivElement>): void {

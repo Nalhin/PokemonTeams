@@ -2,6 +2,7 @@ import * as React from 'react';
 import styled from '@emotion/styled';
 import { PADDING } from '../../styles/padding';
 import ModelViewer from './ModelViewer';
+import Loading from '../Loading/Loading';
 
 const StyledModelContainer = styled.div`
   margin: ${PADDING.BASE} auto;
@@ -11,15 +12,24 @@ const StyledModelContainer = styled.div`
 
 interface PokemonModelViewerProps {
   id: string;
+  isLoadingDisabled: boolean;
 }
 
-const PokemonModelViewer: React.FC<PokemonModelViewerProps> = ({ id }) => {
+const PokemonModelViewer: React.FC<PokemonModelViewerProps> = ({
+  id,
+  isLoadingDisabled,
+}) => {
   const modelContainer = React.useRef(null);
+  const [isLoading, setIsLoading] = React.useState(true);
+
+  const handleSetIsLoading = () => {
+    setIsLoading(false);
+  };
 
   React.useEffect(() => {
     const modelViewer = new ModelViewer();
     modelViewer.configureViewer(modelContainer);
-    modelViewer.loadModel(`/assets/models/${id}.glb`);
+    modelViewer.loadModel(`/assets/models/${id}.glb`, handleSetIsLoading);
 
     let animationFrameId: number;
     const animateModel = () => {
@@ -33,7 +43,6 @@ const PokemonModelViewer: React.FC<PokemonModelViewerProps> = ({ id }) => {
     const handleResize = () => {
       modelViewer.handleResize(modelContainer);
     };
-
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -42,7 +51,11 @@ const PokemonModelViewer: React.FC<PokemonModelViewerProps> = ({ id }) => {
     };
   }, []);
 
-  return <StyledModelContainer ref={modelContainer} />;
+  return (
+    <Loading isLoading={!isLoadingDisabled && isLoading} isRelative>
+      <StyledModelContainer ref={modelContainer} />
+    </Loading>
+  );
 };
 
 export default PokemonModelViewer;

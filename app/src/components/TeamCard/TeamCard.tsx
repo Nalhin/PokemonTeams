@@ -27,6 +27,12 @@ const StyledCard = styled(Card)`
   }
 `;
 
+const StyledCardContent = styled(CardContent)`
+  &:last-child {
+    padding: ${PADDING.LARGE};
+  }
+`;
+
 const StyledOwner = styled(Typography)`
   margin-top: auto;
   display: flex;
@@ -46,7 +52,7 @@ const TeamCard: React.FC<TeamCardProps> = ({ team, history }) => {
   const { login } = owner;
   return (
     <StyledCard type={type} onClick={handleTeamClick} data-testid="team__card">
-      <CardContent>
+      <StyledCardContent>
         <Typography variant="h5" component="h2">
           {name}
         </Typography>
@@ -57,7 +63,7 @@ const TeamCard: React.FC<TeamCardProps> = ({ team, history }) => {
         <StyledOwner variant="body2" component="p">
           {login}
         </StyledOwner>
-      </CardContent>
+      </StyledCardContent>
     </StyledCard>
   );
 };

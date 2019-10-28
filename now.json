@@ -1,5 +1,5 @@
 {
-  "name": "pokemon-teams",
+  "name": "PokemonTeams",
   "version": 2,
   "builds": [
     {
@@ -12,19 +12,22 @@
   ],
   "routes": [
     {
-      "src": "/static/(.*)",
-      "dest": "app/static/$1"
+      "src": "(.*)/static/(.*)",
+      "headers": {
+        "cache-control": "s-maxage=604800"
+      },
+      "dest": "/app/static/$2"
     },
     {
       "src": "/assets/(.*)",
       "headers": {
         "cache-control": "s-maxage=604800"
       },
-      "dest": "app/assets/$1"
+      "dest": "/app/assets/$1"
     },
     {
       "src": "/favicon.ico",
-      "dest": "app/favicon.ico"
+      "dest": "/app/favicon.ico"
     },
     { "handle": "filesystem" },
     {"src": "^/(.*)", "dest": "/app/index.html"}
