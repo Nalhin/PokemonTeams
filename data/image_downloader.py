@@ -7,7 +7,7 @@ target_path = './assets'
 
 def resize_images(path, d):
     image = PIL.Image.open(path)
-    resized_image = image.resize((40, 40),PIL.Image.BILINEAR )
+    resized_image = image.resize((40, 40),PIL.Image.LANCZOS )
     resized_image.save(f'{target_path}/icons/{d["id"]}.png')
 
 
