@@ -1,6 +1,7 @@
 app/node_modules
 app/coverage
 app/dist
+.idea
 
 data/assets
 data/package-lock.json
