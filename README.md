@@ -1,6 +1,6 @@
 ﻿[![Build Status](https://travis-ci.com/Nalhin/PokemonTeams.svg?branch=master)](https://travis-ci.com/Nalhin/PokemonTeams)
 [![Codecov](https://codecov.io/gh/Nalhin/PokemonTeams/branch/master/graph/badge.svg)](https://codecov.io/gh/Nalhin/PokemonTeams)
-![License](https://img.shields.io/github/license/Nalhin/PokemonTeams)
+[![License](https://img.shields.io/github/license/Nalhin/PokemonTeams)](LICENSE.md)
 
 # Pokemon Teams
 
@@ -11,7 +11,7 @@ Users can also inspect interactive 3D models of their favourite pokemon.
 
 * [Description](#description)
 * [Features](#features)
-* [Screenshots](#screenshots)
+* [Presentation](#presentation)
 * [Folder Structure](#folder-structure)
 * [Technology Stack](#technology-stack)
 * [API](#api)
@@ -20,12 +20,13 @@ Users can also inspect interactive 3D models of their favourite pokemon.
 
 ## Description
 
-Website is written in Typescript utilizing React with Flux architecture (Redux). 
-Material UI was used as the component library of choice combined with Emotion for custom styles.
-Interactive 3D models of pokemon were rendered utilizing Three.js.
+Website is written in Typescript utilizing React with Flux architecture (Redux).
+Material UI was used as the component library of choice combined with Emotion for custom styles. 
+Interactive 3D models of pokemon are rendered utilizing Three.js.
 Communication between frontend and backend was implemented with the use of REST API. 
-Each request is handled with its own saga, and stored in Redux store for cache management. 
-Backend is written in Typescript with Express framework. Authentication is implemented with http-only cookie (JWT) attached to each request.
+Each request is handled with its own saga, and stored in Redux store for cache management.
+
+Backend is written in Typescript with Express. Authentication is implemented with http-only cookies (JWT).
 As far as database is concerned, MongoDB was chosen, after the evaluation of data complexity (multiple relations were not needed).
 
 ## Features
@@ -34,7 +35,7 @@ As far as database is concerned, MongoDB was chosen, after the evaluation of dat
 * Interactive 3D models.
 * CRUD functionality.
 
-## Screenshots
+## Presentation
 
 #### Overview
 
@@ -80,24 +81,29 @@ As far as database is concerned, MongoDB was chosen, after the evaluation of dat
 
 ```
 src
-├── components (Reusable components used throughout the entire application)
-├── interfaces (Typescript interfaces)
-├── routes (Routes with corresponding components)
-├── store (Redux boilerplate implemented in "Duck" architecture - feature first approach).
-│   ├── *.actions.ts 
-│   ├── *.reducer.ts
-│   ├── *.saga.ts 
-│   ├── *.types.ts
-│   └── *.api.ts
-├── styles (styling constants)
+├── components (reusable components)
+├── interfaces (typescript interfaces)
+├── routes (routes with corresponding components)
+├── store (redux store)
+│   ├── modal 
+│   ├── pokemon 
+│   ├── snackbar 
+│   ├── team 
+│   └── user
+│        ├── user.actions.ts 
+│        ├── user.reducer.ts
+│        ├── user.saga.ts 
+│        ├── user.types.ts
+│        └── user.api.ts
+│      
+├── styles (style constants)
 ├── utils (utility functions)
 └── \__tests__ (test files are always located next to corresponding functionality)
 ```
 
 #### Backend
 
-Feature first approach (so called "Duck" architecture).
-Each folder consists of (unless not required by implementation) the following:
+Each functionality consists of the following files.
 ```
 ├── *.controller.ts (routes)
 ├── *.interface.ts (typescript definitions)
@@ -132,8 +138,6 @@ Each folder consists of (unless not required by implementation) the following:
 * Jest
 * React Testing Library
 * Supertest
-* Travis
-* Codecov
 
 #### Data
 
@@ -148,9 +152,10 @@ Each folder consists of (unless not required by implementation) the following:
 
 ## Models, Images and Data
 
-All models and images are downloaded from [this](https://www.models-resource.com/3ds/pokemonxy/) with python web scrapping scripts.
-After being downloaded, models are then converted to .glb format utilizing open source converters ([fbx2glb](https://github.com/facebookincubator/FBX2glTF), [obj2glb](https://www.npmjs.com/package/obj2gltf), [collada2glb](https://github.com/KhronosGroup/COLLADA2GLTF)).
-Pokemon data is gathered from [pokemondb](https://pokemondb.net/pokedex/all).
+Models and images were downloaded from [this](https://www.models-resource.com/3ds/pokemonxy/) with web scrapping scripts.
+After being downloaded, models are then converted to .glb format with open source converters ([fbx2glb](https://github.com/facebookincubator/FBX2glTF), [obj2glb](https://www.npmjs.com/package/obj2gltf), [collada2glb](https://github.com/KhronosGroup/COLLADA2GLTF)). 
+
+Pokemon data was scrapped from [pokemondb](https://pokemondb.net/pokedex/all). 
 
 ## Requirements
 
@@ -174,7 +179,6 @@ mongo --version
 #### App
 
 ```bash
-git clone https://github.com/Nalhin/PokemonTeams
 cd app
 npm install
 npm run start
@@ -183,7 +187,6 @@ npm run start
 #### Backend
 
 ```bash
-git clone https://github.com/Nalhin/PokemonTeams
 cd server && npm install
 cd ../data && import_into_local_mongodb.bat
 cd ../server && npm run start
