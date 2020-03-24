@@ -4,7 +4,7 @@
 
 # Pokemon Teams
 
-A website that allows users to create and share teams consisting of different Pokemon as well as previewing their interactive 3D models.
+A website that allows users to create teams consisting of different Pokemon as well as previewing their interactive 3D models.
 
 ## Table of contents
 
