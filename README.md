@@ -4,8 +4,7 @@
 
 # Pokemon Teams
 
-A web application that allows users to create and share teams consisting of their favourite Pokemon. 
-Users can also inspect interactive 3D models of their favourite pokemon.
+A website that allows users to create and share teams consisting of different Pokemon as well as previewing their interactive 3D models.
 
 ## Table of contents
 
@@ -22,11 +21,10 @@ Users can also inspect interactive 3D models of their favourite pokemon.
 
 Website is written in Typescript utilizing React with Flux architecture (Redux).
 Material UI was used as the component library of choice combined with Emotion for custom styles. 
-Interactive 3D models of pokemon are rendered utilizing Three.js.
 Communication between frontend and backend was implemented with the use of REST API. 
 Each request is handled with its own saga, and stored in Redux store for cache management.
 
-Backend is written in Typescript with Express. Authentication is implemented with http-only cookies (JWT).
+Backend is written in Typescript utilizing Express framework. Authentication is implemented with http-only cookies (JWT).
 As far as database is concerned, MongoDB was chosen, after the evaluation of data complexity (multiple relations were not needed).
 
 ## Features
@@ -103,7 +101,7 @@ src
 
 #### Backend
 
-Each functionality consists of the following files.
+Each module consists of the following files.
 ```
 ├── *.controller.ts (routes)
 ├── *.interface.ts (typescript definitions)
