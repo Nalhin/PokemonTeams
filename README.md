@@ -1,4 +1,4 @@
-﻿[![Build Status](https://travis-ci.com/Nalhin/PokemonTeams.svg?branch=master)](https://travis-ci.com/Nalhin/PokemonTeams)
+﻿[![Test](https://github.com/Nalhin/PokemonTeams/workflows/Test/badge.svg)](https://github.com/Nalhin/PokemonTeams/actions)
 [![Codecov](https://codecov.io/gh/Nalhin/PokemonTeams/branch/master/graph/badge.svg)](https://codecov.io/gh/Nalhin/PokemonTeams)
 [![License](https://img.shields.io/github/license/Nalhin/PokemonTeams)](LICENSE.md)
 
