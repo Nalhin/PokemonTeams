@@ -23,7 +23,7 @@ jobs:
       - name: Install dependencies
         run: npm install
         working-directory: ./app
-      - name: Run App tests
+      - name: Run tests
         run: npm run test:cov
         working-directory: ./app
       - name: Upload coverage
@@ -53,7 +53,7 @@ jobs:
       - name: Install dependencies
         run: npm install
         working-directory: ./server
-      - name: Run App tests
+      - name: Run tests
         run: npm run test:cov
         working-directory: ./server
       - name: Upload coverage
