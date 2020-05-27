@@ -4,7 +4,7 @@
 
 # Pokemon Teams
 
-A website that allows users to create teams consisting of different Pokemon as well as previewing their interactive 3D models.
+Pokemon team planner with interactive 3D models.
 
 ## Table of contents
 
@@ -19,7 +19,7 @@ A website that allows users to create teams consisting of different Pokemon as w
 
 ## Description
 
-Website is written in Typescript utilizing React with Flux architecture (Redux).
+Frontend is written in Typescript utilizing React with Flux architecture (Redux).
 Material UI was used as the component library of choice combined with Emotion for custom styles. 
 Communication between frontend and backend was implemented with the use of REST API. 
 Each request is handled with its own saga, and stored in Redux store for cache management.
