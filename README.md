@@ -19,12 +19,12 @@ Pokemon team planner with interactive 3D models.
 
 ## Description
 
-Frontend is written in Typescript utilizing React with Flux architecture (Redux).
+Frontend was written in Typescript utilizing React with Flux architecture (Redux).
 Material UI was used as the component library of choice combined with Emotion for custom styles. 
 Communication between frontend and backend was implemented with the use of REST API. 
 Each request is handled with its own saga, and stored in Redux store for cache management.
 
-Backend is written in Typescript utilizing Express framework. Authentication is implemented with http-only cookies (JWT).
+Backend was written in Typescript utilizing Express framework. Authentication was implemented with http-only cookies (JWT).
 As far as database is concerned, MongoDB was chosen, after the evaluation of data complexity (multiple relations were not needed).
 
 ## Features
